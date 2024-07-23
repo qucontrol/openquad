@@ -2,6 +2,11 @@
 
 Open database for multi-dimensional numerical integration
 
+---
+> [!NOTE]
+> The first release will be published soon!  
+> Give this repo a star to stay tuned!
+---
 
 ## Dev installation
 
