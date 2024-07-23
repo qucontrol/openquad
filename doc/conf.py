@@ -17,6 +17,10 @@ release = openquad.__version__
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+# Report broken links as warnings
+#nitpicky = True
+# nitpick_ignore = [("py:class", "callable")]
+
 extensions = [
     #'sphinx.ext.autodoc',
     #'sphinx.ext.autosummary',
@@ -49,7 +53,11 @@ rst_prolog = """
 html_theme = 'pydata_sphinx_theme'
 
 html_theme_options = {
-    "logo": {"text": "OpenQuad"},
+    "logo": {
+        "alt_text": "OpenQuad - home",
+        "image_light": "_static/images/logo.svg",
+        "image_dark": "_static/images/logo.svg",
+    },
     "icon_links": [
         {
             "name": "GitHub",
@@ -83,6 +91,7 @@ html_theme_options = {
 
 
 html_static_path = ['_static']
+html_css_files = ['openquad.css']
 html_copy_source = False
 html_show_sourcelink = False
 

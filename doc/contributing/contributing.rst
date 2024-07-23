@@ -52,11 +52,11 @@ issues in commits.
 .. _Linking a pull request to an issue: https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
 
 
-Rel:ases follow `semantic versioning`_ and need to be compatible with `PyPi
+Rel:ases follow `semantic versioning`_ and need to be compatible with `PyPA
 version specifiers`_ (former `PEP440`_).
 
 .. _semantic_versioning: https://semver.org/
-.. _PyPi version specifiers: https://packaging.python.org/en/latest/specifications/version-specifiers/#version-specifiers
+.. _PyPA version specifiers: https://packaging.python.org/en/latest/specifications/version-specifiers/#version-specifiers
 .. _PEP440: https://peps.python.org/pep-0440/
 
 
