@@ -56,7 +56,7 @@ class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithDegree):
         return points, weights
 
 
-class WomersleySO3EqualWeight(AtomicSO3Quadrature, QuadratureWithDegree):
+class WomersleySO3Chebyshev(AtomicSO3Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1] // 2

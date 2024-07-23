@@ -15,9 +15,9 @@ from .grid import xyz_from_angles, S2Grid, SO3Grid
 from .newton_cotes import CompositeTrapezoid, CompositeSimpson, Romberg
 from .gauss import GaussLegendre, GaussLobattoLegendre
 from .lebedev import LebedevLaikov
-from .graef import GraefS2Gauss, GraefS2Design, GraefSO3Gauss, GraefSO3EqualWeight
+from .graef import GraefS2Gauss, GraefS2Design, GraefSO3Gauss, GraefSO3Chebyshev
 from .karney import KarneySO3
-from .womersley import WomersleyS2Design, WomersleySO3EqualWeight
+from .womersley import WomersleyS2Design, WomersleySO3Chebyshev
 from .fibonacci import FibonacciSphere, ZCW2, ZCW3
 from .monte_carlo import MonteCarloR1, MonteCarloS2, MonteCarloSO3
 
@@ -35,22 +35,22 @@ class GeometryQuadrature(ABC):
         'romberg': Romberg,
         'gauss-legendre': GaussLegendre,
         'gauss-lobatto-legendre': GaussLobattoLegendre,
-        'monte-carlo-1d': MonteCarloR1,
+        '1d-monte-carlo': MonteCarloR1,
         # two-angle methods:
-        'lebedev-laikov': LebedevLaikov,
+        's2-gauss-lebedev-laikov': LebedevLaikov,
         's2-gauss-graef': GraefS2Gauss,
         's2-design-graef': GraefS2Design,
         's2-design-womersley': WomersleyS2Design,
-        'fibonacci-sphere': FibonacciSphere,
-        'zcw2': ZCW2,
-        'monte-carlo-s2': MonteCarloS2,
+        's2-fibonacci': FibonacciSphere,
+        's2-zcw': ZCW2,
+        's2-monte-carlo': MonteCarloS2,
         # three-angle methods:
         'so3-covering-karney': KarneySO3,
         'so3-gauss-graef': GraefSO3Gauss,
-        'so3-equalweight-graef': GraefSO3EqualWeight,
-        'so3-equalweight-womersley': WomersleySO3EqualWeight,
-        'zcw3': ZCW3,
-        'monte-carlo-so3': MonteCarloSO3,
+        'so3-chebyshev-graef': GraefSO3Chebyshev,
+        'so3-chebyshev-womersley': WomersleySO3Chebyshev,
+        'so3-zcw': ZCW3,
+        'so3-monte-carlo': MonteCarloSO3,
     }
     _method_aliases = {
         # dummy quadrature
@@ -58,43 +58,36 @@ class GeometryQuadrature(ABC):
         # composite trapezoid rule
         'composite trapezoid': 'composite trapezoid',
         'trapezoid': 'composite trapezoid',
-        'trapz': 'composite trapezoid',
         # composite simpson rule
         'composite simpson': 'composite simpson',
         'simpson': 'composite simpson',
-        'simps': 'composite simpson',
         # Romberg integration
         'romberg': 'romberg',
-        'romb': 'romberg',
         # Gauss-Legendre quadrature
         'gauss-legendre': 'gauss-legendre',
-        'gl': 'gauss-legendre',
         # Gauss-Lobatto-Legendre
         'gauss-lobatto-legendre': 'gauss-lobatto-legendre',
-        'gll': 'gauss-lobatto-legendre',
         # Lebedev Laikov
-        'lebedev-laikov': 'lebedev-laikov',
-        'lebedev': 'lebedev-laikov',
+        's2-gauss-lebedev-laikov': 's2-gauss-lebedev-laikov',
+        'lebedev-laikov': 's2-gauss-lebedev-laikov',
+        'lebedev': 's2-gauss-lebedev-laikov',
         # 1d Monte-Carlo
-        'monte-carlo-1d': 'monte-carlo-1d',
-        'mc1': 'monte-carlo-1d',
+        '1d-monte-carlo': '1d-monte-carlo',
         # two-angle Monte-Carlo
-        'monte-carlo-s2': 'monte-carlo-s2',
-        'mcs2': 'monte-carlo-s2',
+        's2-monte-carlo': 's2-monte-carlo',
         # three-angle Monte-Carlo
-        'monte-carlo-so3': 'monte-carlo-so3',
-        'mcso3': 'monte-carlo-so3',
+        'so3-monte-carlo': 'so3-monte-carlo',
         # other methods without aliases
         's2-gauss-graef': 's2-gauss-graef',
         's2-design-graef': 's2-design-graef',
         's2-design-womersley': 's2-design-womersley',
-        'fibonacci-sphere': 'fibonacci-sphere',
-        'zcw2': 'zcw2',
+        's2-fibonacci': 's2-fibonacci',
+        's2-zcw': 's2-zcw',
         'so3-covering-karney': 'so3-covering-karney',
         'so3-gauss-graef': 'so3-gauss-graef',
-        'so3-equalweight-graef': 'so3-equalweight-graef',
-        'so3-equalweight-womersley': 'so3-equalweight-womersley',
-        'zcw3': 'zcw3',
+        'so3-chebyshev-graef': 'so3-chebyshev-graef',
+        'so3-chebyshev-womersley': 'so3-chebyshev-womersley',
+        'so3-zcw': 'so3-zcw',
     }
 
     @property

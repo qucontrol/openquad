@@ -84,7 +84,7 @@ class GraefSO3Gauss(AtomicSO3Quadrature, QuadratureWithDegree):
         return points, weights
 
 
-class GraefSO3EqualWeight(AtomicSO3Quadrature, QuadratureWithDegree):
+class GraefSO3Chebyshev(AtomicSO3Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(SO3_EQUAL_WEIGHT_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
