@@ -374,7 +374,7 @@ class GeometryQuadrature(ABC):
         return result
 
     @abstractmethod
-    def write_grid(self, filename, weights=False):
+    def savetxt(self, filename, weights=True):
         pass
 
 
@@ -415,7 +415,7 @@ class SO3(GeometryQuadrature):
         else:
             raise ValueError("Cannot determine integration interval")
 
-    def write_grid(self, filename, weights=False):
+    def savetxt(self, filename, weights=True):
         grid = SO3Grid('Euler angles', self.angles)
         if weights:
             grid.save(filename, 'Euler angles', weights=self.weights)
@@ -458,7 +458,7 @@ class S2(GeometryQuadrature):
         else:
             raise ValueError("Cannot determine integration interval")
 
-    def write_grid(self, filename, weights=False):
+    def savetxt(self, filename, weights=True):
         grid = S2Grid('angles', self.angles)
         if weights:
             grid.save(filename, 'angles', weights=self.weights)
@@ -485,6 +485,6 @@ class Rn(GeometryQuadrature):
         # Specification of Jacobians is optional.
         return 'user', 'user', None
 
-    def write_grid(self, filename, weights=False):
+    def savetxt(self, filename, weights=True):
         msg = "Writing grids not yet implemented for this class"
         raise NotImplementedError(msg)
