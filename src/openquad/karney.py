@@ -1,7 +1,7 @@
 import numpy as np
 
 from .base import QuadratureWithoutDegree, AtomicSO3Quadrature
-from .data.karney.table import SO3_COVERINGS
+from .data.karney import SO3_COVERINGS
 
 
 class KarneySO3(AtomicSO3Quadrature, QuadratureWithoutDegree):

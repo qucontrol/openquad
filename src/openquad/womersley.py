@@ -1,7 +1,7 @@
 import numpy as np
 
 from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree)
-from .data.womersley.table import S2_SPHERICAL_DESIGNS
+from .data.womersley import S2_SPHERICAL_DESIGNS
 
 
 class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithDegree):

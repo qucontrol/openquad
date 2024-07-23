@@ -1,7 +1,7 @@
 import numpy as np
 
 from .base import AtomicS2Quadrature, QuadratureWithDegree
-from .data.lebedev.table import LEBEDEV_LAIKOV_QUADRATURES
+from .data.lebedev import LEBEDEV_LAIKOV_QUADRATURES
 
 
 class LebedevLaikov(AtomicS2Quadrature, QuadratureWithDegree):

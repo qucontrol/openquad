@@ -1,7 +1,7 @@
 import numpy as np
 
 from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree)
-from .data.graef.table import (
+from .data.graef import (
     S2_GAUSS_METHODS,
     S2_SPHERICAL_DESIGNS,
     SO3_GAUSS_METHODS,
