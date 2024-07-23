@@ -1,14 +1,14 @@
 import numpy as np
 from scipy.integrate import trapezoid, simpson, romb
 
-from .base import AtomicR1Quadrature, QuadratureWithFixedPolyAcc
+from .base import AtomicR1Quadrature, QuadratureWithFixedDegree
 
 
-class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedPolyAcc):
+class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
     _has_endpoints = True
 
-    def _get_p_acc(self):
+    def _get_degree(self):
         return 1
 
     def _points_weights(self, a, b):
@@ -53,11 +53,11 @@ class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedPolyAcc):
         return x, w
 
 
-class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedPolyAcc):
+class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
     _has_endpoints = True
 
-    def _get_p_acc(self):
+    def _get_degree(self):
         return 3
 
     def _points_weights(self, a, b):
@@ -111,14 +111,14 @@ class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedPolyAcc):
         return x, w
 
 
-class Romberg(AtomicR1Quadrature, QuadratureWithFixedPolyAcc):
+class Romberg(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
     _has_endpoints = True
 
-    def _get_p_acc(self):
+    def _get_degree(self):
         # Romberg is in some situations equivalent to Trapz, Simps and Boole,
-        # i.e. it can have p_acc at least up to five. I don't know, if there
-        # is a general formula for the p_acc for higher order of Romb.
+        # i.e. it can have degree at least up to five. I don't know, if there
+        # is a general formula for the degree for higher order of Romb.
         return None #TODO?
 
     def _points_weights(self, a, b):
