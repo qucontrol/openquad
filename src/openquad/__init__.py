@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this library. If not, see <https://www.gnu.org/licenses/>.
 
-__version__ = "alpha+dev"
+__version__ = "0.1.0-dev"
 
 # Expose top-level interface
 from .geometries import Rn, S2, SO3
