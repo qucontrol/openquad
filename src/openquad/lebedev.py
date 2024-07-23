@@ -1,0 +1,36 @@
+import numpy as np
+
+from .base import AtomicS2Quadrature, QuadratureWithPolyAcc
+from .data.lebedev.table import LEBEDEV_LAIKOV_QUADRATURES
+
+
+class LebedevLaikov(AtomicS2Quadrature, QuadratureWithPolyAcc):
+
+    _TABLE = np.asarray(LEBEDEV_LAIKOV_QUADRATURES, dtype=int)
+    _available_sizes = _TABLE[:, 1]
+    _available_p_accs = _TABLE[:, 0]
+
+    def _points_weights(self):
+        """Lebedev-Laikov quadrature.
+
+        We simply wrap sphericalquadpy's Lebedev class for now.
+
+        #TODO
+        Parameters
+        ----------
+        size : int
+            Number of equidistant sampling points.
+        order : int
+            Quadrature order.
+
+        Returns
+        -------
+        points : ndarray
+            Sample points.
+        weights : ndarray
+            Array of ones. This is only returned to retain a common interface.
+
+        """
+        points, weights = self._load_points_weights('lebedev', 's2_gauss')
+        weights = weights * (4*np.pi)
+        return points, weights
