@@ -44,3 +44,11 @@ examples = [
   "matplotlib",
   "spherical",
 ]
+docs = [
+  "sphinx",
+  "pydata_sphinx_theme",
+  "sphinx-autoapi",
+  "sphinx-copybutton",
+  "sphinx_design",
+]
+# TODO: freeze doc dependencies versions
