@@ -1,0 +1,11 @@
+# Setup
+*.egg-info/
+*.egg
+*.py[cod]
+__pycache__/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Other
+releases

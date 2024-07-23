@@ -1,0 +1,46 @@
+[project]
+name = "openquad"
+dynamic = ["version"]
+authors = [
+  {name="Alexander Blech", email="alexander.blech@fu-berlin.de"},
+]
+description = "Open database for multi-dimensional numerical integration"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3"
+dependencies = [
+  "numpy",
+  "scipy",
+  "quaternionic",
+]
+keywords = [
+  "quadrature",
+  "integration",
+  "numerical integration",
+  "spherical quadrature",
+  "illumination integral",
+  "orientation average",
+  "Euler angles",
+  "orientation",
+  "SO3",
+  "Lebedev",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/openquad/__init__.py"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+]
+examples = [
+  "matplotlib",
+  "spherical",
+]
