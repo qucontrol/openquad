@@ -7,7 +7,7 @@ Gräf published at [1] and downloaded in January 2024.
 """
 
 S2_GAUSS_METHODS = [
-    # p_acc, size
+    # degree, size
     [1, 2],
     [2, 4],
     [3, 6],
@@ -50,7 +50,7 @@ S2_GAUSS_METHODS = [
 """list: Table of S2 Gauss-type quadratures from M. Gräf."""
 
 S2_SPHERICAL_DESIGNS = [
-    # p_acc, size
+    # degree, size
     [1, 2],
     [2, 4],
     [3, 6],
@@ -128,7 +128,7 @@ S2_SPHERICAL_DESIGNS = [
 """list: Table of S2 spherical designs from M. Gräf."""
 
 SO3_GAUSS_METHODS = [
-    # p_acc, size
+    # degree, size
     [1, 4],
     [2, 11],
     [3, 23],
@@ -143,8 +143,8 @@ SO3_GAUSS_METHODS = [
 ]
 """list: Table of SO3 Gauss-type quadratures from M. Gräf."""
 
-SO3_EQUAL_WEIGHT_METHODS = [
-    # p_acc, size
+SO3_CHEBYSHEV_METHODS = [
+    # degree, size
     [1, 4],
     [2, 12],
     [3, 24],
@@ -162,4 +162,4 @@ SO3_EQUAL_WEIGHT_METHODS = [
     [19, 3300],
     [23, 5880],
 ]
-"""list: Table of SO3 equal-weight quadratures from M. Gräf."""
+"""list: Table of SO3 Chebyshev-type quadratures from M. Gräf."""

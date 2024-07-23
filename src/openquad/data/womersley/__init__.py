@@ -10,7 +10,7 @@ provided in [1].
 """
 
 S2_SPHERICAL_DESIGNS = [
-    # p_acc, size, has antipodal symmetry
+    # degree, size, has antipodal symmetry
     # inversion-symmetric spherical designs
     [1, 2, True],
     [3, 6, True],
@@ -360,7 +360,7 @@ S2_SPHERICAL_DESIGNS = [
 """list: Table of S2 spherical designs from R. Womersley."""
 
 S3_SPHERICAL_DESIGNS = [
-    # p_acc, size, has antipodal symmetry
+    # degree, size, has antipodal symmetry
     # known S3 spherical designs
     # (they can only be used for SO3 quadratures, if they have inversion
     # symmetry; but I don't know if they do)

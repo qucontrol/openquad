@@ -39,7 +39,7 @@ All files are formatted in the same way:
   NumPy array of dimension `(3, N)` containing the spherical polar angles and the weights in
   the order `(polar angle, azimuthal angle, weights)` in the first axis and with `N` the
   number of quadrature points.
-- SO3 equal-weight quadratures:
+- SO3 Chebyshev-type quadratures:
   NumPy array of dimension `(3, N)` containing the Euler angles in the z-y-z convention
   the order `(alpha, beta, gamma)` in the first axis and with `N` the
   number of quadrature points.

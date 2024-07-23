@@ -4,7 +4,7 @@ The files in this directory have been converted from the `orientation` package
 from Charles F. F. Karney [1], revision db92f00 from October 12, 2015,
 published with the MIT license.
 
-These coverings have non-uniform weights and no polynomial accuracy.
+These coverings have non-uniform weights and no degree of exactness.
 
 Non-optimal coverings have been excluded from this directory.
 
