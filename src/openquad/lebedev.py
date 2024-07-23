@@ -1,14 +1,14 @@
 import numpy as np
 
-from .base import AtomicS2Quadrature, QuadratureWithPolyAcc
+from .base import AtomicS2Quadrature, QuadratureWithDegree
 from .data.lebedev.table import LEBEDEV_LAIKOV_QUADRATURES
 
 
-class LebedevLaikov(AtomicS2Quadrature, QuadratureWithPolyAcc):
+class LebedevLaikov(AtomicS2Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(LEBEDEV_LAIKOV_QUADRATURES, dtype=int)
     _available_sizes = _TABLE[:, 1]
-    _available_p_accs = _TABLE[:, 0]
+    _available_degrees = _TABLE[:, 0]
 
     def _points_weights(self):
         """Lebedev-Laikov quadrature.

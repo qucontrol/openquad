@@ -1,6 +1,6 @@
 import numpy as np
 
-from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithPolyAcc)
+from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree)
 from .data.graef.table import (
     S2_GAUSS_METHODS,
     S2_SPHERICAL_DESIGNS,
@@ -9,11 +9,11 @@ from .data.graef.table import (
 )
 
 
-class GraefS2Gauss(AtomicS2Quadrature, QuadratureWithPolyAcc):
+class GraefS2Gauss(AtomicS2Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(S2_GAUSS_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
-    _available_p_accs = _TABLE[:, 0]
+    _available_degrees = _TABLE[:, 0]
 
     def _points_weights(self):
         """FFT optimized Gauss-type S2 quadrature schemes from Manuel Gräf.
@@ -34,11 +34,11 @@ class GraefS2Gauss(AtomicS2Quadrature, QuadratureWithPolyAcc):
         return points, weights
 
 
-class GraefS2Design(AtomicS2Quadrature, QuadratureWithPolyAcc):
+class GraefS2Design(AtomicS2Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1]
-    _available_p_accs = _TABLE[:, 0]
+    _available_degrees = _TABLE[:, 0]
 
     def _points_weights(self):
         """FFT optimized S2 spherical designs from Manuel Gräf.
@@ -59,11 +59,11 @@ class GraefS2Design(AtomicS2Quadrature, QuadratureWithPolyAcc):
         return points, weights
 
 
-class GraefSO3Gauss(AtomicSO3Quadrature, QuadratureWithPolyAcc):
+class GraefSO3Gauss(AtomicSO3Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(SO3_GAUSS_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
-    _available_p_accs = _TABLE[:, 0]
+    _available_degrees = _TABLE[:, 0]
 
     def _points_weights(self):
         """FFT optimized Gauss-type SO3 quadrature schemes from Manuel Gräf.
@@ -84,11 +84,11 @@ class GraefSO3Gauss(AtomicSO3Quadrature, QuadratureWithPolyAcc):
         return points, weights
 
 
-class GraefSO3EqualWeight(AtomicSO3Quadrature, QuadratureWithPolyAcc):
+class GraefSO3EqualWeight(AtomicSO3Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(SO3_EQUAL_WEIGHT_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
-    _available_p_accs = _TABLE[:, 0]
+    _available_degrees = _TABLE[:, 0]
 
     def _points_weights(self):
         """FFT optimized equal-weight SO3 quadrature schemes from Manuel Gräf.

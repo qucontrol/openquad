@@ -1,10 +1,10 @@
 import numpy as np
 
-from .base import QuadratureWithoutPolyAcc, AtomicSO3Quadrature
+from .base import QuadratureWithoutDegree, AtomicSO3Quadrature
 from .data.karney.table import SO3_COVERINGS
 
 
-class KarneySO3(AtomicSO3Quadrature, QuadratureWithoutPolyAcc):
+class KarneySO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
 
     _TABLE = np.array(SO3_COVERINGS, dtype='object')
     _available_sizes = _TABLE[:, 0].astype(int)

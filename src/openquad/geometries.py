@@ -25,7 +25,7 @@ from .monte_carlo import MonteCarloR1, MonteCarloS2, MonteCarloSO3
 
 
 # TODO: move to submodule?
-class TopologicalQuadrature(ABC):
+class GeometryQuadrature(ABC):
 
     _available_methods = {
         'none': NoQuadrature,
@@ -110,7 +110,7 @@ class TopologicalQuadrature(ABC):
         self._ndims = []
         self._dims = []
         self._sizes = []
-        self._p_accs = []
+        self._degrees = []
 
         # Resolve and check selected quadrature methods:
         method_objects = []
@@ -173,7 +173,7 @@ class TopologicalQuadrature(ABC):
             self._methods.append(method)
             self._ndims.append(method.dim)
             self._sizes.append(method.size)
-            self._p_accs.append(method.p_acc)
+            self._degrees.append(method.degree)
 
     def _check_and_fill_options(self, options, dims):
         """Check the integrations options and fill remaining fields."""
@@ -378,7 +378,7 @@ class TopologicalQuadrature(ABC):
         pass
 
 
-class SO3(TopologicalQuadrature):
+class SO3(GeometryQuadrature):
 
     dim = 3
 
@@ -423,7 +423,7 @@ class SO3(TopologicalQuadrature):
             grid.save(filename, 'Euler angles')
 
 
-class S2(TopologicalQuadrature):
+class S2(GeometryQuadrature):
 
     dim = 2
 
@@ -466,7 +466,7 @@ class S2(TopologicalQuadrature):
             grid.save(filename, 'angles')
 
 
-class Rn(TopologicalQuadrature):
+class Rn(GeometryQuadrature):
 
     dim = None #TODO: can this be more elegant?
     # Maybe, make dim an instance attribute for consistency

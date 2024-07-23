@@ -46,29 +46,29 @@ class AtomicQuadrature(ABC):
                 raise ValueError(msg)
 
     @property
-    def p_acc(self):
-        """Polynomial accuracy of the quadrature method.
-        If the method does not have a polynomial accuracy, this should be
+    def degree(self):
+        """Degree of exactness of the quadrature method.
+        If the method does not have a degree, this should be
         `None`. Otherwise this should be an integer.
         """
         try:
-            return self._p_acc
+            return self._degree
         except AttributeError:
-            msg = f"{type(self)} missing attribute `p_acc`"
+            msg = f"{type(self)} missing attribute `degree`"
             raise NotImplementedError(msg)
 
-    @p_acc.setter
-    def p_acc(self, value):
-        self._check_poly_acc_allowed(value)
-        self._p_acc = value
+    @degree.setter
+    def degree(self, value):
+        self._check_degree_allowed(value)
+        self._degree = value
 
-    def _check_poly_acc_allowed(self, value):
+    def _check_degree_acc_allowed(self, value):
         if value is not None and value < 0:
-            raise ValueError("`p_acc` must not be negative")
-        if hasattr(self, "_available_p_accs"):
-            if value not in self._available_p_accs:
-                msg = (f"`p_acc` {value} not available. Possible values are:"
-                       f"{self._available_p_accs}")
+            raise ValueError("`degree` must not be negative")
+        if hasattr(self, "_available_degrees"):
+            if value not in self._available_degrees:
+                msg = (f"`degree` {value} not available. Possible values are:"
+                       f"{self._available_degrees}")
                 raise ValueError(msg)
 
     def __init__(self, *pw_args, jacobian=None, **pw_kwargs):
@@ -99,8 +99,8 @@ class AtomicQuadrature(ABC):
         raise NotImplementedError(msg)
 
     def _load_points_weights(self, folder, type, suffix=''):
-        if self.p_acc is not None:
-            filename = f"{type}_size{self.size}_acc{self.p_acc}{suffix}.npy"
+        if self.degree is not None:
+            filename = f"{type}_size{self.size}_acc{self.degree}{suffix}.npy"
         else:
             filename = f"{type}_size{self.size}{suffix}.npy"
         data = np.load(QUAD_DATA_DIR / folder / filename,
@@ -149,77 +149,77 @@ class AtomicQuadrature(ABC):
         return np.sum(f_samples * self.weights, axis=-1)
 
 
-class QuadratureWithoutPolyAcc(AtomicQuadrature):
+class QuadratureWithoutDegree(AtomicQuadrature):
 
     def __init__(self, size, *args, **kwargs):
         self.size = size
-        self.p_acc = None
+        self.degree = None
         super().__init__(*args, **kwargs)
 
 
-class QuadratureWithFixedPolyAcc(AtomicQuadrature):
+class QuadratureWithFixedDegree(AtomicQuadrature):
 
     def __init__(self, size, *args, **kwargs):
         self.size = size
-        self.p_acc = self._get_p_acc()
+        self.degree = self._get_degree()
         super().__init__(*args, **kwargs)
 
     @abstractmethod
-    def _get_p_acc(self):
-        """Return the polynomial accuracy of this quadrature method.
+    def _get_degree(self):
+        """Return the degree of exactness of this quadrature method.
 
-        For quadrature methods where the polynomial accuracy does not depend on
+        For quadrature methods where the degree of exactness does not depend on
         the size of the quadrature grid, this method needs to be defined and
         return a single integer.
 
         """
-        msg = f"{self.__class__} missing method _get_p_acc"
+        msg = f"{self.__class__} missing method _get_degree"
         raise NotImplementedError(msg)
 
 
-class QuadratureWithPolyAcc(AtomicQuadrature):
+class QuadratureWithDegree(AtomicQuadrature):
 
-    def __init__(self, *args, size=None, p_acc=None, **kwargs):
-        if size is not None and p_acc is None:
+    def __init__(self, *args, size=None, degree=None, **kwargs):
+        if size is not None and degree is None:
             self.size = size
-            self.p_acc = self._get_p_acc(size)
-        elif p_acc is not None and size is None:
-            self.p_acc = p_acc
-            self.size = self._get_size(p_acc)
+            self.degree = self._get_degree(size)
+        elif degree is not None and size is None:
+            self.degree = degree
+            self.size = self._get_size(degree)
         else:
-            raise TypeError("Either `size` or `p_acc` must be given, not both")
+            raise TypeError("Either `size` or `degree` must be given, not both")
         super().__init__(*args, **kwargs)
 
-    def _get_size(self, p_acc):
-        """Return the size corresponding to the given polynomial accuracy.
+    def _get_size(self, degree):
+        """Return the size corresponding to the given degree of exactness.
 
         If the quadrature class has the attribute `_available_sizes`, search
         the size in this list. If a functional relation between the size and
-        the polynomial accuracy of the method exits, this method needs to be
+        the degree of the method exits, this method needs to be
         overwritten in the corresponding child class.
 
         """
         if hasattr(self, '_available_sizes'):
-            selection = np.nonzero(self._available_p_accs == p_acc)
+            selection = np.nonzero(self._available_degrees == degree)
             return self._available_sizes[selection].min()
         else:
             msg = "f{self.__class__} missing method _get_size"
             raise NotImplementedError(msg)
 
-    def _get_p_acc(self, size):
-        """Return the polynomial accuracy corresponding to the given size.
+    def _get_degree(self, size):
+        """Return the degree of exactness corresponding to the given size.
 
-        If the quadrature class has the attribute `_available_p_accs`, search
+        If the quadrature class has the attribute `_available_degrees`, search
         the accuracy in this list. If a functional relation between the size
-        and the polynomial accuracy of the method exits, this method needs to
+        and the degree of the method exits, this method needs to
         be overwritten in the corresponding child class.
 
         """
-        if hasattr(self, '_available_p_accs'):
+        if hasattr(self, '_available_degrees'):
             selection = np.nonzero(self._available_sizes == size)
-            return self._available_p_accs[selection].max()
+            return self._available_degrees[selection].max()
         else:
-            msg = f"{self.__class__} missing method _get_p_acc"
+            msg = f"{self.__class__} missing method _get_degree"
             raise NotImplementedError(msg)
 
 
@@ -287,7 +287,7 @@ class NoQuadrature(ABC):
         """
         points = np.asarray(points)
         self.size = points.size
-        self.p_acc = None
+        self.degree = None
         self.points = points
         self.weights = np.ones(points.size)
 

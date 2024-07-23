@@ -1,17 +1,17 @@
 import numpy as np
 from scipy import special
 
-from .base import AtomicR1Quadrature, QuadratureWithPolyAcc
+from .base import AtomicR1Quadrature, QuadratureWithDegree
 
 
-class GaussLegendre(AtomicR1Quadrature, QuadratureWithPolyAcc):
+class GaussLegendre(AtomicR1Quadrature, QuadratureWithDegree):
 
     _has_endpoints = False
 
-    def _get_size(self, p_acc):
-        return int(np.ceil((p_acc + 1) / 2))
+    def _get_size(self, degree):
+        return int(np.ceil((degree + 1) / 2))
 
-    def _get_p_acc(self, size):
+    def _get_degree(self, size):
         return 2 * size - 1
 
     def _points_weights(self, a, b):
@@ -45,17 +45,17 @@ class GaussLegendre(AtomicR1Quadrature, QuadratureWithPolyAcc):
         return (b-a)/2 * x + (a+b)/2, w * (b-a)/2
 
 
-class GaussLobattoLegendre(AtomicR1Quadrature, QuadratureWithPolyAcc):
+class GaussLobattoLegendre(AtomicR1Quadrature, QuadratureWithDegree):
 
     _has_endpoints = True
 
-    def _get_size(self, p_acc):
-        size = int(np.ceil((p_acc + 3) / 2))
+    def _get_size(self, degree):
+        size = int(np.ceil((degree + 3) / 2))
         if self._periodic:
             size = size - 1
         return size
 
-    def _get_p_acc(self, size):
+    def _get_degree(self, size):
         if self._periodic:
             size = size + 1
         return 2 * size - 3

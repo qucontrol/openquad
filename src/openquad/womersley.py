@@ -1,14 +1,14 @@
 import numpy as np
 
-from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithPolyAcc)
+from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree)
 from .data.womersley.table import S2_SPHERICAL_DESIGNS
 
 
-class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithPolyAcc):
+class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1]
-    _available_p_accs = _TABLE[:, 0]
+    _available_degrees = _TABLE[:, 0]
 
     def __init__(self, *args, symmetric=None, **kwargs):
         super().__init__(*args, symmetric=symmetric, **kwargs)
@@ -56,12 +56,12 @@ class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithPolyAcc):
         return points, weights
 
 
-class WomersleySO3EqualWeight(AtomicSO3Quadrature, QuadratureWithPolyAcc):
+class WomersleySO3EqualWeight(AtomicSO3Quadrature, QuadratureWithDegree):
 
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1] // 2
-    _available_p_accs = (_TABLE[:, 0] - 1) // 2
-    # p_acc_SO3 corresponds to p_acc_S3 = 2*p_acc_SO3 + 1
+    _available_degrees = (_TABLE[:, 0] - 1) // 2
+    # degree_SO3 corresponds to degree_S3 = 2*degree_SO3 + 1
 
     def _points_weights(self):
         """SO3 quadrature method based on S3 spherical designs from Womersley.

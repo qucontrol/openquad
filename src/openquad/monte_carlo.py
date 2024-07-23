@@ -1,10 +1,10 @@
 import numpy as np
 import quaternionic
 
-from .base import QuadratureWithoutPolyAcc, AtomicR1Quadrature, AtomicS2Quadrature, AtomicSO3Quadrature
+from .base import QuadratureWithoutDegree, AtomicR1Quadrature, AtomicS2Quadrature, AtomicSO3Quadrature
 
 
-class MonteCarloR1(AtomicR1Quadrature, QuadratureWithoutPolyAcc):
+class MonteCarloR1(AtomicR1Quadrature, QuadratureWithoutDegree):
 
     _has_endpoints = False
 
@@ -33,7 +33,7 @@ class MonteCarloR1(AtomicR1Quadrature, QuadratureWithoutPolyAcc):
         return x, w
 
 
-class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutPolyAcc):
+class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutDegree):
 
     def __init__(self, size, seed=None):
         super().__init__(size=size, seed=seed)
@@ -86,7 +86,7 @@ class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutPolyAcc):
         return np.array([theta, phi])
 
 
-class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutPolyAcc):
+class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
 
     def __init__(self, size, seed=None, method='quaternions'):
         super().__init__(size=size, seed=seed, method=method)
