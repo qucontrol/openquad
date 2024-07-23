@@ -52,3 +52,20 @@ docs = [
   "sphinx_design",
 ]
 # TODO: freeze doc dependencies versions
+
+
+[tool.hatch.envs.docs]
+description = "Build documentation (Python 3.12)"
+template = "docs"
+features = [
+  "dev",
+  "docs",
+]
+python = "3.12"
+
+[tool.hatch.envs.docs.scripts]
+build = [
+    #"sphinx-build -v -W --keep-going -b html doc doc/_build/html -d doc/_build/doctree",
+    "sphinx-build -b html doc doc/_build/html -d doc/_build/doctree",
+]
+serve = "python -m http.server -d doc/_build/html"
