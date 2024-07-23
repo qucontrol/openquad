@@ -1,0 +1,30 @@
+import numpy as np
+
+from .base import QuadratureWithoutPolyAcc, AtomicSO3Quadrature
+from .data.karney.table import SO3_COVERINGS
+
+
+class KarneySO3(AtomicSO3Quadrature, QuadratureWithoutPolyAcc):
+
+    _TABLE = np.array(SO3_COVERINGS, dtype='object')
+    _available_sizes = _TABLE[:, 0].astype(int)
+
+    def _points_weights(self):
+        """Nearly optimal SO3 coverings from Charles F.F. Karney.
+
+        These coverings are based on 4d polytopes.
+
+        Coverings taken from:
+        https://github.com/cffk/orientation
+
+        Returns
+        -------
+        points : ndarray
+            Sample points.
+        weights : ndarray
+            Quadrature weights.
+
+        """
+        points, weights = self._load_points_weights('karney', 'so3_covering')
+        weights = weights * (8*np.pi**2)
+        return points, weights
