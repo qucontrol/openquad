@@ -1,7 +1,8 @@
-OpenQuad
-========
-
+<h1 align="center">
+<img src="docs/_static/images/logo.svg" width="300">
+<br>
 Your open database for multi-dimensional numerical integration
+</h1><br>
 
 TODO: add badges
 

@@ -31,7 +31,7 @@ OpenQuad documentation
     :gutter: 2 3 4 4
 
     .. grid-item-card::
-        :img-top: ../source/_static/index-images/getting_started.svg
+        :img-top: ../source/_static/images/getting_started.svg
         :text-align: center
 
         Getting started
@@ -50,7 +50,7 @@ OpenQuad documentation
             Get started
 
     .. grid-item-card::
-        :img-top: ../source/_static/index-images/user_guide.svg
+        :img-top: ../source/_static/images/user_guide.svg
         :text-align: center
 
         User guide
@@ -69,7 +69,7 @@ OpenQuad documentation
             To the user guide
 
     .. grid-item-card::
-        :img-top: ../source/_static/index-images/api.svg
+        :img-top: ../source/_static/images/api.svg
         :text-align: center
 
         API reference
@@ -90,7 +90,7 @@ OpenQuad documentation
             To the API reference
 
     .. grid-item-card::
-        :img-top: ../source/_static/index-images/contributor.svg
+        :img-top: ../source/_static/images/contributor.svg
         :text-align: center
 
         Contributor guide
