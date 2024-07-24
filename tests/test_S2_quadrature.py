@@ -69,9 +69,9 @@ def test_initialization():
     # Now given that the type of the specifier is correct and that a valid
     # combination of methods has been choosen, check the remaining options
     # for the method.
-    with pytest.raises(TypeError, match='not both'): # either p_acc or size
+    with pytest.raises(TypeError, match='not both'): # either degree or size
         quad = S2([
-            ('lebedev-laikov', {'size':6, 'p_acc':3}),
+            ('lebedev-laikov', {'size':6, 'degree':3}),
         ])
     with pytest.raises(TypeError, match='unexpected'): # unexpected argument
         quad = S2([
@@ -81,15 +81,15 @@ def test_initialization():
     # Valid initializations
     with does_not_raise():
         quad = S2([
-            ('gLl', {'size':5}),
-            ('trapz', {'size':5}),
+            ('gAuSs-lObAtTo-lEgEnDrE', {'size':5}),
+            ('trapezoid', {'size':5}),
         ])
         quad = S2([
-            ('simps', {'size':5}),
+            ('simpson', {'size':5}),
             ('Trapezoid', {'size':5}),
         ])
         quad = S2([('lebedev-laikov', {'size':6})])
-        quad = S2([('lebedev-laikov', {'p_acc':3})])
+        quad = S2([('lebedev-laikov', {'degree':3})])
         quad = S2([
             ('none', {'points':[0]}),
             ('trapezoid', {'size':5}),
@@ -105,12 +105,12 @@ def test_fields_product_method():
     n2 = 6
     x1 = np.linspace(-1, 1, n1)
     quad = S2([
-        ('trapz', {'size':n1}),
+        ('trapezoid', {'size':n1}),
         ('gauss-legendre', {'size':n2}),
     ])
     # test submethod properties:
-    assert quad._methods[0].p_acc == 1
-    assert quad._methods[1].p_acc == 2*n2-1
+    assert quad._methods[0].degree == 1
+    assert quad._methods[1].degree == 2*n2-1
     assert quad._methods[0].size == n1
     assert quad._methods[1].size == n2
     assert len(quad._method_weights) == 2
@@ -123,7 +123,7 @@ def test_fields_product_method():
     assert quad._ndims == [1, 1]
     assert quad._dims == [(0,), (1,)] # do I really need this?
     assert quad._sizes == [n1, n2]
-    assert quad._p_accs == [1, 2*n2-1]
+    assert quad._degrees == [1, 2*n2-1]
     assert quad._points.size == (2*n1*n2)
     assert quad._points.shape == (2, n1*n2)
 
@@ -146,13 +146,13 @@ def test_fields_non_product_method():
     """Test the various fields of the quadrature class.
     Here we test a non-product method.
     """
-    p_acc = 3 # p_acc of scheme
+    degree = 3 # degree of scheme
     n = 6 # number of sample points
     quad = S2([
-        ('lebedev-laikov', {'p_acc':p_acc}),
+        ('lebedev-laikov', {'degree':degree}),
     ])
     # test submethod properties:
-    assert quad._methods[0].p_acc == p_acc
+    assert quad._methods[0].degree == degree
     assert quad._methods[0].size == n
     assert len(quad._method_weights) == 1
     assert len(quad._method_points) == 1
@@ -162,7 +162,7 @@ def test_fields_non_product_method():
     assert quad._ndims == [2]
     assert quad._dims == [(0, 1)] # do I really need this?
     assert quad._sizes == [n]
-    assert quad._p_accs == [p_acc]
+    assert quad._degrees == [degree]
     assert quad._points.shape == (2, n)
 
     # test public properties:
@@ -200,7 +200,7 @@ def test_integration():
     assert quad.integrate(f_samples) == pytest.approx(1)
 
     quad = S2([
-        ('lebedev-laikov', {'p_acc':9}),
+        ('lebedev-laikov', {'degree':9}),
     ])
     assert quad.integrate(f) == pytest.approx(1)
     f_samples = f(*quad.angles)

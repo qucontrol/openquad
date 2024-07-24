@@ -46,7 +46,7 @@ def test_initialization(method, has_poly_acc):
     # duplicate arguments
     if has_poly_acc:
         with pytest.raises(TypeError, match="not both"):
-            quad = method(p_acc=5, size=5, a=0, b=1)
+            quad = method(degree=5, size=5, a=0, b=1)
 
     # unexpected arguments
     with pytest.raises(TypeError, match="unexpected keyword"):
@@ -72,7 +72,7 @@ def test_initialization(method, has_poly_acc):
         quad = method(size=5, a=0, b=1, jacobian=None)
     if has_poly_acc:
         with does_not_raise():
-            quad = method(p_acc=5, a=0, b=1)
+            quad = method(degree=5, a=0, b=1)
 
 
 @pytest.mark.parametrize(
@@ -95,7 +95,7 @@ def test_fields_and_integration(method, size, has_normalized_weights, poly_acc):
     # test fields
     assert quad.dim == 1
     assert quad.size == size
-    assert quad.p_acc == poly_acc(size)
+    assert quad.degree == poly_acc(size)
 
     # test weights
     if has_normalized_weights:
@@ -127,13 +127,13 @@ def test_poly_acc(method, tol):
 
     Here, Legendre polynomials integrated from -1 to 1.
     """
-    max_p_acc = 100
-    for p_acc in np.arange(max_p_acc+1):
-        quad = method(p_acc=p_acc, a=-1, b=1)
+    max_degree  = 100
+    for degree in np.arange(max_degree +1):
+        quad = method(degree=degree, a=-1, b=1)
         # First, test that the weights are normalized:
         assert np.sum(quad.weights) == pytest.approx(2)
         # Then, test the integration of all polynomials:
-        orders = np.arange(p_acc+1)[:, np.newaxis]
+        orders = np.arange(degree+1)[:, np.newaxis]
         Pls = special.eval_legendre(orders, quad.points)
         results = quad.integrate(Pls, axis=-1)
         truevals = np.concatenate(([2], np.zeros(Pls.shape[0]-1)))

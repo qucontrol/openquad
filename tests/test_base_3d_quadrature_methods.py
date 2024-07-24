@@ -8,8 +8,8 @@ import pytest
 from contextlib import nullcontext as does_not_raise
 
 from openquad.monte_carlo import MonteCarloSO3
-from openquad.graef import GraefSO3EqualWeight, GraefSO3Gauss
-from openquad.womersley import WomersleySO3EqualWeight
+from openquad.graef import GraefSO3Chebyshev, GraefSO3Gauss
+from openquad.womersley import WomersleySO3Chebyshev
 from openquad.fibonacci import ZCW3
 from openquad.karney import KarneySO3
 
@@ -48,25 +48,25 @@ def test_test_function():
 
 
 @pytest.mark.parametrize(
-    "method, size, p_acc",
+    "method, size, degree",
     [
         (MonteCarloSO3, 10, None),
         (GraefSO3Gauss, 4, 1),
-        (GraefSO3EqualWeight, 4, 1),
-        #(WomersleySO3EqualWeight, 4, 1),
+        (GraefSO3Chebyshev, 4, 1),
+        #(WomersleySO3Chebyshev, 4, 1),
         #(ZCW3, 4, None),
         (KarneySO3, 24, None),
     ]
 )
-def test_initialization(method, size, p_acc):
+def test_initialization(method, size, degree):
     # missing required arguments
     with pytest.raises(TypeError):
         quad = method()
 
     # duplicate arguments
-    if p_acc is not None:
+    if degree is not None:
         with pytest.raises(TypeError, match="not both"):
-            quad = method(p_acc=3, size=6)
+            quad = method(degree=3, size=6)
 
     # unexpected arguments
     with pytest.raises(TypeError, match="unexpected keyword"):
@@ -75,37 +75,37 @@ def test_initialization(method, size, p_acc):
     # invalid number of points or accuracy
     with pytest.raises(ValueError, match="larger than zero"):
         quad = method(size=0)
-    if p_acc is not None:
+    if degree is not None:
         with pytest.raises(ValueError, match="not available"):
             quad = method(size=1)
         with pytest.raises(ValueError, match="not available"):
-            quad = method(p_acc=0)
+            quad = method(degree=0)
 
     # valid initializations
     with does_not_raise():
         quad = method(size=size)
-    if p_acc is not None:
+    if degree is not None:
         with does_not_raise():
-            quad = method(p_acc=p_acc)
+            quad = method(degree=degree)
 
 
 @pytest.mark.parametrize(
-    "method, size, p_acc, tol, kwargs",
+    "method, size, degree, tol, kwargs",
     [
         (MonteCarloSO3, 1000, None, 1e-2, {'seed':0, 'method':'quaternions'}),
         (MonteCarloSO3, 5000, None, 1e-2, {'seed':0, 'method':'angles'}),
         (KarneySO3, 24, None, 1e-8, {}),
         (GraefSO3Gauss, 23, 3, 1e-8, {}),
-        (GraefSO3EqualWeight, 24, 3, 1e-8, {}),
-        #(WomersleySO3EqualWeight, 10, 10, 1e-8, {}),
+        (GraefSO3Chebyshev, 24, 3, 1e-8, {}),
+        #(WomersleySO3Chebyshev, 10, 10, 1e-8, {}),
     ]
 )
-def test_fields_and_integration(method, size, p_acc, tol, kwargs):
+def test_fields_and_integration(method, size, degree, tol, kwargs):
     quad = method(size=size, **kwargs)
     
     # test fields
     assert quad.dim == 3
-    assert quad.p_acc == p_acc
+    assert quad.degree == degree
     assert quad.size == size
 
     # test weights
@@ -129,22 +129,22 @@ def test_fields_and_integration(method, size, p_acc, tol, kwargs):
     [
         #TODO: set accuracy
         (GraefSO3Gauss, 1e-9, {}),
-        (GraefSO3EqualWeight, 1e-6, {}),
-        #(WomersleySO3EqualWeight, 1e-12, {}),
+        (GraefSO3Chebyshev, 1e-6, {}),
+        #(WomersleySO3Chebyshev, 1e-12, {}),
     ]
 )
 def test_poly_acc(method, tol, kwargs):
-    max_p_acc = 30
-    wigner = spherical.Wigner(max_p_acc)
-    available_p_accs = method._available_p_accs
-    tested_p_accs = available_p_accs[available_p_accs <= max_p_acc]
-    for p_acc in tested_p_accs:
-        quad = method(p_acc=p_acc, **kwargs)
+    max_degree = 30
+    wigner = spherical.Wigner(max_degree)
+    available_degrees = method._available_degrees
+    tested_p_accs = available_degrees[available_degrees <= max_degree]
+    for degree in tested_p_accs:
+        quad = method(degree=degree, **kwargs)
         # First, test that the weights are normalized:
         assert np.sum(quad.weights) == pytest.approx(8*np.pi**2)
         # Then, test the integration of all polynomials:
         q = quaternionic.array.from_euler_angles(*quad.angles)
-        Dlmm = wigner.D(q)[:, :wigner.Dindex(p_acc, p_acc, p_acc)+1]
+        Dlmm = wigner.D(q)[:, :wigner.Dindex(degree, degree, degree)+1]
         results = quad.integrate(Dlmm, axis=0)
         truevals = np.concatenate(
             ([8*np.pi**2], np.zeros(Dlmm.shape[-1]-1))

@@ -6,7 +6,6 @@ from contextlib import nullcontext as does_not_raise
 
 from openquad import Rn
 
-
 def f(theta, phi):
     """Test integrand. Integral should yield 1."""
     assert np.shape(theta) == np.shape(phi)
@@ -58,36 +57,36 @@ def test_initialization():
     # Now given that the type of the specifier is correct and that a valid
     # combination of methods has been choosen, check the remaining options
     # for the method.
-    with pytest.raises(TypeError, match='not both'): # either p_acc or size
+    with pytest.raises(TypeError, match='not both'): # either degree or size
         quad = Rn([
-            ('gauss-legendre', {'size':5, 'p_acc':4, 'a':0, 'b':1}),
+            ('gauss-legendre', {'size':5, 'degree':4, 'a':0, 'b':1}),
         ])
-    with pytest.raises(TypeError, match='`size` or `p_acc` must be given'):
+    with pytest.raises(TypeError, match='`size` or `degree` must be given'):
         quad = Rn([
             ('gauss-legendre', {'a':0, 'b':np.pi}),
         ])
     with pytest.raises(ValueError, match='`a`'): # no interval specified
         quad = Rn([
-            ('trapz', {'size':33, 'b':np.pi, 'jacobian':np.sin}),
+            ('trapezoid', {'size':33, 'b':np.pi, 'jacobian':np.sin}),
         ])
     with pytest.raises(TypeError, match='unexpected'): # unexpected argument
         quad = Rn([
-            ('trapz', {'size':5, 'a':0, 'b':1, 'unexpected':True}),
+            ('trapezoid', {'size':5, 'a':0, 'b':1, 'unexpected':True}),
         ])
 
     # Test optional parameters
     with pytest.raises(TypeError, match='jacobian'):
         quad = Rn([
-            ('trapz', {'size':33, 'a':0, 'b':np.pi, 'jacobian':np.ones(11)}),
+            ('trapezoid', {'size':33, 'a':0, 'b':np.pi, 'jacobian':np.ones(11)}),
         ])
 
     # Valid initializations
     with does_not_raise():
-        quad = Rn([('trapz', {'size':33, 'a':0, 'b':np.pi})])
-        quad = Rn([('tRaPz', {'size':33, 'a':0, 'b':np.pi})])
-        quad = Rn([('trapz', {'size':33, 'a':0, 'b':np.pi})])
+        quad = Rn([('trapezoid', {'size':33, 'a':0, 'b':np.pi})])
+        quad = Rn([('tRaPeZoId', {'size':33, 'a':0, 'b':np.pi})])
+        quad = Rn([('trapezoid', {'size':33, 'a':0, 'b':np.pi})])
         quad = Rn([
-            ('trapz', {'size':33, 'a':0, 'b':np.pi, 'jacobian':np.sin}),
+            ('trapezoid', {'size':33, 'a':0, 'b':np.pi, 'jacobian':np.sin}),
         ])
 
 
@@ -104,12 +103,12 @@ def test_fields():
     n2 = 6
     x1 = np.linspace(0, 1, n1)
     quad = Rn([
-        ('trapz', {'size':n1, 'a':0, 'b':1}),
+        ('trapezoid', {'size':n1, 'a':0, 'b':1}),
         ('gauss-legendre', {'size':n2, 'a':0, 'b':2}),
     ])
     # test submethod properties:
-    assert quad._methods[0].p_acc == 1
-    assert quad._methods[1].p_acc == 2*n2-1
+    assert quad._methods[0].degree == 1
+    assert quad._methods[1].degree == 2*n2-1
     assert quad._methods[0].size == n1
     assert quad._methods[1].size == n2
     assert len(quad._method_weights) == 2
@@ -122,10 +121,10 @@ def test_fields():
     assert quad._ndims == [1, 1]
     assert quad._dims == [(0,), (1,)] # do I really need this?
     assert quad._sizes == [n1, n2]
-    assert quad._p_accs == [1, 2*n2-1]
+    assert quad._degrees == [1, 2*n2-1]
     assert quad._points.size == (2*n1*n2)
     assert quad._points.shape == (2, n1*n2)
-
+    
     # test public properties:
     assert quad.dim == 2
     assert quad.size == n1*n2

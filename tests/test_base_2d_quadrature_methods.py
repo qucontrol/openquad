@@ -33,7 +33,7 @@ def test_testfuction():
 
 
 @pytest.mark.parametrize(
-    "method, size, p_acc, has_poly_acc",
+    "method, size, degree, has_poly_acc",
     [
         (LebedevLaikov, 6, 3, True),
         (GraefS2Gauss, 6, 3, True),
@@ -43,7 +43,7 @@ def test_testfuction():
         (ZCW2, 21, None, False),
     ]
 )
-def test_initialization(method, size, p_acc, has_poly_acc):
+def test_initialization(method, size, degree, has_poly_acc):
     # missing required arguments
     with pytest.raises(TypeError):
         quad = method()
@@ -51,7 +51,7 @@ def test_initialization(method, size, p_acc, has_poly_acc):
     # duplicate arguments
     if has_poly_acc:
         with pytest.raises(TypeError, match="not both"):
-            quad = method(p_acc=p_acc, size=size)
+            quad = method(degree=degree, size=size)
 
     # unexpected arguments
     with pytest.raises(TypeError, match="unexpected keyword"):
@@ -64,18 +64,18 @@ def test_initialization(method, size, p_acc, has_poly_acc):
         with pytest.raises(ValueError, match="not available"):
             quad = method(size=1)
         with pytest.raises(ValueError, match="not available"):
-            quad = method(p_acc=0)
+            quad = method(degree=0)
 
     # valid initializations
     with does_not_raise():
         quad = method(size=size)
     if has_poly_acc:
         with does_not_raise():
-            quad = method(p_acc=p_acc)
+            quad = method(degree=degree)
 
 
 @pytest.mark.parametrize(
-    "method, size, p_acc, kwargs",
+    "method, size, degree, kwargs",
     [
         (LebedevLaikov, 14, 5, {}),
         (GraefS2Gauss, 12, 5, {}),
@@ -86,13 +86,13 @@ def test_initialization(method, size, p_acc, has_poly_acc):
         (ZCW2, 21, None, {}),
     ]
 )
-def test_fields_and_integration(method, size, p_acc, kwargs):
+def test_fields_and_integration(method, size, degree, kwargs):
     tol = 1e-6
     quad = method(size=size, **kwargs)
     
     # test fields
     assert quad.dim == 2
-    assert quad.p_acc == p_acc
+    assert quad.degree == degree
     assert quad.size == size
 
     # test weights
@@ -122,17 +122,17 @@ def test_fields_and_integration(method, size, p_acc, kwargs):
     ]
 )
 def test_poly_acc(method, tol, kwargs):
-    max_p_acc = 50
-    wigner = spherical.Wigner(max_p_acc)
-    available_p_accs = method._available_p_accs
-    tested_p_accs = available_p_accs[available_p_accs <= max_p_acc]
-    for p_acc in tested_p_accs:
-        quad = method(p_acc=p_acc, **kwargs)
+    max_degree = 50
+    wigner = spherical.Wigner(max_degree)
+    available_degree = method._available_degrees
+    tested_degree = available_degree[available_degree <= max_degree]
+    for degree in tested_degree:
+        quad = method(degree=degree, **kwargs)
         # First, test that the weights are normalized:
         assert np.sum(quad.weights) == pytest.approx(4*np.pi)
         # Then, test the integration of all polynomials:
         q = quaternionic.array.from_spherical_coordinates(*quad.angles)
-        Ylm = wigner.sYlm(0, q)[:, :wigner.Yindex(p_acc, p_acc)+1]
+        Ylm = wigner.sYlm(0, q)[:, :wigner.Yindex(degree, degree)+1]
         results = quad.integrate(Ylm, axis=0)
         truevals = np.concatenate(
             ([np.sqrt(4*np.pi)], np.zeros(Ylm.shape[-1]-1))
