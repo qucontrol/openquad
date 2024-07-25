@@ -47,8 +47,11 @@ For details on the classes and methods contained in |openquad|, see the :ref:`AP
    :caption: Extras
    :maxdepth: 1
 
-   references
+..  references
+..
+
    cite
-   Release notes <https://github.com/qcontrol/orientation_average/releases>
-   Contact <https://github.com/qcontrol/orientation_average/issues>
-   License <https://github.com/qcontrol/orientation_average/license>
+   Release notes <https://github.com/qucontrol/openquad/releases>
+   Contact <https://github.com/qucontrol/openquad/discussions>
+   License <https://github.com/qucontrol/openquad/license>
+   about
