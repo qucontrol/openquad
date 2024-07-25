@@ -4,7 +4,7 @@
 Your open database for multi-dimensional numerical integration
 </h1><br>
 
-TODO: add badges
+<!-- TODO: add badges -->
 
 ---
 > [!NOTE]
@@ -15,7 +15,7 @@ TODO: add badges
 <!-- start including on doc landing page -->
 OpenQuad offers a collection of highly efficient quadrature methods for
 evaluating integrals on different domains and geometries, including 1d
-intervals, spherical surfaces, Euler angles and more.  These methods serve as
+intervals, spherical surfaces, Euler angles and more. These methods serve as
 building blocks for constructing custom quadratures, making this package
 versatile for integrals over arbitrary multi-dimensional domains and tensor
 spaces.
@@ -32,7 +32,7 @@ spaces.
 Found a bug? [Open an issue](https://github.com/qucontrol/openquad/issues).  
 Missing a feature? [Start a discussion](https://github.com/qucontrol/openquad/discussions).
 
-We appreciate and welcome your [contribution]()!
+We appreciate and welcome your [contribution][contribute]!
 
 ---
 > [!NOTE]
@@ -54,13 +54,13 @@ python -m pip install orientation_average
 Usage
 -----
 
-Create a quadrature method for an integral over the three [Euler angles](),
-using [Lebedev-Laikov quadrature]() of degree `5` for the first two angles
+Create a quadrature method for an integral over the three [Euler angles][angles],
+using [Lebedev-Laikov quadrature][lebedev] of degree `5` for the first two angles
 combined with the composite trapezoid rule with `6` sample points for the third
 angle, and export sample points and weights in a text file:
 
 ```python
-from orientation_average import SO3
+from openquad import SO3
 
 quad = SO3([
     ('LebedevLaikov', degree=5),
@@ -70,10 +70,10 @@ quad.savetxt('points_and_weights.dat')
 ```
 
 Integrate a Python function `func(theta, phi)` over the surface of the
-two-dimensional unit sphere using a [spherical design]() of degree `7`:
+two-dimensional unit sphere using a [spherical design][designs] of degree `7`:
 
 ```python
-from orientation_average import S2
+from openquad import S2
 
 quad = S2([
     ('S2-Design-Graef', degree=7),
@@ -85,7 +85,7 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 `[-10, 5]`:
 
 ```python
-from orientation_average import Rn
+from openquad import Rn
 
 quad = Rn([
     ('GaussLegendre', degree=71, a=-10, b=5),
@@ -95,10 +95,18 @@ quad.weights
 ```
 
 For further information, including advanced examples, background information,
-and details on the implementation, see the [documentation]().
+and details on the implementation, see the [documentation][docs].
 
 
 Citation
 --------
 
-If this package was useful for your research, please [cite it]().
+If this package was useful for your research, please [cite it][cite].
+
+
+[angles]: https://en.wikipedia.org/wiki/Euler_angles
+[designs]: https://en.wikipedia.org/wiki/Spherical_design
+[lebedev]: https://en.wikipedia.org/wiki/Lebedev_quadrature
+[docs]: https://qucontrol.github.io/openquad
+[cite]: https://qucontrol.github.io/openquad/using/cite.html
+[contribute]: https://qucontrol/github.io/openquad/contributing/index.html
