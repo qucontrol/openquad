@@ -29,7 +29,7 @@ spaces.
 - Export quadrature points and weights for use in other software.
 
 Found a bug? [Open an issue](https://github.com/qucontrol/openquad/issues).  
-Missing a feature? [Open a pull request](https://github.com/qucontrol/openquad/pulls).
+Missing a feature? [Start a discussion](https://github.com/qucontrol/openquad/discussions).
 
 We appreciate and welcome your [contribution]()!
 
