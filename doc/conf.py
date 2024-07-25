@@ -24,7 +24,7 @@ release = openquad.__version__
 extensions = [
     #'sphinx.ext.autodoc',
     #'sphinx.ext.autosummary',
-    'sphinx.ext.napoleon',
+    #'sphinx.ext.napoleon',
     'autoapi.extension',
     'sphinx.ext.intersphinx',
     'sphinx.ext.doctest',
@@ -103,22 +103,41 @@ copybutton_prompt_text = ">>> "
 
 # sphinx-autoapi settings
 autoapi_type = "python"
+autoapi_template_dir = "_templates/autoapi"
 autoapi_dirs = ["../src/openquad"]
+#autoapi_ignore = [""]
+autoapi_root = "api/autoapi"
+autoapi_add_toctree_entry = False
 autoapi_keep_files = False
-autoapi_root = "api"
 autoapi_member_order = "groupwise"
-autoapi_ignore = ["../src/openquad/data"]
+autoapi_own_page_level = "module"
+autoapi_python_class_content = "class"
+autoapi_options = [
+    "undoc-members",
+    "show-module-summary",
+    "imported-members",
+]
 
-# Napoleon settings
-napoleon_google_docstring = False
-napoleon_numpy_docstring = True
-napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-napoleon_use_admonition_for_examples = False
-napoleon_use_admonition_for_notes = False
-napoleon_use_admonition_for_references = False
-napoleon_use_ivar = False
-#napoleon_use_param = True
-#napoleon_use_rtype = True
+def skip_submodules(app, what, name, obj, skip, options):
+    if what == "module":
+        skip = True
+    elif what == "package" and name != "openquad":
+        skip = True
+    return skip
+
+## Napoleon settings
+#napoleon_google_docstring = False
+#napoleon_numpy_docstring = True
+#napoleon_include_private_with_doc = False
+#napoleon_include_special_with_doc = True
+#napoleon_use_admonition_for_examples = False
+#napoleon_use_admonition_for_notes = False
+#napoleon_use_admonition_for_references = False
+#napoleon_use_ivar = False
+##napoleon_use_param = True
+##napoleon_use_rtype = True
 
 
+# -----------------------------------------------------------------------------
+def setup(sphinx):
+    sphinx.connect("autoapi-skip-member", skip_submodules)
