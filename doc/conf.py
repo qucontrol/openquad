@@ -41,7 +41,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # Will be included in the beginning of every RST file
 rst_prolog = """
-.. |openquad| replace:: ``OpenQuad``
+.. |openquad| replace:: OpenQuad
 """
 
 # -- Options for HTML output -------------------------------------------------
