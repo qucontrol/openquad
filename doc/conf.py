@@ -10,7 +10,7 @@ import openquad
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'OpenQuad'
-copyright = '2024, Alexander Blech et al.'
+copyright = '2024, OpenQuad developers'
 author = 'Alexander Blech et al.'
 release = openquad.__version__
 
