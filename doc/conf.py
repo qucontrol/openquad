@@ -87,6 +87,7 @@ html_theme_options = {
     "show_nav_level": 2, #TODO
     "navigation_depth": 4, #TODO
     #"collapse_navigation": True,
+    "announcement": "https://github.com/qucontrol/openquad/main/doc/_templates/annoucement_banner.html"
 }
 
 
