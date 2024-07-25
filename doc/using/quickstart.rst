@@ -81,7 +81,7 @@ Install the latest stable release with
 Tell me more!
 ^^^^^^^^^^^^^
 
-Have a look at the :ref:`user guide <basics>` and the :ref:`example gallery <examples>`.
+Have a look at the :ref:`user guide <using>` and the :ref:`example gallery <examples>`.
 
 Don't know, which method to choose? Read our `paper`_.
 
