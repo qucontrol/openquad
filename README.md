@@ -12,13 +12,14 @@ TODO: add badges
 > Watch this repo to stay tuned for any updates!
 ---
 
-
+<!-- start including on doc landing page -->
 OpenQuad offers a collection of highly efficient quadrature methods for
 evaluating integrals on different domains and geometries, including 1d
 intervals, spherical surfaces, Euler angles and more.  These methods serve as
 building blocks for constructing custom quadratures, making this package
 versatile for integrals over arbitrary multi-dimensional domains and tensor
 spaces.
+<!-- end including on doc landing page -->
 
 **Key features**:
 

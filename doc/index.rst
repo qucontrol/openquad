@@ -25,8 +25,8 @@ OpenQuad documentation
 .. only:: html
 
    .. include:: ../README.md
-      :start-line: 10
-      :end-line: 17
+      :start-after: <!-- start including on doc landing page -->
+      :end-before: <!-- end including on doc landing page -->
 
 .. grid:: 1 1 2 2
     :gutter: 2 3 4 4
