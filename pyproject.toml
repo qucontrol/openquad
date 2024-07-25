@@ -44,7 +44,7 @@ examples = [
   "matplotlib",
   "spherical",
 ]
-docs = [
+doc = [
   "sphinx",
   "pydata_sphinx_theme",
   "sphinx-autoapi",
@@ -54,16 +54,16 @@ docs = [
 # TODO: freeze doc dependencies versions
 
 
-[tool.hatch.envs.docs]
+[tool.hatch.envs.doc]
 description = "Build documentation (Python 3.12)"
-template = "docs"
+template = "doc"
 features = [
   "dev",
-  "docs",
+  "doc",
 ]
 python = "3.12"
 
-[tool.hatch.envs.docs.scripts]
+[tool.hatch.envs.doc.scripts]
 build = [
     #"sphinx-build -v -W --keep-going -b html doc doc/_build/html -d doc/_build/doctree",
     "sphinx-build -b html doc doc/_build/html -d doc/_build/doctree",
