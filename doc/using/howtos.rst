@@ -28,7 +28,7 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 
 Quadrature points and weights are stored in :attr:`points` and :ref:`weights`,
 
-.. testcode::
+.. doctest::
 
     >>> quad.points.shape
     (1, ...)
@@ -59,7 +59,7 @@ For example, initiate a :math:`\mathrm{S}^2` `spherical design`_ of degree `7`:
 
 To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :method:`integrate` method:
     
-.. testcode::
+.. doctest::
 
     >>> quad.integrate(func)
     ...
