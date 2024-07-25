@@ -7,7 +7,7 @@ Here, we provide a selection of Learning-oriented guides and targeted towards ne
 
 For detailed description of the classes and methods contained in |openquad|, see the :ref:`API reference <api>`.
 
-.. todo::
+.. warning::
 
    Under construction! For now, see our :ref:`How-tos <howtos>`.
 

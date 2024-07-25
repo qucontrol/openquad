@@ -24,40 +24,48 @@ multi-dimensional quadratures.
 How do I use it?
 ^^^^^^^^^^^^^^^^
 
+.. todo: testsetup into conftest.py
+.. testsetup::
+
+   >>> import numpy as np
+
 Want to integrate a Python function over the interval :math:`[-10,5]` with
 Gauss-Legendre quadrature?
 
-.. code-block:: python
+.. testcode::
 
-    from orientation_average import Rn
-    
-    quad = Rn([
-        ('GaussLegendre', degree=71, a=-10, b=5),
-    ])
-    quad.integrate(your_awesome_function)
+    >>> from orientation_average import Rn
+    >>> quad = Rn([
+    >>>     ('GaussLegendre', degree=71, a=-10, b=5),
+    >>> ])
+    >>> quad.integrate(your_awesome_function)
 
 Have a Python function that you need to evaluate on a uniform grid over the surface of the unit sphere?
 
-.. code-block:: python
+.. testcode::
+   :hide:
 
-    from orientation_average import S2
-    
-    quad = S2([
-        ('S2-Covering', size=142),
-    ])
-    grid = your_awesome_function(*quad.angles)
+   >>> def your_awesome_function(theta, phi):
+   >>>  return np.sin(theta) * np.cos(phi)
+
+.. testcode::
+
+    >>> from orientation_average import S2
+    >>> quad = S2([
+    >>>     ('S2-Covering', size=142),
+    >>> ])
+    >>> grid = your_awesome_function(*quad.angles)
 
 Need quadrature points and weights for performing an efficient orientation average in your molecular dynamics simulation?
 
-.. code-block:: python
+.. testcode::
 
-    from orientation_average import SO3
-    
-    quad = SO3([
-        ('LebedevLaikov', degree=35),
-        ('Trapezoid', size=36),
-    ])
-    quad.savetxt('points_and_weights.dat')
+    >>> from orientation_average import SO3
+    >>> quad = SO3([
+    >>>     ('LebedevLaikov', degree=35),
+    >>>     ('Trapezoid', size=36),
+    >>> ])
+    >>> quad.savetxt('points_and_weights.dat')
 
 
 How do I get it?

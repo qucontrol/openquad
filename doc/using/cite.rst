@@ -7,9 +7,9 @@ If |openquad| was helpful for your research, and you would like to acknowledge
 the project in your academic publication, we suggest citing the following
 paper:
 
-   * A. Blech, Raoul M.M. Ebeling, Marec Heger, Christiane P. Koch, Daniel M.
-     Reich, *Numerical evaluation of orientation averages and its application
-     to molecular physics*, `todo <https://arxiv.org/abs/2407.17434>`_ (2024)
+* A. Blech, Raoul M.M. Ebeling, Marec Heger, Christiane P. Koch, Daniel M.
+  Reich, *Numerical evaluation of orientation averages and its application to
+  molecular physics*, `arXiv:2407.17434 <https://arxiv.org/abs/2407.17434>`_ (2024)
 
 In BibTeX format:
 

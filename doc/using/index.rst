@@ -37,7 +37,8 @@ For details on the classes and methods contained in |openquad|, see the :ref:`AP
    :caption: Detailed background information
    :maxdepth: 1
 
-   method_characterization
+   background
+.. method_characterization
    method_categories
    method_selection
 

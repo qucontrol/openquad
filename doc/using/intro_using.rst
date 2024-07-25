@@ -64,7 +64,7 @@ Sample points and weights
 """""""""""""""""""""""""
 
 Sample points and weights are stored as NumPy arrays in :attr:`points` and
-:attr:`weights`, respecitvely. 
+:attr:`weights`, respecitvely.
 
 .. doctest::
 
@@ -89,7 +89,6 @@ Other coordinates might be available, e.g. :attr:`angles` or :attr:`xyz`.
 
     >>> np.array_equal(quad.angles, quad.points)
     True
-    
     >>> quad.xyz.shape
     (3, 28)
 
@@ -133,9 +132,6 @@ values available on the quadrature grid.
     >>> f_values = f(*quad.angles)
     >>> f_values.shape
     (2, 28)
-
-.. ** <-- this comment is only because of my bad syntac highliting in vim
-.. todo: remove this comment
 
 You can perform the integration on the array data at a later point with
 
