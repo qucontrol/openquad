@@ -21,10 +21,10 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 
 .. testcode::
 
-    >>> from orientation_average import Rn
+    >>> from openquad import Rn
     >>> quad = Rn([
-    >>>     ('GaussLegendre', degree=71, a=-10, b=5),
-    >>> ])
+    ...     ('GaussLegendre', degree=71, a=-10, b=5),
+    ... ])
 
 Quadrature points and weights are stored in :attr:`points` and :ref:`weights`,
 
@@ -45,17 +45,17 @@ spherical polar coordinates.
 .. testcode::
 
     >>> def func(theta, phi):
-    >>>     """Spherical harmonic Y_{1, 0}."""
-    >>>     return np.sin(theta) * np.cos(phi)
+    ...     """Spherical harmonic Y_{1, 0}."""
+    ...     return np.sin(theta) * np.cos(phi)
 
 For example, initiate a :math:`\mathrm{S}^2` `spherical design`_ of degree `7`:
 
 .. testcode::
 
-    >>> from orientation_average import S2
+    >>> from openquad import S2
     >>> quad = S2([
-    >>>     ('S2-Design-Graef', degree=7),
-    >>> ])
+    ...     ('S2-Design-Graef', degree=7),
+    ... ])
 
 To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :method:`integrate` method:
     
@@ -75,11 +75,11 @@ angle.
 
 .. testcode::
 
-    >>> from orientation_average import SO3
+    >>> from openquad import SO3
     >>> quad = SO3([
-    >>>     ('LebedevLaikov', degree=5),
-    >>>     ('Trapezoid', size=6),
-    >>> ])
+    ...     ('LebedevLaikov', degree=5),
+    ...     ('Trapezoid', size=6),
+    ... ])
     
 Save sample points and weights to a text with the :method:`savetxt` method.
 

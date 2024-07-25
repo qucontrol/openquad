@@ -4,7 +4,7 @@ About
 -----
 
 |openquad| is being developed by members of the `Quantum dynamics & control
-group`_ at Freie Universität Berlin under the lead of `Alexander Blech_`,
+group`_ at Freie Universität Berlin under the lead of `Alexander Blech`_,
 `Daniel Reich`_ and `Christiane Koch`_.
 
 Contributions from both the scientific and open source community are very welcome!

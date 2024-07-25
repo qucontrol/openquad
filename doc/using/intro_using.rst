@@ -18,7 +18,7 @@ As a first step, import the class for the desired geometry. For example,
 .. testcode::
 
    >>> import numpy as np
-   >>> from orientation_average import S2
+   >>> from openquad import S2
 
 We will also use NumPy later on.
 
@@ -37,18 +37,9 @@ or combine lower-dimensional methods with compatible geometries
 .. testcode::
 
    >>> quad = S2([
-   >>>     ('GaussLegendre', degree=7)]),
-   >>>     ('Trapezoid', size=7),
-   >>> ], polar_sampling='cos')
-
-.. black style:
-.. quad = S2(
-       [
-           ('GaussLegendre', degree=7)]),
-           ('Trapezoid', size=7),
-       ],
-       polar_sampling='cos'
-   )
+   ...     ('GaussLegendre', degree=7)]),
+   ...     ('Trapezoid', size=8),
+   ... ], polar_sampling='cos')
 
 Some classes take additional parameters, like :attr:`polar_sampling`.
 
@@ -115,7 +106,7 @@ Suppose the integrand :math:`f(x)` is a Python function, e.g.
 .. testcode::
 
     >>> def f(theta, phi):
-    >>>     return np.cos(theta) * np.sin(phi)
+    ...     return np.cos(theta) * np.sin(phi)
 
 To perform the integral of this function directly
 

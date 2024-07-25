@@ -29,7 +29,7 @@ This package is available on `PyPi`_. You can install it with
 
 .. code-block:: bash
 
-    python -m pip install orientation_average
+    python -m pip install openquad
 
 This will install the most recent stable release into your active
 `environment`_ along with any dependencies.
