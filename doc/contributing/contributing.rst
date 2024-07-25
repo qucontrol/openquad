@@ -86,11 +86,13 @@ See for example `this guide`_ for details on how to create one.
 .. _virtual environment: https://docs.python.org/3/glossary.html#term-virtual-environment
 .. _this guide: https://docs.python.org/3/library/venv.html#module-venv
 
-To install the package along with additional development dependencies, run
+To install the latest commit of the package along with additional development
+dependencies, clone the package and run the following command in the package
+root directory:
 
 .. code-block:: bash
 
-   python -m pip install -e openquad[dev,extras]
+   python -m pip install -e .[dev,extras]
 
 If you don’t have `pip`_ installed, the `Python installation guide`_,
 respectively the `Python Packaging User Guide`_ can guide you through the
