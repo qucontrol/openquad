@@ -7,6 +7,11 @@ Your open database for multi-dimensional numerical integration
 TODO: add badges
 
 ---
+> [!NOTE]
+> The first stable release is under active development.  
+> Watch this repo to stay tuned for any updates!
+---
+
 
 OpenQuad offers a collection of highly efficient quadrature methods for
 evaluating integrals on different domains and geometries, including 1d
@@ -57,7 +62,7 @@ angle, and export sample points and weights in a text file:
 from orientation_average import SO3
 
 quad = SO3([
-    ('Lebedev-Laikov', degree=5),
+    ('LebedevLaikov', degree=5),
     ('Trapezoid', size=6),
 ])
 quad.savetxt('points_and_weights.dat')
@@ -82,7 +87,7 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 from orientation_average import Rn
 
 quad = Rn([
-    ('Gauss-Legendre', degree=71, a=-10, b=5),
+    ('GaussLegendre', degree=71, a=-10, b=5),
 ])
 quad.points
 quad.weights
