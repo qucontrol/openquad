@@ -15,12 +15,12 @@ these base classes define the basic properties for quadratures on different
 geometries. On the other hand, they distinguish between quadratures with and
 without non-zero degree of exactness.
 
-Quadrature points and weights are located in the `data` directory, organized in
+Quadrature points and weights are located in the ``data`` directory, organized in
 separate folders for the different sources. Each subfolder contains a file
-`__init__.py` giving information about the source and listing available degrees
-and sizes. Actual coordinates and weights are stored in NumPy's `.npy` `binary
-file format`_ in the following convention, ``n`` denoting the number of sample
-points:
+``__init__.py`` giving information about the source and listing available
+degrees and sizes. Actual coordinates and weights are stored in NumPy's
+``.npy`` `binary file format`_ in the following convention, ``n`` denoting the
+number of sample points:
 
 - S2 spherical designs:
   Array of shape ``(2, n)``, along the first axis containing the spherical polar
@@ -40,4 +40,4 @@ points:
 All angles are given in the interval from :math:`[0,\pi]` or :math:`[0,2\pi]`,
 respectively.
 
-.. _binary file format: https://numpy.org/devdocs/reference/generated/numpy.lib.format.html
+.. _binary file format: https://numpy.org/doc/stable/reference/generated/numpy.lib.format.html
