@@ -19,7 +19,8 @@ OpenQuad documentation
 :ref:`Installation <install>` |
 `Source repository <https://github.com/qucontrol/openquad>`_ |
 `Issue tracker <https://github.com/qucontrol/openquad/issues>`_ |
-:ref:`Cite me <cite>`
+`Discussion forum <https://github.com/qucontrol/openquad/discussions>`_ |
+:ref:`Cite OpenQuad <cite>`
 
 .. only:: html
 
