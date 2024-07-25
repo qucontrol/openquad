@@ -25,6 +25,8 @@ This guide will get you started.
    structure
 
 
-If you don't know, where to start, reach out to us in `our discussion forum`_.
+.. tip::
+
+   If you don't know, where to start, reach out to us in `our discussion forum`_.
 
 .. _our discussion forum: https://github.com/qucontrol/openquad/discussions
