@@ -1,5 +1,5 @@
-<h1 align="center">
-<img src="docs/_static/images/logo.svg" width="300">
+<h1 avlign="center">
+<img src="https://raw.githubusercontent.com/qucontrol/openquad/main/doc/_static/images/logo.svg" width="300">
 <br>
 Your open database for multi-dimensional numerical integration
 </h1><br>
@@ -34,11 +34,6 @@ Missing a feature? [Start a discussion](https://github.com/qucontrol/openquad/di
 
 We appreciate and welcome your [contribution][contribute]!
 
----
-> [!NOTE]
-> The first release will be published soon!  
-> Give this repo a star to stay tuned!
----
 
 Installation
 ------------
