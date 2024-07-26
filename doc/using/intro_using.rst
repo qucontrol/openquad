@@ -61,9 +61,9 @@ Sample points and weights are stored as NumPy arrays in :attr:`~openquad.S2.poin
 .. doctest::
 
     >>> quad.weights.shape
-    (28,)
+    (32,)
     >>> quad.points.shape
-    (2, 28)
+    (2, 32)
 
 Weights are normalized such that their sum equals the volume of the integration
 domain. For :math:`\mathrm{S}^2`, this is the area :math:`4\pi`:
@@ -71,7 +71,7 @@ domain. For :math:`\mathrm{S}^2`, this is the area :math:`4\pi`:
 .. doctest::
 
    >>> np.sum(quad.weights) / (4 * np.pi)
-   1.0
+   np.float(1.0)
 
 Sample points in :attr:`~openquad.S2.points` are given in the default
 coordinates of the selected integration domain. For :class:`~openquad.S2`,
@@ -83,7 +83,7 @@ these are spherical polar angles.  Other coordinates might be available, e.g.
     >>> np.array_equal(quad.angles, quad.points)
     True
     >>> quad.xyz.shape
-    (3, 28)
+    (3, 32)
 
 
 Exporting quadratures
@@ -108,14 +108,15 @@ Suppose the integrand :math:`f(x)` is a Python function, e.g.
 .. testcode::
 
     >>> def f(theta, phi):
-    ...     return np.cos(theta) * np.sin(phi)
+    ...     """Spherical harmonic |Y_{2, 1}|^2."""
+    ...     return ((np.sin(2*theta) * np.cos(phi))*np.sqrt(15/(16*np.pi)))**2
 
 To perform the integral of this function directly
 
 .. doctest::
 
     >>> quad.integrate(f)
-    1.0
+    np.float64(1.0000000000000002)
 
 In some situations it may be desirable or necessary to access the function
 values available on the quadrature grid.
@@ -124,14 +125,14 @@ values available on the quadrature grid.
 
     >>> f_values = f(*quad.angles)
     >>> f_values.shape
-    (2, 28)
+    (32,)
 
 You can perform the integration on the array data at a later point with
 
 .. doctest::
 
     >>> quad.integrate(f_values)
-    1.0
+    np.float64(1.0000000000000002)
 
 
 Other parameters

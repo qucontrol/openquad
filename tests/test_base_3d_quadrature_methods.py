@@ -133,12 +133,12 @@ def test_fields_and_integration(method, size, degree, tol, kwargs):
         #(WomersleySO3Chebyshev, 1e-12, {}),
     ]
 )
-def test_poly_acc(method, tol, kwargs):
+def test_degree(method, tol, kwargs):
     max_degree = 30
     wigner = spherical.Wigner(max_degree)
     available_degrees = method._available_degrees
-    tested_p_accs = available_degrees[available_degrees <= max_degree]
-    for degree in tested_p_accs:
+    tested_degrees = available_degrees[available_degrees <= max_degree]
+    for degree in tested_degrees:
         quad = method(degree=degree, **kwargs)
         # First, test that the weights are normalized:
         assert np.sum(quad.weights) == pytest.approx(8*np.pi**2)

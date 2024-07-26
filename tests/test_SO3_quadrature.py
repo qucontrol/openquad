@@ -77,7 +77,7 @@ def test_initialization():
     with pytest.raises(ValueError, match="Invalid"):
         quad = SO3([('trapezoid', {})])
     with pytest.raises(ValueError, match="Invalid"):
-        quad = SO3([('lebedev-laikov', {})])
+        quad = SO3([('s2-gauss-lebedevlaikov', {})])
     with pytest.raises(ValueError, match="Invalid"):
         quad = SO3([
             ('simpson', {}),
@@ -87,12 +87,12 @@ def test_initialization():
          ])
     with pytest.raises(ValueError, match="Invalid"):
         quad = SO3([
-            ('lebedev-laikov', {}), 
-            ('gauss-legendre', {}), 
-            ('gauss-legendre', {})
+            ('s2-gauss-lebedevlaikov', {}), 
+            ('gausslegendre', {}), 
+            ('gausslegendre', {})
         ])
     with pytest.raises(ValueError, match="Invalid"):
-        quad = SO3([('lebedev-laikov', {}), ('lebedev-laikov', {})])
+        quad = SO3([('s2-gauss-lebedevlaikov', {}), ('s2-gauss-lebedevlaikov', {})])
 
     # Invalid method options
     # Now given that the type of the specifier is correct and that a valid
@@ -100,27 +100,27 @@ def test_initialization():
     # for the method.
     with pytest.raises(TypeError, match='not both'): # either degree or size
         quad = SO3([
-            ('lebedev-laikov', {'size':6, 'degree':3}),
-            ('gauss-legendre', {'size':6, 'degree':11}),
+            ('s2-gauss-lebedevlaikov', {'size':6, 'degree':3}),
+            ('gausslegendre', {'size':6, 'degree':11}),
         ])
     with pytest.raises(TypeError, match='unexpected'): # unexpected argument
         quad = SO3([
-            ('so3-monte-carlo', {'size':6, 'unexpected':True}),
+            ('so3-montecarlo', {'size':6, 'unexpected':True}),
         ])
 
     # Valid initializations
     with does_not_raise():
         quad = SO3([
-            ('LebeDev-laikov', {'degree':5}),
+            ('s2-gauss-LebeDevlaikov', {'degree':5}),
             ('Trapezoid', {'size':5}),
         ])
         quad = SO3([
             ('simpson', {'size':5}),
             ('Trapezoid', {'size':5}),
-            ('Gauss-legendre', {'size':5}),
+            ('Gausslegendre', {'size':5}),
         ])
-        quad = SO3([('so3-monte-carlo', {'size':5})])
-        quad = SO3([('so3-monte-carlo', {'size':5, 'seed':1})])
+        quad = SO3([('so3-montecarlo', {'size':5})])
+        quad = SO3([('so3-montecarlo', {'size':5, 'seed':1})])
 
 
 def test_fields():
@@ -129,7 +129,7 @@ def test_fields():
     n12 = 6
     n3 = 4
     quad = SO3([
-        ('lebedev-laikov', {'degree': degree_12}),
+        ('s2-gauss-lebedevlaikov', {'degree': degree_12}),
         ('trapezoid', {'size': n3}),
     ])
     # test submethod properties:
@@ -171,7 +171,7 @@ def test_integration():
     """
     quad = SO3([
         ('trapezoid', dict(size=7)),
-        ('gauss-legendre', dict(size=9)),
+        ('gausslegendre', dict(size=9)),
         ('trapezoid', dict(size=5)),
     ], polar_sampling='cos')
     assert quad.integrate(f_abg) == pytest.approx(1)
@@ -180,7 +180,7 @@ def test_integration():
 
     quad = SO3([
         ('trapezoid', dict(size=7)),
-        ('gauss-legendre', dict(size=9)),
+        ('gausslegendre', dict(size=9)),
         ('trapezoid', dict(size=5)),
     ], polar_sampling='angle')
     assert quad.integrate(f_abg) == pytest.approx(1)
@@ -189,14 +189,14 @@ def test_integration():
 
     quad = SO3([
         ('trapezoid', {'size':11}),
-        ('lebedev-laikov', {'degree':5}),
+        ('s2-gauss-lebedevlaikov', {'degree':5}),
     ])
     assert quad.integrate(f_abg) == pytest.approx(1)
     f_samples = f_abg(*quad.angles)
     assert quad.integrate(f_samples) == pytest.approx(1)
 
     quad = SO3([
-        ('lebedev-laikov', {'degree':5}),
+        ('s2-gauss-lebedevlaikov', {'degree':5}),
         ('trapezoid', {'size':11}),
     ])
     assert quad.integrate(f_abg) == pytest.approx(1)
@@ -204,7 +204,7 @@ def test_integration():
     assert quad.integrate(f_samples) == pytest.approx(1)
 
     quad = SO3([
-        ('so3-monte-carlo', {'size':500, 'seed':0}),
+        ('so3-montecarlo', {'size':500, 'seed':0}),
     ])
     assert quad.integrate(f_abg) == pytest.approx(1)
     f_samples = f_abg(*quad.angles)
@@ -214,7 +214,7 @@ def test_integration():
 def test_integration_quaternions():
     """Test integration with quaternions."""
     quad = SO3([
-        ('lebedev-laikov', {'degree':5}),
+        ('s2-gauss-lebedevlaikov', {'degree':5}),
         ('trapezoid', {'size':11}),
     ])
     f_samples = f_q(quad.quaternions)
@@ -224,7 +224,7 @@ def test_integration_quaternions():
 def test_integration_axis():
     """Test axis keyword in integration method."""
     quad = SO3([
-        ('lebedev-laikov', {'degree':7}),
+        ('s2-gauss-lebedevlaikov', {'degree':7}),
         ('trapezoid', {'size':11}),
     ])
     f_vector = f_vector_q(quad.quaternions)

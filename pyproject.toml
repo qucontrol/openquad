@@ -39,6 +39,7 @@ path = "src/openquad/__init__.py"
 [project.optional-dependencies]
 dev = [
   "pytest",
+  "spherical",
 ]
 examples = [
   "matplotlib",

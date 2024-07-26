@@ -32,9 +32,9 @@ def test_test_function():
 #    "methods_spec, expectation, match",
 #    [
 #        ([('trapezoid',)], pytest.raises(ValueError), "invalid choice of methods"),
-#        ([('gauss-legendre',)], pytest.raises(ValueError), "invalid choice of methods"),
-#        ([('gauss-legendre',), ('gauss-legendre',), ('gauss-legendre',)], pytest.raises(ValueError), "invalid choice of methods"),
-#        ([('gauss-legendre',), ('lebedev',)], pytest.raises(ValueError), "invalid choice of methods"),
+#        ([('gausslegendre',)], pytest.raises(ValueError), "invalid choice of methods"),
+#        ([('gausslegendre',), ('gausslegendre',), ('gausslegendre',)], pytest.raises(ValueError), "invalid choice of methods"),
+#        ([('gausslegendre',), ('s2-gauss-lebedevlaikov',)], pytest.raises(ValueError), "invalid choice of methods"),
 #        ([('ZCW',)], pytest.raises(ValueError), "invalid choice of methods"),
 #        
 def test_initialization():
@@ -54,16 +54,16 @@ def test_initialization():
     with pytest.raises(ValueError, match="Invalid"):
         quad = S2([('trapezoid', {})])
     with pytest.raises(ValueError, match="Invalid"):
-        quad = S2([('gauss-legendre', {})])
+        quad = S2([('gausslegendre', {})])
     with pytest.raises(ValueError, match="Invalid"):
         quad = S2([
-            ('gauss-legendre', {}),
-            ('gauss-legendre', {}),
-            ('gauss-legendre', {})])
+            ('gausslegendre', {}),
+            ('gausslegendre', {}),
+            ('gausslegendre', {})])
     with pytest.raises(ValueError, match="Invalid"):
-        quad = S2([('gauss-legendre', {}), ('lebedev-laikov', {})])
+        quad = S2([('gausslegendre', {}), ('lebedevlaikov', {})])
     with pytest.raises(ValueError, match="Invalid"):
-        quad = S2([('monte-carlo-so3', {})])
+        quad = S2([('so3-montecarlo', {})])
 
     # Invalid method options
     # Now given that the type of the specifier is correct and that a valid
@@ -71,25 +71,25 @@ def test_initialization():
     # for the method.
     with pytest.raises(TypeError, match='not both'): # either degree or size
         quad = S2([
-            ('lebedev-laikov', {'size':6, 'degree':3}),
+            ('s2-gauss-lebedevlaikov', {'size':6, 'degree':3}),
         ])
     with pytest.raises(TypeError, match='unexpected'): # unexpected argument
         quad = S2([
-            ('lebedev-laikov', {'size':6, 'unexpected':True}),
+            ('s2-gauss-lebedevlaikov', {'size':6, 'unexpected':True}),
         ])
 
     # Valid initializations
     with does_not_raise():
         quad = S2([
-            ('gAuSs-lObAtTo-lEgEnDrE', {'size':5}),
+            ('gAuSslObAtTolEgEnDrE', {'size':5}),
             ('trapezoid', {'size':5}),
         ])
         quad = S2([
             ('simpson', {'size':5}),
             ('Trapezoid', {'size':5}),
         ])
-        quad = S2([('lebedev-laikov', {'size':6})])
-        quad = S2([('lebedev-laikov', {'degree':3})])
+        quad = S2([('s2-gauss-lebedevlaikov', {'size':6})])
+        quad = S2([('s2-gauss-lebedevlaikov', {'degree':3})])
         quad = S2([
             ('none', {'points':[0]}),
             ('trapezoid', {'size':5}),
@@ -106,7 +106,7 @@ def test_fields_product_method():
     x1 = np.linspace(-1, 1, n1)
     quad = S2([
         ('trapezoid', {'size':n1}),
-        ('gauss-legendre', {'size':n2}),
+        ('gausslegendre', {'size':n2}),
     ])
     # test submethod properties:
     assert quad._methods[0].degree == 1
@@ -149,7 +149,7 @@ def test_fields_non_product_method():
     degree = 3 # degree of scheme
     n = 6 # number of sample points
     quad = S2([
-        ('lebedev-laikov', {'degree':degree}),
+        ('s2-gauss-lebedevlaikov', {'degree':degree}),
     ])
     # test submethod properties:
     assert quad._methods[0].degree == degree
@@ -184,7 +184,7 @@ def test_fields_non_product_method():
 
 def test_integration():
     quad = S2([
-        ('gauss-legendre', dict(size=6)),
+        ('gausslegendre', dict(size=6)),
         ('trapezoid', dict(size=5)),
     ], polar_sampling='cos')
     assert quad.integrate(f) == pytest.approx(1)
@@ -192,7 +192,7 @@ def test_integration():
     assert quad.integrate(f_samples) == pytest.approx(1)
 
     quad = S2([
-        ('gauss-legendre', dict(size=6)),
+        ('gausslegendre', dict(size=6)),
         ('trapezoid', dict(size=5)),
     ], polar_sampling='angle')
     assert quad.integrate(f) == pytest.approx(1)
@@ -200,7 +200,7 @@ def test_integration():
     assert quad.integrate(f_samples) == pytest.approx(1)
 
     quad = S2([
-        ('lebedev-laikov', {'degree':9}),
+        ('s2-gauss-lebedevlaikov', {'degree':9}),
     ])
     assert quad.integrate(f) == pytest.approx(1)
     f_samples = f(*quad.angles)

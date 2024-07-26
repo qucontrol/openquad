@@ -28,6 +28,8 @@ How do I use it?
 .. testsetup::
 
    >>> import numpy as np
+   >>> def your_awesome_function(arg0, arg1, arg2=None):
+   ...     return arg0*arg1
 
 Want to integrate a Python function over the interval :math:`[-10,5]` with
 Gauss-Legendre quadrature?
@@ -53,7 +55,7 @@ surface of the unit sphere?
 
     >>> from openquad import S2
     >>> quad = S2([
-    ...     ('S2-Covering', dict(size=142)),
+    ...     ('S2-Covering-Fibonacci', dict(size=142)),
     ... ])
     >>> grid = your_awesome_function(*quad.angles)
 

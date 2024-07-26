@@ -23,7 +23,7 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 
     >>> from openquad import Rn
     >>> quad = Rn([
-    ...     ('GaussLegendre', dict(degree=71, a=-10, b=5)),
+    ...     ('GaussLegendre', dict(degree=21, a=-10, b=5)),
     ... ])
 
 Quadrature points and weights are stored in :attr:`~openquad.Rn.points` and :attr:`~openquad.Rn.weights`,
@@ -31,9 +31,9 @@ Quadrature points and weights are stored in :attr:`~openquad.Rn.points` and :att
 .. doctest::
 
     >>> quad.points.shape
-    (1, ...)
+    (1, 11)
     >>> quad.weights.shape
-    (..., )
+    (11,)
 
 
 How to integrate a python function
@@ -45,9 +45,9 @@ spherical polar coordinates.
 .. testcode::
 
     >>> def func(theta, phi):
-    ...     """Spherical harmonic Y_{1, 0}."""
-    ...     return np.sin(theta) * np.cos(phi)
-
+    ...     """Spherical harmonic |Y_{2, 1}|^2."""
+    ...     return ((np.sin(2*theta) * np.cos(phi))*np.sqrt(15/(16*np.pi)))**2
+ 
 For example, initiate a :math:`\mathrm{S}^2` `spherical design`_ of degree `7`:
 
 .. _spherical design: https://en.wikipedia.org/wiki/Spherical_design
@@ -64,7 +64,7 @@ To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :meth:`~o
 .. doctest::
 
     >>> quad.integrate(func)
-    ...
+    np.float64(0.9999999999975318)
 
 
 How to export quadrature points and weights

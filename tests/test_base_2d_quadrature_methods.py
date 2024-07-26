@@ -33,7 +33,7 @@ def test_testfuction():
 
 
 @pytest.mark.parametrize(
-    "method, size, degree, has_poly_acc",
+    "method, size, degree, has_degree",
     [
         (LebedevLaikov, 6, 3, True),
         (GraefS2Gauss, 6, 3, True),
@@ -43,13 +43,13 @@ def test_testfuction():
         (ZCW2, 21, None, False),
     ]
 )
-def test_initialization(method, size, degree, has_poly_acc):
+def test_initialization(method, size, degree, has_degree):
     # missing required arguments
     with pytest.raises(TypeError):
         quad = method()
 
     # duplicate arguments
-    if has_poly_acc:
+    if has_degree:
         with pytest.raises(TypeError, match="not both"):
             quad = method(degree=degree, size=size)
 
@@ -60,7 +60,7 @@ def test_initialization(method, size, degree, has_poly_acc):
     # invalid number of points or accuracy
     with pytest.raises(ValueError, match="larger than zero"):
         quad = method(size=0)
-    if has_poly_acc:
+    if has_degree:
         with pytest.raises(ValueError, match="not available"):
             quad = method(size=1)
         with pytest.raises(ValueError, match="not available"):
@@ -69,7 +69,7 @@ def test_initialization(method, size, degree, has_poly_acc):
     # valid initializations
     with does_not_raise():
         quad = method(size=size)
-    if has_poly_acc:
+    if has_degree:
         with does_not_raise():
             quad = method(degree=degree)
 

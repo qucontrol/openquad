@@ -51,7 +51,7 @@ class GeometryQuadrature(ABC):
         'romberg': Romberg,
         'gausslegendre': GaussLegendre,
         'gausslobattolegendre': GaussLobattoLegendre,
-        '1d-monte-carlo': MonteCarloR1,
+        '1d-montecarlo': MonteCarloR1,
         # two-angle methods:
         's2-gauss-lebedevlaikov': LebedevLaikov,
         's2-gauss-graef': GraefS2Gauss,

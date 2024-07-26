@@ -49,9 +49,9 @@ def test_initialization():
     with pytest.raises(ValueError, match='Invalid'):
         quad = Rn([('invalid', {})])
     with pytest.raises(ValueError, match='Invalid'):
-        quad = Rn([('lebedev-laikov', {})]) # example of 2d method
+        quad = Rn([('s2-gauss-lebedevlaikov', {})]) # example of 2d method
     with pytest.raises(ValueError, match='Invalid'):
-        quad = Rn([('monte-carlo-so3', {})]) # example of 3d method
+        quad = Rn([('so3-montecarlo', {})]) # example of 3d method
     
     # Invalid method options
     # Now given that the type of the specifier is correct and that a valid
@@ -59,11 +59,11 @@ def test_initialization():
     # for the method.
     with pytest.raises(TypeError, match='not both'): # either degree or size
         quad = Rn([
-            ('gauss-legendre', {'size':5, 'degree':4, 'a':0, 'b':1}),
+            ('gausslegendre', {'size':5, 'degree':4, 'a':0, 'b':1}),
         ])
     with pytest.raises(TypeError, match='`size` or `degree` must be given'):
         quad = Rn([
-            ('gauss-legendre', {'a':0, 'b':np.pi}),
+            ('gausslegendre', {'a':0, 'b':np.pi}),
         ])
     with pytest.raises(ValueError, match='`a`'): # no interval specified
         quad = Rn([
@@ -92,9 +92,9 @@ def test_initialization():
 
 def test_only_1d_methods_allowed():
     with pytest.raises(ValueError, match='Invalid'):
-        quad = Rn([('lebedev-laikov', {})]) # example of 2d method
+        quad = Rn([('s2-gauss-lebedevlaikov', {})]) # example of 2d method
     with pytest.raises(ValueError, match='Invalid'):
-        quad = Rn([('monte-carlo-so3', {})]) # example of 3d method
+        quad = Rn([('so3-montecarlo', {})]) # example of 3d method
 
 
 def test_fields():
@@ -104,7 +104,7 @@ def test_fields():
     x1 = np.linspace(0, 1, n1)
     quad = Rn([
         ('trapezoid', {'size':n1, 'a':0, 'b':1}),
-        ('gauss-legendre', {'size':n2, 'a':0, 'b':2}),
+        ('gausslegendre', {'size':n2, 'a':0, 'b':2}),
     ])
     # test submethod properties:
     assert quad._methods[0].degree == 1
@@ -140,7 +140,7 @@ def test_fields():
 
 def test_integration():
     quad = Rn([
-        ('gauss-legendre', {'size':11,  'a':0, 'b':np.pi, 'jacobian':np.sin}),
+        ('gausslegendre', {'size':11,  'a':0, 'b':np.pi, 'jacobian':np.sin}),
         ('simpson', {'size':13, 'a':0, 'b':2*np.pi}),
     ])
     # Complete integration
