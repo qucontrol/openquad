@@ -6,7 +6,8 @@ Quadrature methods
 Currently, the following quadrature methods are implemented, sorted according
 to their geometry.
 
-The first entry denotes the input string for the method specification, cf. :class:`Rn%method_specs`.
+The first entry denotes the input string for the method specification, cf. the
+``method_spec`` parameter in :class:`openquad.Rn`.
 
 
 :math:`\mathbb{R}^1` methods

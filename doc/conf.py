@@ -21,7 +21,7 @@ release = openquad.__version__
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 # Report broken links as warnings
-#nitpicky = True
+nitpicky = True
 # nitpick_ignore = [("py:class", "callable")]
 
 extensions = [

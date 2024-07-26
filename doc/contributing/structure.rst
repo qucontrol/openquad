@@ -3,10 +3,11 @@
 Structure of this package
 -------------------------
 
-The top level interface, located in :mod:`geometries`, provides classes for
-quadratures on different geometries, e.g. a unit sphere, the rotation group,
-n-dimensional cartesian space and other. They are derived from the abstract
-class :class:`GeometryQuadrature` defining their main attributes and methods.
+The top level interface, located in :mod:`openquad.geometries`, provides
+classes for quadratures on different geometries, e.g. a unit sphere, the
+rotation group, n-dimensional cartesian space and other. They are derived from
+the abstract class :class:`GeometryQuadrature` defining their main attributes
+and methods.
 
 On a lower level, individual quadrature methods are organized in modules
 corresponding to their respective source. They are implemented in terms of

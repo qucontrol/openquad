@@ -11,11 +11,11 @@ Combining a comprehenseive collection of quadrature methods in one single
 interface, |openquad| helps you to efficiently compute integrals over various
 domains with ease, including 1d intervals, spherical surfaces, Euler angles and
 more. The object-oriented interface provides Python classes for each geometry,
-for example the :class:`S2` class for integration over the 2d unit sphere.
-Python functions and array data can be integrated directly using the
-:meth:`~Sn.integrate` method. Alternatively, sample points and quadrature weights
-can be exported with the :meth:`~openquad.Sn.savetxt` method for easy integration with
-other software.
+for example the :class:`openquad.S2` class for integration over the 2d unit
+sphere.  Python functions and array data can be integrated directly using the
+:meth:`~openquad.S2.integrate` method. Alternatively, sample points and
+quadrature weights can be exported with the :meth:`~openquad.S2.savetxt` method
+for easy integration with other software.
 
 The best part: combine individual quadrature methods to create custom
 multi-dimensional quadratures.
@@ -36,7 +36,7 @@ Gauss-Legendre quadrature?
 
     >>> from openquad import Rn
     >>> quad = Rn([
-    ...     ('GaussLegendre', degree=21, a=-10, b=5),
+    ...     ('GaussLegendre', dict(degree=21, a=-10, b=5)),
     ... ])
     >>> quad.integrate(your_awesome_function)
 
@@ -53,7 +53,7 @@ surface of the unit sphere?
 
     >>> from openquad import S2
     >>> quad = S2([
-    ...     ('S2-Covering', size=142),
+    ...     ('S2-Covering', dict(size=142)),
     ... ])
     >>> grid = your_awesome_function(*quad.angles)
 
@@ -64,8 +64,8 @@ average in your molecular dynamics simulation?
 
     >>> from openquad import SO3
     >>> quad = SO3([
-    ...     ('LebedevLaikov', degree=15),
-    ...     ('Trapezoid', size=16),
+    ...     ('LebedevLaikov', dict(degree=15)),
+    ...     ('Trapezoid', dict(size=16)),
     ... ])
     >>> quad.savetxt('points_and_weights.dat')
 

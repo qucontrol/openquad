@@ -23,10 +23,10 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 
     >>> from openquad import Rn
     >>> quad = Rn([
-    ...     ('GaussLegendre', degree=71, a=-10, b=5),
+    ...     ('GaussLegendre', dict(degree=71, a=-10, b=5)),
     ... ])
 
-Quadrature points and weights are stored in :attr:`~Rn.points` and :attr:`~Rn.weights`,
+Quadrature points and weights are stored in :attr:`~openquad.Rn.points` and :attr:`~openquad.Rn.weights`,
 
 .. doctest::
 
@@ -56,10 +56,10 @@ For example, initiate a :math:`\mathrm{S}^2` `spherical design`_ of degree `7`:
 
     >>> from openquad import S2
     >>> quad = S2([
-    ...     ('S2-Design-Graef', degree=7),
+    ...     ('S2-Design-Graef', dict(degree=7)),
     ... ])
 
-To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :meth:`~S2.integrate` method:
+To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :meth:`~openquad.S2.integrate` method:
     
 .. doctest::
 
@@ -79,11 +79,11 @@ angle.
 
     >>> from openquad import SO3
     >>> quad = SO3([
-    ...     ('LebedevLaikov', degree=5),
-    ...     ('Trapezoid', size=6),
+    ...     ('LebedevLaikov', dict(degree=5)),
+    ...     ('Trapezoid', dict(size=6)),
     ... ])
     
-Save sample points and weights to a text with the :meth:`~SO3.savetxt` method.
+Save sample points and weights to a text with the :meth:`~openquad.SO3.savetxt` method.
 
 .. testcode::
 

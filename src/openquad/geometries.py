@@ -121,6 +121,8 @@ class GeometryQuadrature(ABC):
         self._dims = []
         self._sizes = []
         self._degrees = []
+        self._points = []
+        self._weights = []
 
         # Resolve and check selected quadrature methods:
         method_objects = []
@@ -138,7 +140,7 @@ class GeometryQuadrature(ABC):
         self._initialize_quadrature_methods(method_objects, method_options)
         self._construct_weights_and_meshgrids()
         self.shape = tuple(self._sizes)
-        self.size = self.weights.size
+        self.size = self._weights.size
 
     def _resolve_method_name(self, method_str):
         """Map the given `method_str` to the full method name."""
@@ -212,7 +214,7 @@ class GeometryQuadrature(ABC):
 
     def _construct_weights_and_meshgrids(self):
         """Construct combined quadrature weights and grid."""
-        self.weights = np.prod(
+        self._weights = np.prod(
             np.meshgrid(*self._method_weights, indexing='ij', copy=False),
             axis=0,
         ).flatten()
@@ -490,9 +492,9 @@ class SO3(GeometryQuadrature):
     the second coordinate, :math:`\beta`:
 
     >>> openquad.SO3([
-    ...     ('trapezoid', size=7),
-    ...     ('GaussLegendre', degree=6),
-    ...     ('trapezoid', size=7),
+    ...     ('trapezoid', dict(size=7)),
+    ...     ('GaussLegendre', dict(degree=6)),
+    ...     ('trapezoid', dict(size=7)),
     ... ])
 
 
@@ -502,16 +504,16 @@ class SO3(GeometryQuadrature):
     coordinate angle:
 
     >>> openquad.SO3([
-    ...     ('S2-Gauss-LebedevLaikov', degree=5),
-    ...     ('trapezoid', size=6),
+    ...     ('S2-Gauss-LebedevLaikov', dict(degree=5)),
+    ...     ('trapezoid', dict(size=6)),
     ... ])
 
     Instead, the :math:`\mathrm{S}^2` quadrature can be applied to the second
     and third angle:
 
     >>> openquad.SO3([
-    ...     ('S2-Gauss-LebedevLaikov', degree=5),
-    ...     ('trapezoid', size=6),
+    ...     ('S2-Gauss-LebedevLaikov', dict(degree=5)),
+    ...     ('trapezoid', dict(size=6)),
     ... ])
 
     """
@@ -533,6 +535,8 @@ class SO3(GeometryQuadrature):
             self._points[1] = (
                 np.flip(np.arccos(self._points[1]), axis=0)
             )
+        self.weights = self._weights
+        self.points = self._points
         self.angles = self._points
         self.quaternions = quaternionic.array.from_euler_angles(*self.angles)
 
@@ -640,15 +644,15 @@ class S2(GeometryQuadrature):
     :math:`\phi`:
 
     >>> openquad.S2([
-    ...     ('GaussLegendre', degree=6),
-    ...     ('trapezoid', size=7),
+    ...     ('GaussLegendre', dict(degree=6)),
+    ...     ('trapezoid', dict(size=7)),
     ... ])
 
     A quadrature composed of a two-dimensional :math:`\mathrm{S}^2` Gauss
     quadrature:
 
     >>> openquad.S2([
-    ...     ('S2-Gauss-LebedevLaikov', degree=5),
+    ...     ('S2-Gauss-LebedevLaikov', dict(degree=5)),
     ... ])
 
     """
@@ -672,6 +676,8 @@ class S2(GeometryQuadrature):
             self._points[0] = (
                 np.flip(np.arccos(self._points[0]), axis=0)
             )
+        self.weights = self._weights
+        self.points = self._points
         self.angles = self._points
         self.xyz = xyz_from_angles(self.angles, axis=0)
 
@@ -778,7 +784,7 @@ class Rn(GeometryQuadrature):
     Integraion over the one-dimensional interval :math:`[-1, 1]`:
 
     >>> openquad.Rn([
-    ...     ('GaussLegendre', degree=6, a=-1, b=1),
+    ...     ('GaussLegendre', dict(degree=6, a=-1, b=1)),
     ... ])
 
     Integration over a two-dimensional cube, applying Gauss-Legendre quadrature
@@ -786,28 +792,28 @@ class Rn(GeometryQuadrature):
     the second coordinate, :math:`r_2`:
 
     >>> openquad.Rn([
-    ...     ('GaussLegendre', degree=6, a=-10, b=10),
-    ...     ('trapezoid', size=7, a=-1, b=1),
+    ...     ('GaussLegendre', dict(degree=6, a=-10, b=10)),
+    ...     ('trapezoid', dict(size=7, a=-1, b=1)),
     ... ])
 
     It is also possible, to define a Jacobian in terms of a python callable:
 
     >>> openquad.Rn([
-    ...     ('GaussLegendre', degree=6, a=0, b=np.pi, jacobian=np.sin),
+    ...     ('GaussLegendre', dict(degree=6, a=0, b=np.pi, jacobian=np.sin)),
     ... ])
 
     which would be mathematically equivalent to the integral
 
     >>> openquad.Rn([
-    ...     ('GaussLegendre', degree=6, a=-1, b=1),
+    ...     ('GaussLegendre', dict(degree=6, a=-1, b=1)),
     ... ])
 
     This allows to construct quadratures for arbitrary geometries, e.g. a 2D
     unit sphere:
 
     >>> openquad.Rn([
-    ...     ('GaussLegendre', degree=6, a=0, b=np.pi, jacobian=np.sin),
-    ...     ('Trapezoid', degree=6, a=0, b=2*np.pi, periodic=True),
+    ...     ('GaussLegendre', dict(degree=6, a=0, b=np.pi, jacobian=np.sin)),
+    ...     ('Trapezoid', dict(degree=6, a=0, b=2*np.pi, periodic=True)),
     ... ])
 
     """
@@ -826,6 +832,7 @@ class Rn(GeometryQuadrature):
         # Note: determining the dimension this way, effectively
         # allows to use only 1d methods for this class.
         super().__init__(method_specs)
+        self.weights = self._weights
         self.points = self._points
         self.r = self._points #TODO: deprecate self.r?
 

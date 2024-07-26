@@ -48,7 +48,7 @@ This package is available on
 into your active environment:
 
 ```bash
-python -m pip install orientation_average
+python -m pip install openquad
 ```
 
 Usage
@@ -63,8 +63,8 @@ angle, and export sample points and weights in a text file:
 from openquad import SO3
 
 quad = SO3([
-    ('LebedevLaikov', degree=5),
-    ('Trapezoid', size=6),
+    ('LebedevLaikov', dict(degree=5)),
+    ('Trapezoid', dict(size=6)),
 ])
 quad.savetxt('points_and_weights.dat')
 ```
@@ -76,7 +76,7 @@ two-dimensional unit sphere using a [spherical design][designs] of degree `7`:
 from openquad import S2
 
 quad = S2([
-    ('S2-Design-Graef', degree=7),
+    ('S2-Design-Graef', dict(degree=7)),
 ])
 quad.integrate(func)
 ```
@@ -88,7 +88,7 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
 from openquad import Rn
 
 quad = Rn([
-    ('GaussLegendre', degree=71, a=-10, b=5),
+    ('GaussLegendre', dict(degree=71, a=-10, b=5)),
 ])
 quad.points
 quad.weights
