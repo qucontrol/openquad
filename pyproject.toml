@@ -47,6 +47,7 @@ examples = [
 doc = [
   "sphinx",
   "pydata_sphinx_theme",
+  "intersphinx_registry",
   "sphinx-autoapi",
   "sphinx-copybutton",
   "sphinx_design",

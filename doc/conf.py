@@ -1,4 +1,7 @@
 import re
+
+from intersphinx_registry import get_intersphinx_mapping
+
 import openquad
 
 # Configuration file for the Sphinx documentation builder.
@@ -30,12 +33,10 @@ extensions = [
     'numpydoc',
 ]
 
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3/', None),
-    'numpy': ('https://numpy.org/doc/stable/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy', None),
-
-}
+intersphinx_mapping = get_intersphinx_mapping(
+packages={"python", "numpy", "scipy"}
+)
+#intersphinx_disabled_reftypes = ["*"]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -81,7 +82,7 @@ html_theme_options = {
     "use_edit_page_button": False,
     "navbar_align": "content",
     #"show_version_warning_banner": True,
-    #"show_toc_level": 1,
+    "show_toc_level": 2,
     "show_nav_level": 2, #TODO
     "navigation_depth": 4, #TODO
     #"collapse_navigation": True,
@@ -105,7 +106,7 @@ autoapi_template_dir = "_templates/autoapi"
 autoapi_dirs = ["../src/openquad"]
 autoapi_root = "api/autoapi"
 autoapi_add_toctree_entry = False
-autoapi_keep_files = True
+autoapi_keep_files = False
 autoapi_member_order = "groupwise"
 autoapi_own_page_level = "class"
 autoapi_python_class_content = "class"
