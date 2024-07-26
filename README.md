@@ -1,10 +1,14 @@
-<h1 avlign="center">
-<img src="https://raw.githubusercontent.com/qucontrol/openquad/main/doc/_static/images/logo.svg" width="300">
+<p align="center">
+<img alt="openquad" src="https://raw.githubusercontent.com/qucontrol/openquad/main/doc/_static/images/logo.svg" width="300">
 <br>
 Your open database for multi-dimensional numerical integration
-</h1><br>
+</p>
 
-<!-- TODO: add badges -->
+[![Source code on Github](https://img.shields.io/badge/github-qucontrol/openquad-blue.svg)](https://github.com/qucontrol/openquad)
+[![Documentation](https://img.shields.io/badge/docs-gh--pages-blue.svg)](https://qucontrol.github.io/openquad)
+[![Openquad on the Python Package Index](https://img.shields.io/pypi/v/openquad.svg)](https://pypi.python.org/pypi/openquad)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![arXiv](https://img.shields.io/badge/arXiv-2407.17434-b31b1b.svg)](https://arxiv.org/abs/2407.17434)
 
 ---
 > [!NOTE]
