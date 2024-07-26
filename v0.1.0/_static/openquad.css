@@ -1,0 +1,13 @@
+/* Main index page overview cards */
+
+.sd-card .sd-card-img-top {
+  height: 60px;
+  width: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+html[data-theme=dark] .sd-card img[src*='.svg'] {
+      background-color: transparent;
+  }
