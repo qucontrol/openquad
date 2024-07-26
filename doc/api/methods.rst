@@ -6,37 +6,58 @@ Quadrature methods
 Currently, the following quadrature methods are implemented, sorted according
 to their geometry.
 
+The first entry denotes the input string for the method specification, cf. :param:`method_specs`.
+
 
 :math:`\mathbb{R}^1` methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* `Gauss-Legendre quadrature <https://en.wikipedia.org/wiki/Gauss-Legendre_quadrature>`_
-* `Gauss-Lobatto-Legendre quadrature <https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss-Lobatto_rules>`_
-* `Composite trapezoidal rule <https://en.wikipedia.org/wiki/Trapezoidal_rule>`_, see :scipy:`trapezoid`
-* `Composite Simpson's rule <https://en.wikipedia.org/wiki/Simpson's_rule>`_, see :scipy:`simpson`
-* `Romberg's method <https://en.wikipedia.org/wiki/Romberg's_method>`_, see :scipy:`romberg`
-* `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
+* ``GaussLegendre``: `Gauss-Legendre quadrature <https://en.wikipedia.org/wiki/Gauss-Legendre_quadrature>`_
+* ``GaussLegendreLobatto``: `Gauss-Lobatto-Legendre quadrature <https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss-Lobatto_rules>`_
+* ``Trapezoid``: `Composite trapezoidal rule <https://en.wikipedia.org/wiki/Trapezoidal_rule>`_, see :scipy:`trapezoid`
+* ``Simpson``: `Composite Simpson's rule <https://en.wikipedia.org/wiki/Simpson's_rule>`_, see :scipy:`simpson`
+* ``Romberg``: `Romberg's method <https://en.wikipedia.org/wiki/Romberg's_method>`_, see :scipy:`romberg`
+* ``1d-MonteCarlo``:`Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
+
+These methods need the following additional keyword paramters:
+
+* ``size``: float: Number of sampling points.
+* ``degree``: float: Degree of exactness. For Gauss methods alternative to ``size``.
+* ``a`` : float: Lower boundary of the integral.
+* ``b`` : float: Upper boundary of the integral.
+* ``jacobian`` : callable, optional: Jacobian to apply to the coordinate.
+* ``periodic`` : logical, optinal: If ``True``, assume periodic boundary conditions.
 
 
 :math:`\mathrm{S}^2` methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* spherical Gauss quadrature from `Lebedev-Laikov`_
-* spherical Gauss qudarature from `Manuel Gräf`_
-* spherical designs from `Manuel Gräf`_
-* spherical designs from `Robert Womersley`_
-* near-uniform coverings based on `Fibonacci numbers <https://en.wikipedia.org/wiki/Fibonacci_sequence>`_
-* near-uniform coverings with the `ZCW`_ method
-* `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
+* ``S2-Gauss-LebedevLaikov``: spherical Gauss quadrature from `Lebedev-Laikov`_
+* ``S2-Gauss-Graef``: spherical Gauss qudarature from `Manuel Gräf`_
+* ``S2-Design-Graef``: spherical designs from `Manuel Gräf`_
+* ``S2-Design-Womersley``: spherical designs from `Robert Womersley`_
+* ``S2-Covering-Fibonacci``: near-uniform coverings based on `Fibonacci numbers <https://en.wikipedia.org/wiki/Fibonacci_sequence>`_
+* ``S2-Covering-ZCW``: near-uniform coverings with the `ZCW`_ method
+* ``S2-MonteCarlo``: `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
+
+These methods need the following additional keyword paramters:
+
+* ``size``: float: Number of sampling points.
+* ``degree``: float: Degree of exactness. For Gauss methods and spherical desings alternative to ``size``.
 
 
 :math:`\mathrm{SO}(3)` methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* spherical Gauss qudarature from `Manuel Gräf`_
-* spherical Chebyshev quadrature from `Manuel Gräf`_
-* near-uniform coverings from `Charles Karney`_
-* `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
+* ``SO3-Gauss-Graef``: spherical Gauss qudarature from `Manuel Gräf`_
+* ``SO3-Chebyshev-Graef``: spherical Chebyshev quadrature from `Manuel Gräf`_
+* ``SO3-Covering-Karney``: near-uniform coverings from `Charles Karney`_
+* ``SO3-MonteCarlo``: `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
+
+These methods need the following additional keyword paramters:
+
+* ``size``: float: Number of sampling points.
+* ``degree``: float: Degree of exactness. For Gauss and Chebyshev methods alternative to ``size``.
 
 
 .. note::
