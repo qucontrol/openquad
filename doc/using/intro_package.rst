@@ -1,4 +1,4 @@
-.. _structure:
+.. _intro-structure:
 
 Structure of |openquad|
 -----------------------

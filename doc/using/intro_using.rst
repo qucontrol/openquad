@@ -22,8 +22,8 @@ As a first step, import the class for the desired geometry. For example,
 
 We will also use NumPy later on.
 
-Initiate the class with the method specification (see :param:`method_spec`) in
-the form of a list of :python:`tuples`, containing the name of the method and
+Initiate the class with the method specification (see :class:`S2`) in
+the form of a list of tuples, containing the name of the method and
 required parameters.
 
 Either use a method tailored to this geometry
@@ -41,7 +41,7 @@ or combine lower-dimensional methods with compatible geometries
    ...     ('Trapezoid', size=8),
    ... ], polar_sampling='cos')
 
-Some classes take additional parameters, like :attr:`polar_sampling`.
+Some classes take additional parameters, like :attr:`~S2.polar_sampling`.
 
 
 Common functionality
@@ -54,8 +54,8 @@ supplemented by functionality specific to certain geometries.
 Sample points and weights
 """""""""""""""""""""""""
 
-Sample points and weights are stored as NumPy arrays in :attr:`points` and
-:attr:`weights`, respecitvely.
+Sample points and weights are stored as NumPy arrays in :attr:`~S2.points` and
+:attr:`~S2.weights`, respecitvely.
 
 .. doctest::
 
@@ -72,9 +72,9 @@ domain. For :math:`\mathrm{S}^2`, this is the area :math:`4\pi`:
    >>> np.sum(quad.weights) / (4 * np.pi)
    1.0
 
-Sample points in :attr:`points` are given in the `default coordinates`_ of the
+Sample points in :attr:`~S2.points` are given in the default coordinates of the
 selected integration domain. For :class:`S2`, these are spherical polar angles.
-Other coordinates might be available, e.g. :attr:`angles` or :attr:`xyz`.
+Other coordinates might be available, e.g. :attr:`~S2.angles` or :attr:`~S2.xyz`.
 
 .. doctest::
 
@@ -88,7 +88,7 @@ Exporting quadratures
 """""""""""""""""""""
 
 You can save quadrature points and weights as a textfile with
-:method:`savetxt`.
+:meth:`savetxt`.
 
 .. testcode::
 
@@ -98,7 +98,7 @@ You can save quadrature points and weights as a textfile with
 Integration
 """""""""""
 
-Each class is equipped with the :method:`integrate` function, which can handle
+Each class is equipped with the :meth:`integrate` function, which can handle
 arrays and Python callables.
 
 Suppose the integrand :math:`f(x)` is a Python function, e.g.
@@ -137,10 +137,11 @@ Other parameters
 
 Other attributes that are available for all top-level classes include:
 
-- :attr:`dim`: the dimension of the domain :math:`\mathcal{D}`.
-- :attr:`size`: the number of sample points.
-- :attr:`shape`: the shape of :attr:`points`.
-- :attr:`source`: original sources of the comprising quadrature methods.
+- :attr:`~S2.dim`: the dimension of the domain :math:`\mathcal{D}`.
+- :attr:`~S2.size`: the number of sample points.
+- :attr:`~S2.shape`: the shape of :attr:`~S2.points`.
+
+.. - :attr:`~S2.source`: original sources of the comprising quadrature methods.
 
 See the :ref:`API reference <api>` for details.
 

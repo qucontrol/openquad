@@ -13,8 +13,8 @@ domains with ease, including 1d intervals, spherical surfaces, Euler angles and
 more. The object-oriented interface provides Python classes for each geometry,
 for example the :class:`S2` class for integration over the 2d unit sphere.
 Python functions and array data can be integrated directly using the
-:method:`integrate` method. Alternatively, sample points and quadrature weights
-can be exported with the :method:`savetxt` method for easy integration with
+:meth:`~Sn.integrate` method. Alternatively, sample points and quadrature weights
+can be exported with the :meth:`~openquad.Sn.savetxt` method for easy integration with
 other software.
 
 The best part: combine individual quadrature methods to create custom

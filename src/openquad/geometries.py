@@ -387,7 +387,7 @@ class GeometryQuadrature(ABC):
     def savetxt(self, filename, weights=True):
         """Save sampling points and weights to a text file.
 
-        This function wraps :numpy:`savetxt`.
+        This function wraps :func:`numpy.savetxt`.
 
         Parameters
         ----------

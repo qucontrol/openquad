@@ -7,7 +7,7 @@ OpenQuad reference
 :Date: |today|
 
 The API reference provides details about the available functions, classes and
-modules. For learning how to use |openquad|, see our :ref:`user guide <user>`.
+modules. For learning how to use |openquad|, see our :ref:`user guide <using>`.
 
 .. toctree::
    :maxdepth: 2

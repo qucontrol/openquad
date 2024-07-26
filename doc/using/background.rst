@@ -1,3 +1,5 @@
+.. _background:
+
 Detailed background
 -------------------
 

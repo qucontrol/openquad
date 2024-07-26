@@ -1,4 +1,4 @@
-.. _structure:
+.. _package-structure:
 
 Structure of this package
 -------------------------

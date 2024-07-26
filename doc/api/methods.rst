@@ -6,7 +6,7 @@ Quadrature methods
 Currently, the following quadrature methods are implemented, sorted according
 to their geometry.
 
-The first entry denotes the input string for the method specification, cf. :param:`method_specs`.
+The first entry denotes the input string for the method specification, cf. :class:`Rn%method_specs`.
 
 
 :math:`\mathbb{R}^1` methods
@@ -14,9 +14,9 @@ The first entry denotes the input string for the method specification, cf. :para
 
 * ``GaussLegendre``: `Gauss-Legendre quadrature <https://en.wikipedia.org/wiki/Gauss-Legendre_quadrature>`_
 * ``GaussLegendreLobatto``: `Gauss-Lobatto-Legendre quadrature <https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss-Lobatto_rules>`_
-* ``Trapezoid``: `Composite trapezoidal rule <https://en.wikipedia.org/wiki/Trapezoidal_rule>`_, see :scipy:`trapezoid`
-* ``Simpson``: `Composite Simpson's rule <https://en.wikipedia.org/wiki/Simpson's_rule>`_, see :scipy:`simpson`
-* ``Romberg``: `Romberg's method <https://en.wikipedia.org/wiki/Romberg's_method>`_, see :scipy:`romberg`
+* ``Trapezoid``: `Composite trapezoidal rule <https://en.wikipedia.org/wiki/Trapezoidal_rule>`_, see :func:`scipy.integrate.trapezoid`
+* ``Simpson``: `Composite Simpson's rule <https://en.wikipedia.org/wiki/Simpson's_rule>`_, see :func:`scipy.integrate.simpson`
+* ``Romberg``: `Romberg's method <https://en.wikipedia.org/wiki/Romberg's_method>`_, see :func:`scipy.integrate.romberg`
 * ``1d-MonteCarlo``:`Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
 
 These methods need the following additional keyword paramters:

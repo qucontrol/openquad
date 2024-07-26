@@ -26,7 +26,7 @@ Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
     ...     ('GaussLegendre', degree=71, a=-10, b=5),
     ... ])
 
-Quadrature points and weights are stored in :attr:`points` and :ref:`weights`,
+Quadrature points and weights are stored in :attr:`~Rn.points` and :attr:`~Rn.weights`,
 
 .. doctest::
 
@@ -50,6 +50,8 @@ spherical polar coordinates.
 
 For example, initiate a :math:`\mathrm{S}^2` `spherical design`_ of degree `7`:
 
+.. _spherical design: https://en.wikipedia.org/wiki/Spherical_design
+
 .. testcode::
 
     >>> from openquad import S2
@@ -57,7 +59,7 @@ For example, initiate a :math:`\mathrm{S}^2` `spherical design`_ of degree `7`:
     ...     ('S2-Design-Graef', degree=7),
     ... ])
 
-To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :method:`integrate` method:
+To evaluate the integral of ``func`` over :math:`\mathrm{S}^2` use the :meth:`~S2.integrate` method:
     
 .. doctest::
 
@@ -81,10 +83,11 @@ angle.
     ...     ('Trapezoid', size=6),
     ... ])
     
-Save sample points and weights to a text with the :method:`savetxt` method.
+Save sample points and weights to a text with the :meth:`~SO3.savetxt` method.
 
 .. testcode::
 
     >>> quad.savetxt('points_and_weights.dat')
 
+.. _Lebedev-Laikov quadrature: https://en.wikipedia.org/wiki/Lebedev_quadrature
 .. _Euler angles: https://en.wikipedia.org/wiki/Euler_angles
