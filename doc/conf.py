@@ -27,6 +27,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx_design',
     'sphinx_copybutton',
+    'numpydoc',
 ]
 
 intersphinx_mapping = {
@@ -104,14 +105,15 @@ autoapi_template_dir = "_templates/autoapi"
 autoapi_dirs = ["../src/openquad"]
 autoapi_root = "api/autoapi"
 autoapi_add_toctree_entry = False
-autoapi_keep_files = False
+autoapi_keep_files = True
 autoapi_member_order = "groupwise"
-autoapi_own_page_level = "module"
+autoapi_own_page_level = "class"
 autoapi_python_class_content = "class"
 autoapi_options = [
     "undoc-members",
     "show-module-summary",
     "imported-members",
+    "inherited-members",
 ]
 
 def skip_submodules(app, what, name, obj, skip, options):
