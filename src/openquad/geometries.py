@@ -49,24 +49,24 @@ class GeometryQuadrature(ABC):
         'composite trapezoid': CompositeTrapezoid,
         'composite simpson': CompositeSimpson,
         'romberg': Romberg,
-        'gauss-legendre': GaussLegendre,
-        'gauss-lobatto-legendre': GaussLobattoLegendre,
+        'gausslegendre': GaussLegendre,
+        'gausslobattolegendre': GaussLobattoLegendre,
         '1d-monte-carlo': MonteCarloR1,
         # two-angle methods:
-        's2-gauss-lebedev-laikov': LebedevLaikov,
+        's2-gauss-lebedevlaikov': LebedevLaikov,
         's2-gauss-graef': GraefS2Gauss,
         's2-design-graef': GraefS2Design,
         's2-design-womersley': WomersleyS2Design,
-        's2-fibonacci': FibonacciSphere,
-        's2-zcw': ZCW2,
-        's2-monte-carlo': MonteCarloS2,
+        's2-covering-fibonacci': FibonacciSphere,
+        's2-covering-zcw': ZCW2,
+        's2-montecarlo': MonteCarloS2,
         # three-angle methods:
         'so3-covering-karney': KarneySO3,
         'so3-gauss-graef': GraefSO3Gauss,
         'so3-chebyshev-graef': GraefSO3Chebyshev,
         'so3-chebyshev-womersley': WomersleySO3Chebyshev,
-        'so3-zcw': ZCW3,
-        'so3-monte-carlo': MonteCarloSO3,
+        'so3-covering-zcw': ZCW3,
+        'so3-montecarlo': MonteCarloSO3,
     }
     _method_aliases = {
         # dummy quadrature
@@ -80,36 +80,37 @@ class GeometryQuadrature(ABC):
         # Romberg integration
         'romberg': 'romberg',
         # Gauss-Legendre quadrature
-        'gauss-legendre': 'gauss-legendre',
+        'gausslegendre': 'gausslegendre',
         # Gauss-Lobatto-Legendre
-        'gauss-lobatto-legendre': 'gauss-lobatto-legendre',
+        'gausslobattolegendre': 'gausslobattolegendre',
         # Lebedev Laikov
-        's2-gauss-lebedev-laikov': 's2-gauss-lebedev-laikov',
-        'lebedev-laikov': 's2-gauss-lebedev-laikov',
-        'lebedev': 's2-gauss-lebedev-laikov',
+        's2-gauss-lebedevlaikov': 's2-gauss-lebedevlaikov',
+        'lebedev-laikov': 's2-gauss-lebedevlaikov',
+        'lebedev': 's2-gauss-lebedevlaikov',
         # 1d Monte-Carlo
-        '1d-monte-carlo': '1d-monte-carlo',
+        '1d-montecarlo': '1d-montecarlo',
         # two-angle Monte-Carlo
-        's2-monte-carlo': 's2-monte-carlo',
+        's2-montecarlo': 's2-montecarlo',
         # three-angle Monte-Carlo
-        'so3-monte-carlo': 'so3-monte-carlo',
+        'so3-montecarlo': 'so3-montecarlo',
         # other methods without aliases
         's2-gauss-graef': 's2-gauss-graef',
         's2-design-graef': 's2-design-graef',
         's2-design-womersley': 's2-design-womersley',
-        's2-fibonacci': 's2-fibonacci',
-        's2-zcw': 's2-zcw',
+        's2-covering-fibonacci': 's2-covering-fibonacci',
+        's2-fibonacci': 's2-covering-fibonacci',
+        's2-covering-zcw': 's2-covering-zcw',
         'so3-covering-karney': 'so3-covering-karney',
         'so3-gauss-graef': 'so3-gauss-graef',
         'so3-chebyshev-graef': 'so3-chebyshev-graef',
         'so3-chebyshev-womersley': 'so3-chebyshev-womersley',
-        'so3-zcw': 'so3-zcw',
+        'so3-covering-zcw': 'so3-covering-zcw',
     }
 
     @property
     @abstractmethod
     def dim(self):
-        """Dimension of the space that this quadrature method is working on."""
+        """int : Dimension of this geometry."""
         pass
 
     def __init__(self, method_specs):
@@ -282,38 +283,28 @@ class GeometryQuadrature(ABC):
         jacobian = None
         return a, b, jacobian
 
-    def integrate(self, f, f_kwargs={}, axis=-1, dim=None):#, squeeze=True):#, order=None, only=None):
-        """Integrate using the given samples of a function.
-
-        This method integrates the data with the integration methods provided
-        during initialization of the quadrature object.
-
-        For each integration method, `y` is integrated along each 1d slice on
-        the given axis.
+    def integrate(self, f, f_kwargs={}, axis=-1):#, dim=None):#, squeeze=True):#, order=None, only=None):
+        """Integrate the given data or callable.
 
         Parameters
         ----------
-        y : callable or array_like
-            Representation of the integrand. Either an array-like or an callable.
+        f : callable or array_like
+            Representation of the integrand. Either an array-like or an
+            callable.
+        f_kwargs : dict, optional
+            Additional keyword arguments to pass to `f`, if `f` is a callable.
         axis : sequence of ints, optional
-            Axes along which to perform the integration. The number of axes provided must match the number
-            of integration methods hold by the quadrature object.
-            By default, start with the last axis of `y`.
-        squeeze : bool, optional
-            Some SciPy integration method return zero for integration of an
-            axis with length one. If True, axes of length one are squeezed,
-            i.e. the result of the integration is the single value of the
-            integrand along this axes. Axes that are not integrated are not
-            affected by the squeeze.
-        dim : int or sequence of ints, optional
-            Specifies which dimensions are to be integrated.
-            If None, integrate all dimensions.
+            Axes along which to perform the integration. The number of axes
+            provided must match the number of integration methods hold by the
+            quadrature object. By default, start with the last axis of `f`.
+
+            .. caution:: Experimental feature
 
         Returns
         -------
-        result : float or ndarray
-            The result of the integration. If the dimension of `y` equals the
-            number of integration methods, the result is a float.
+        result : scalar or ndarray
+            The result of the integration. If the dimension of `f` equals the
+            number of integration methods, the result is a scalar.
 
         """
         if callable(f):
@@ -324,10 +315,20 @@ class GeometryQuadrature(ABC):
         else:
             f_array = f
 
+        #squeeze : bool, optional
+        #    Some SciPy integration method return zero for integration of an
+        #    axis with length one. If True, axes of length one are squeezed,
+        #    i.e. the result of the integration is the single value of the
+        #    integrand along this axes. Axes that are not integrated are not
+        #    affected by the squeeze.
+        #dim : int or sequence of ints, optional
+        #    Specifies which dimensions are to be integrated.
+        #    If None, integrate all dimensions.
         # options for dim:
         # 0
         # (0, 1)
         # ((0, 1), 2) #no!
+        dim = None
         if dim is not None: # integrate speficic dimensions
             # This blew up in complexity; I won't allow it for now.
             raise NotImplementedError
@@ -384,18 +385,145 @@ class GeometryQuadrature(ABC):
 
     @abstractmethod
     def savetxt(self, filename, weights=True):
+        """Save sampling points and weights to a text file.
+
+        This function wraps :numpy:`savetxt`.
+
+        Parameters
+        ----------
+        filename : filename, file handle or pathlib.Path
+            Name of the text file.
+        weights : logical, optional
+            If ``False``, only save sampling points and not the quadrature
+            weights.
+
+        """
         pass
 
 
 class SO3(GeometryQuadrature):
+    r"""Group of all rotations in 3D space.
+
+    This class provides an interface to construct quadrature  methods for the
+    integral
+
+    .. math::
+
+       \int_{0}^{2\pi}
+       \int_{0}^{\pi}
+       \int_{0}^{2\pi}
+       f(\alpha, \beta, \gamma)
+       \, \sin(\beta)
+       \, d\gamma
+       \, d\beta
+       \, d\alpha
+
+    The innermost integral is evaluated first.
+
+    The default coordinates of this geometry are Euler angles [2] in the order
+    :math:`(\alpha, \beta, \gamma)`.
+
+
+    Parameters
+    ----------
+    method_specs : list of tuples
+        Specification of the quadrature methods. Each entry of the list
+        contains a tuple corresponding to a quadrature method and its options.
+
+        The first entry of each tuple needs to be a string denoting the
+        quadrature method.  See :ref:`this list <implemented-methods>` for an
+        overview of available methods.  The other entries of the tuple need to
+        be keyword arguments for the individual methods.
+        At least, ``size`` needs to be given, or ``degree`` if applicable.
+        Other options are tabulated :ref:`here <implemented-methods>`.
+
+        Individual quadrature methods are applied to the default
+        coordinates in the order mentioned above.
+        See below, for examples.
+    polar_sampling : {'angle', 'cos'}, optional
+        Controls if the second integral is sampled along :math:`\beta` or
+        :math:`\cos\beta`.
+
+
+    Attributes
+    ----------
+    dim : int
+        Dimension of the geometry.
+    size : int
+        Total number of sampling points.
+    shape : tuple of int
+        The shape of `points`, ``(dim, size)``.
+    points : ndarray
+        Sampling points in the default coordinates. The array has shape
+        ``(3, size)``.
+    weights : ndarray
+        Quadrature weights. The array has shape ``(size,)``.
+    angles : ndarray
+        Equivalent to `points`
+    quaternions : ndarray
+        Sampling points in the form of unit quaternions, :math:`(q_r, q_i, q_j,
+        q_k)`, where :math:`q_r` is the scalar part [3].
+        
+
+    Notes
+    -----
+    Quaternion functionality is provided via the Mike Boyle's ``quaternionic``
+    package [4]
+
+
+    References
+    ----------
+    * [1]: Wikipedia page:
+           https://en.wikipedia.org/wiki/3D_rotation_group
+    * [2]: Wikipedia page:
+           https://en.wikipedia.org/wiki/Euler_angles
+    * [3]: Wikipedia page:
+           https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
+    * [4]: GitHub:
+           https://github.com/moble/quaternionic 
+
+    Examples
+    --------
+    A quadrature composed of three one-dimensional quadratures. The composite
+    trapezoidal rule is applied to the first and third coordinate, i.e.,
+    :math:`\alpha` and :math:`\gamma`.  Gauss-Legendre quadrature is applied to
+    the second coordinate, :math:`\beta`:
+
+    >>> openquad.SO3([
+    ...     ('trapezoid', size=7),
+    ...     ('GaussLegendre', degree=6),
+    ...     ('trapezoid', size=7),
+    ... ])
+
+
+    A quadrature composed of atwo-dimensional and a one-dimensional quadrature.
+    A :math:`\mathrm{S}^2` Gauss quadrature is applied to the first and second
+    Euler angle, whereas the trapezoidal rule is applied to the third
+    coordinate angle:
+
+    >>> openquad.SO3([
+    ...     ('S2-Gauss-LebedevLaikov', degree=5),
+    ...     ('trapezoid', size=6),
+    ... ])
+
+    Instead, the :math:`\mathrm{S}^2` quadrature can be applied to the second
+    and third angle:
+
+    >>> openquad.SO3([
+    ...     ('S2-Gauss-LebedevLaikov', degree=5),
+    ...     ('trapezoid', size=6),
+    ... ])
+
+    """
 
     dim = 3
+    """int: Dimension of this geometry."""
 
     def __init__(self, method_specs, polar_sampling='cos'):
-        allowed_samplings = ['angle', 'cos']
-        if polar_sampling not in allowed_samplings:
+        _allowed_samplings = ['angle', 'cos']
+        if polar_sampling not in _allowed_samplings:
             raise ValueError(
-                f"`polar_sampling needs to be one of {allowed_samplings}"
+                f"`polar_sampling needs to be one of {_allowed_samplings}"
             )
         self._polar_sampling = polar_sampling
         super().__init__(method_specs)
@@ -433,14 +561,108 @@ class SO3(GeometryQuadrature):
 
 
 class S2(GeometryQuadrature):
+    r"""Two-dimensional unit sphere.
 
-    dim = 2
+    This class provides an interface to construct quadrature  methods for the
+    integral
+
+    .. math::
+
+       \int_{0}^{\pi}
+       \int_{0}^{2\pi}
+       f(\theta, \phi)
+       \, \sin(\theta)
+       \, d\phi
+       \, d\theta
+
+    The innermost integral is evaluated first.
+
+    The default coordinates of this geometry are the spherical polar angles
+    [3] in the order :math:`(\theta, \phi)`.
+
+
+    Parameters
+    ----------
+    method_specs : list of tuples
+        Specification of the quadrature methods. Each entry of the list
+        contains a tuple corresponding to a quadrature method and its options.
+
+        The first entry of each tuple needs to be a string denoting the
+        quadrature method.  See :ref:`this list <implemented-methods>` for an
+        overview of available methods.  The other entries of the tuple need to
+        be keyword arguments for the individual methods.
+        At least, ``size`` needs to be given, or ``degree`` if applicable.
+        Other options are tabulated :ref:`here <implemented-methods>`.
+
+        Individual quadrature methods are applied to the default
+        coordinates in the order mentioned above.
+        See below, for examples.
+    polar_sampling : {'angle', 'cos'}, optional
+        Controls if the second integral is sampled along :math:`\theta` or
+        :math:`\cos\theta`.
+
+
+    Attributes
+    ----------
+    dim : int
+        Dimension of the geometry.
+    size : int
+        Total number of sampling points.
+    shape : tuple of int
+        The shape of `points`, ``(dim, size)``.
+    points : ndarray
+        Sampling points in the default coordinates. The array has shape
+        ``(2, size)``.
+    weights : ndarray
+        Quadrature weights. The array has shape ``(size,)``.
+    angles : ndarray
+        Equivalent to `points`
+    xyz : ndarray
+        Sampling points in cartesian coordinates, :math:`(x, y, z)`.
+        This array has shape ``(3, size)``.
+        
+            
+    References
+    ----------
+    * [1]: Wikipedia page:
+           https://en.wikipedia.org/wiki/Unit_sphere
+    * [2]: Wikipedia page:
+           https://en.wikipedia.org/wiki/N-sphere
+    * [3]: Wikipedia page:
+           https://en.wikipedia.org/wiki/Spherical_coordinate_system
+            
+
+    Examples
+    --------
+    A quadrature composed of one-dimensional quadratures. Gauss-Legendre
+    quadrature is applied to the first coordinate, i.e., :math:`\theta`. The
+    composite trapezoidal rule is applied to the second coordinate,
+    :math:`\phi`:
+
+    >>> openquad.S2([
+    ...     ('GaussLegendre', degree=6),
+    ...     ('trapezoid', size=7),
+    ... ])
+
+    A quadrature composed of a two-dimensional :math:`\mathrm{S}^2` Gauss
+    quadrature:
+
+    >>> openquad.S2([
+    ...     ('S2-Gauss-LebedevLaikov', degree=5),
+    ... ])
+
+    """
+
+    @property
+    def dim(self):
+        """int: Dimension of this geometry."""
+        return 2
 
     def __init__(self, method_specs, polar_sampling='cos'):
-        allowed_samplings = ['angle', 'cos']
-        if polar_sampling not in allowed_samplings:
+        _allowed_samplings = ['angle', 'cos']
+        if polar_sampling not in _allowed_samplings:
             raise ValueError(
-                f"`polar_sampling needs to be one of {allowed_samplings}"
+                f"`polar_sampling needs to be one of {_allowed_samplings}"
             )
         self._polar_sampling = polar_sampling
         super().__init__(method_specs)
@@ -476,9 +698,128 @@ class S2(GeometryQuadrature):
 
 
 class Rn(GeometryQuadrature):
+    r""":math:`n`-dimensional Euclidean space.
+
+    This class provides an interface to construct quadrature  methods for the
+    integral
+
+    .. math::
+
+       \int_{a_1}^{b_1}
+       \int_{a_2}^{b_2}
+       \cdots
+       \int_{a_n}^{b_n}
+       f(r_1, r_2, \dots, r_n)
+       \, dr_n
+       \cdots
+       \, dr_2
+       \, dr_1
+
+    The innermost integral is evaluated first.
+
+    The default coordinates of this geometry are the Cartesian coordinates [2]
+    in the order :math:`(r_1, r_2, \dots, r_n)`.
+
+
+    Parameters
+    ----------
+    method_specs : list of tuples
+        Specification of the quadrature methods. Each entry of the list
+        contains a tuple corresponding to a quadrature method and its options.
+
+        The first entry of each tuple needs to be a string denoting the
+        quadrature method.  See :ref:`this list <implemented-methods>` for an
+        overview of available methods.  The other entries of the tuple need to
+        be keyword arguments for the individual methods.
+        At least, ``size`` needs to be given, or ``degree`` if applicable.
+        Other options are tabulated :ref:`here <implemented-methods>`.
+
+        Individual quadrature methods are applied to the default
+        coordinates in the order mentioned above.
+        See below, for examples.
+
+        .. note::
+            
+            Currently, only one-dimensional quadrature methods are supported.
+
+
+    Attributes
+    ----------
+    dim : int
+        Dimension of the geometry. Equal to ``len(method_spec)``.
+    size : int
+        Total number of sampling points.
+    shape : tuple of int
+        The shape of `points`, ``(dim, size)``.
+    points : ndarray
+        Sampling points in the default coordinates. The array has shape
+        ``(dim, size)``.
+    weights : ndarray
+        Quadrature weights. The array has shape ``(size,)``.
+    r : ndarray
+        Equivalent to `points`
+        
+
+    Notes
+    -----
+    This class can be used to generate quadrature methods over arbitrary
+    domains. See the examples below.
+
+            
+    References
+    ----------
+    * [1]: Wikipedia page: https://en.wikipedia.org/wiki/Euclidean_space
+    * [2]: Wikipedia page:
+           https://en.wikipedia.org/wiki/Cartesian_coordinate_system
+            
+
+    Examples
+    --------
+    Integraion over the one-dimensional interval :math:`[-1, 1]`:
+
+    >>> openquad.Rn([
+    ...     ('GaussLegendre', degree=6, a=-1, b=1),
+    ... ])
+
+    Integration over a two-dimensional cube, applying Gauss-Legendre quadrature
+    to the first coordinate, :math:`r_1`, and the composite trapezoidal rule to
+    the second coordinate, :math:`r_2`:
+
+    >>> openquad.Rn([
+    ...     ('GaussLegendre', degree=6, a=-10, b=10),
+    ...     ('trapezoid', size=7, a=-1, b=1),
+    ... ])
+
+    It is also possible, to define a Jacobian in terms of a python callable:
+
+    >>> openquad.Rn([
+    ...     ('GaussLegendre', degree=6, a=0, b=np.pi, jacobian=np.sin),
+    ... ])
+
+    which would be mathematically equivalent to the integral
+
+    >>> openquad.Rn([
+    ...     ('GaussLegendre', degree=6, a=-1, b=1),
+    ... ])
+
+    This allows to construct quadratures for arbitrary geometries, e.g. a 2D
+    unit sphere:
+
+    >>> openquad.Rn([
+    ...     ('GaussLegendre', degree=6, a=0, b=np.pi, jacobian=np.sin),
+    ...     ('Trapezoid', degree=6, a=0, b=2*np.pi, periodic=True),
+    ... ])
+
+    """
 
     dim = None #TODO: can this be more elegant?
     # Maybe, make dim an instance attribute for consistency
+    """Dimension of this geometry.
+
+    .. note::
+    
+       For this geometry, ``dim`` is set during initialization.
+    """
 
     def __init__(self, method_specs):
         self.dim = len(method_specs)
