@@ -5,7 +5,7 @@ authors:
     given-names: "Alexander"
 title: "OpenQuad"
 version: 0.1.0
-date-released: 2024-07-25
+date-released: 2024-07-26
 url: "https://github.com/qucontrol/openquad"
 preferred-citation:
   type: article
