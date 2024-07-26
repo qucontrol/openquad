@@ -46,16 +46,14 @@ examples = [
   "spherical",
 ]
 doc = [
-  "sphinx",
-  "pydata_sphinx_theme",
+  "sphinx==7.4.7",
+  "pydata_sphinx_theme==0.15.4",
   "intersphinx_registry",
-  "sphinx-autoapi",
-  "sphinx-copybutton",
-  "sphinx_design",
-  "numpydoc",
+  "sphinx-autoapi==3.2.1",
+  "sphinx-copybutton==0.5.2",
+  "sphinx_design==0.6.0",
+  "numpydoc==1.7.0",
 ]
-# TODO: freeze doc dependencies versions
-
 
 [tool.hatch.envs.doc]
 description = "Build documentation (Python 3.12)"
