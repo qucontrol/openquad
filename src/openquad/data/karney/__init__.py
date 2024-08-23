@@ -1,3 +1,7 @@
+# OpenQuad - open database for multi-dimensional numerical integration
+# SPDX-FileCopyrightText: 2024  Alexander Blech
+# SPDX-License-Identifier: MPL-2.0
+
 """Nearly optimal SO3 coverings from C.F.F. Karney.
 
 The files in this directory have been converted from the `orientation` package

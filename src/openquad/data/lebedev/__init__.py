@@ -1,3 +1,7 @@
+# OpenQuad - open database for multi-dimensional numerical integration
+# SPDX-FileCopyrightText: 2024  Alexander Blech
+# SPDX-License-Identifier: MPL-2.0
+
 """
 Lebedev quadrature grids for integration on the S2 unit sphere.
 

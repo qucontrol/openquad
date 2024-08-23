@@ -1,3 +1,7 @@
+# OpenQuad - open database for multi-dimensional numerical integration
+# SPDX-FileCopyrightText: 2024  Alexander Blech
+# SPDX-License-Identifier: MPL-2.0
+
 """S2 spherical designs and SO3 equal-weight quadratures from R. Womersley.
 
 The files in this directory have been converted from the data from Rob
