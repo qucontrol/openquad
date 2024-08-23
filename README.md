@@ -1,7 +1,7 @@
 <p align="center">
 <img alt="openquad" src="https://raw.githubusercontent.com/qucontrol/openquad/main/doc/_static/images/logo.svg" width="300">
 <br>
-Your open database for multi-dimensional numerical integration
+Open database for multi-dimensional numerical integration
 </p>
 
 [![Source code on Github](https://img.shields.io/badge/github-qucontrol/openquad-blue.svg)](https://github.com/qucontrol/openquad)
@@ -107,5 +107,5 @@ If this package was useful for your research, please [cite it][cite].
 [designs]: https://en.wikipedia.org/wiki/Spherical_design
 [lebedev]: https://en.wikipedia.org/wiki/Lebedev_quadrature
 [docs]: https://qucontrol.github.io/openquad
-[cite]: https://qucontrol.github.io/openquad/using/cite.html
-[contribute]: https://qucontrol/github.io/openquad/contributing/index.html
+[cite]: https://qucontrol.github.io/openquad/latest/using/cite.html
+[contribute]: https://qucontrol/github.io/openquad/latest/contributing/index.html
