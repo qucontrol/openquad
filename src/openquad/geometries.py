@@ -73,7 +73,7 @@ class GeometryQuadrature(ABC):
         'gausslobattolegendre': 'gausslobattolegendre',
         # Lebedev Laikov
         's2-gauss-lebedevlaikov': 's2-gauss-lebedevlaikov',
-        'lebedev-laikov': 's2-gauss-lebedevlaikov',
+        'lebedevlaikov': 's2-gauss-lebedevlaikov',
         'lebedev': 's2-gauss-lebedevlaikov',
         # 1d Monte-Carlo
         '1d-montecarlo': '1d-montecarlo',
