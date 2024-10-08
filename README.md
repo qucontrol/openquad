@@ -7,8 +7,8 @@ Open database for multi-dimensional numerical integration
 [![Source code on Github](https://img.shields.io/badge/github-qucontrol/openquad-blue.svg)](https://github.com/qucontrol/openquad)
 [![Documentation](https://img.shields.io/badge/docs-gh--pages-blue.svg)](https://qucontrol.github.io/openquad)
 [![Openquad on the Python Package Index](https://img.shields.io/pypi/v/openquad.svg)](https://pypi.python.org/pypi/openquad)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![arXiv](https://img.shields.io/badge/arXiv-2407.17434-b31b1b.svg)](https://arxiv.org/abs/2407.17434)
+[![License: GPL v3](https://img.shields.io/badge/license-MPL%202.0-blue)](https://www.mozilla.org/en-US/MPL/2.0/)
+[![arXiv](https://img.shields.io/badge/DOI-10.1063/5.0230569-b31b1b.svg)](https://doi.org/10.1063/5.0230569)
 
 ---
 > [!NOTE]
