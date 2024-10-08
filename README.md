@@ -13,7 +13,7 @@ Open database for multi-dimensional numerical integration
 ---
 > [!NOTE]
 > The first stable release is under active development.  
-> Watch this repo to stay tuned for any updates!
+> Stay tuned for any updates!
 ---
 
 <!-- start including on doc landing page -->
@@ -33,6 +33,8 @@ spaces.
 - Integrate Python functions and array data with a single command.
 - Export quadrature points and weights for use in other software.
 
+[**Get started!**][docs]
+
 Found a bug? [Open an issue](https://github.com/qucontrol/openquad/issues).  
 Missing a feature? [Start a discussion](https://github.com/qucontrol/openquad/discussions).
 
@@ -50,8 +52,33 @@ into your active environment:
 python -m pip install openquad
 ```
 
-Usage
------
+Basic usage
+-----------
+
+Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
+`[-10, 5]`:
+
+```python
+from openquad import Rn
+
+quad = Rn([
+    ('GaussLegendre', dict(degree=71, a=-10, b=5)),
+])
+quad.points
+quad.weights
+```
+
+Integrate a function `func(theta, phi)` over the surface of the
+two-dimensional unit sphere using a [spherical design][designs] of degree `7`:
+
+```python
+from openquad import S2
+
+quad = S2([
+    ('S2-Design-Graef', dict(degree=7)),
+])
+quad.integrate(func)
+```
 
 Create a quadrature method for an integral over the three [Euler angles][angles],
 using [Lebedev-Laikov quadrature][lebedev] of degree `5` for the first two angles
@@ -66,31 +93,6 @@ quad = SO3([
     ('Trapezoid', dict(size=6)),
 ])
 quad.savetxt('points_and_weights.dat')
-```
-
-Integrate a Python function `func(theta, phi)` over the surface of the
-two-dimensional unit sphere using a [spherical design][designs] of degree `7`:
-
-```python
-from openquad import S2
-
-quad = S2([
-    ('S2-Design-Graef', dict(degree=7)),
-])
-quad.integrate(func)
-```
-
-Obtain Gauss-Legendre sample points and weights for degree `71` on the interval
-`[-10, 5]`:
-
-```python
-from openquad import Rn
-
-quad = Rn([
-    ('GaussLegendre', dict(degree=71, a=-10, b=5)),
-])
-quad.points
-quad.weights
 ```
 
 For further information, including advanced examples, background information,
