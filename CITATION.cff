@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+message: "If this software was useful for your research, please cite it as below."
 authors:
   - family-names: "Blech"
     given-names: "Alexander"
 title: "OpenQuad"
-version: 0.1.0
-date-released: 2024-07-26
+version: 0.3.0
+date-released: 2024-10-08
 url: "https://github.com/qucontrol/openquad"
 preferred-citation:
   type: article
@@ -15,6 +15,7 @@ preferred-citation:
     orcid: "https://orcid.org/0000-0002-2530-4399"
   - family-names: "Ebeling"
     given-names: "Raoul M. M."
+    orcid: "https://orcid.org/0009-0001-1838-2217"
   - family-names: "Heger"
     given-names: "Marec"
     orcid: "https://orcid.org/0009-0002-3045-3820"
@@ -26,8 +27,9 @@ preferred-citation:
     orcid: "https://orcid.org/0000-0003-1381-6300"
   title: "Numerical evaluation of orientation averages and its application to molecular physics"
   year: 2024
-  month: 7
+  month: 10
   identifiers:
     - type: other
-      value: "https://arxiv.org/abs/2407.17434"
-      description: "preprint on arXiv"
+      value: "https://doi.org/10.1063/5.0230569"
+      description: "Tutorial article in The Journal of Chemical Physics"
+
