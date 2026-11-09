@@ -1,0 +1,9 @@
+# Store text files with LF line endings in the repository
+* text=auto
+
+# Windows batch files need CRLF in the working tree
+*.bat text eol=crlf
+
+# Binary data
+*.npy binary
+*.npz binary
