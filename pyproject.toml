@@ -73,3 +73,10 @@ dev = [
   {include-group = "test"},
   {include-group = "lint"},
 ]
+
+[tool.pytest]
+minversion = "9.0"
+addopts = ["-ra"]
+strict = true
+log_level = "INFO"
+testpaths = ["tests"]
