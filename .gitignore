@@ -10,5 +10,19 @@ __pycache__/
 # Documentation
 doc/_build
 
+# Build artifacts
+build/
+dist/
+
+# Environments
+.venv/
+
+# Test and tool caches
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+
 # Other
 releases
