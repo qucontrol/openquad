@@ -19,9 +19,9 @@ def f(theta, phi):
     assert np.shape(theta) == np.shape(phi)
     poly = (
         1
-        + 3 * special.sph_harm(3, 3, phi, theta)
-        + 4 * special.sph_harm(2, 4, phi, theta)
-        + 5 * special.sph_harm(4, 5, phi, theta)
+        + 3 * special.sph_harm_y(3, 3, theta, phi)
+        + 4 * special.sph_harm_y(4, 2, theta, phi)
+        + 5 * special.sph_harm_y(5, 4, theta, phi)
     )
     return poly / (4*np.pi)
 
