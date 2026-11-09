@@ -63,14 +63,15 @@ version specifiers`_ (former `PEP440`_).
 Styles and conventions
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Code needs to be compatible with `PEP 8`_. Furthermore, this projects adopts
-the `Black code style`_ with a line length limit of 79 characters.
+Code needs to be compatible with `PEP 8`_. It is formatted with `Ruff`_, which
+follows the Black code style, with Ruff's default line length of 88
+characters.
 
 Docstrings are written according to the `NumPy Style Guide`_, e.g. see this
 `comprehensive example`_.
 
 .. _PEP 8: https://peps.python.org/pep-0008/
-.. _Black code style: https://github.com/psf/black#the-black-code-style
+.. _Ruff: https://docs.astral.sh/ruff/formatter/
 .. _NumPy Style Guide: https://numpydoc.readthedocs.io/en/latest/format.html
 .. _comprehensive example: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_numpy.html
 
@@ -86,18 +87,46 @@ See for example `this guide`_ for details on how to create one.
 .. _virtual environment: https://docs.python.org/3/glossary.html#term-virtual-environment
 .. _this guide: https://docs.python.org/3/library/venv.html#module-venv
 
-To install the latest commit of the package along with additional development
-dependencies, clone the package and run the following command in the package
+To install the latest commit of the package along with the tools for testing
+and linting, clone the package and run the following command in the package
 root directory:
 
 .. code-block:: bash
 
-   python -m pip install -e .[dev,extras]
+   python -m pip install -e . --group dev
+
+This needs pip 25.1 or newer. With `uv`_, run ``uv pip install -e . --group
+dev`` instead. Add ``--group docs`` to also install the tools for building
+the documentation, and ``.[examples]`` instead of ``.`` for the packages used
+in the examples.
 
 If you don’t have `pip`_ installed, the `Python installation guide`_,
 respectively the `Python Packaging User Guide`_ can guide you through the
 process.
 
+.. _uv: https://docs.astral.sh/uv/
 .. _pip: https://pip.pypa.io/en/stable/
 .. _Python installation guide: https://docs.python-guide.org/starting/installation/
 .. _Python Packaging User Guide: https://packaging.python.org/en/latest/tutorials/installing-packages/
+
+
+Running the tests
+^^^^^^^^^^^^^^^^^
+
+Run the test suite from the package root directory:
+
+.. code-block:: bash
+
+   python -m pytest
+
+
+Building the documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Build the documentation from the package root directory, and serve it
+locally to view it in a browser:
+
+.. code-block:: bash
+
+   sphinx-build -b html doc doc/_build/html -d doc/_build/doctree
+   python -m http.server -d doc/_build/html
