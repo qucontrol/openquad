@@ -61,13 +61,13 @@ lint = [
   "ruff",
 ]
 docs = [
-  "sphinx==7.4.7",
-  "pydata_sphinx_theme==0.15.4",
+  "sphinx==9.2.0",
+  "pydata_sphinx_theme==0.23.0",
   "intersphinx_registry",
-  "sphinx-autoapi==3.2.1",
+  "sphinx-autoapi==3.8.1",
   "sphinx-copybutton==0.5.2",
-  "sphinx_design==0.6.0",
-  "numpydoc==1.7.0",
+  "sphinx_design==0.7.0",
+  "numpydoc==1.11.0",
 ]
 dev = [
   {include-group = "test"},
