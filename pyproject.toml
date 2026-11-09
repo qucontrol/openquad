@@ -43,15 +43,24 @@ build-backend = "hatchling.build"
 path = "src/openquad/__init__.py"
 
 [project.optional-dependencies]
-dev = [
-  "pytest",
-  "spherical",
-]
 examples = [
   "matplotlib",
   "spherical",
 ]
-doc = [
+
+# Development tools are not published with the package. Install them with
+# `pip install --group dev` (pip 25.1 or newer) or `uv sync`.
+[dependency-groups]
+test = [
+  "pytest>=9",
+  "pytest-cov",
+  "spherical",
+]
+lint = [
+  "prek",
+  "ruff",
+]
+docs = [
   "sphinx==7.4.7",
   "pydata_sphinx_theme==0.15.4",
   "intersphinx_registry",
@@ -60,19 +69,7 @@ doc = [
   "sphinx_design==0.6.0",
   "numpydoc==1.7.0",
 ]
-
-[tool.hatch.envs.doc]
-description = "Build documentation (Python 3.12)"
-template = "doc"
-features = [
-  "dev",
-  "doc",
+dev = [
+  {include-group = "test"},
+  {include-group = "lint"},
 ]
-python = "3.12"
-
-[tool.hatch.envs.doc.scripts]
-build = [
-    #"sphinx-build -v -W --keep-going -b html doc doc/_build/html -d doc/_build/doctree",
-    "sphinx-build -b html doc doc/_build/html -d doc/_build/doctree",
-]
-serve = "python -m http.server -d doc/_build/html"
