@@ -7,6 +7,6 @@ import pytest
 import numpy as np
 
 
-@pytest.ficture(autouse=True)
+@pytest.fixture(autouse=True)
 def set_doctest_env(doctest_namespace):
     doctest_namespace['np'] = np

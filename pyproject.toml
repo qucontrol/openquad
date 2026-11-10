@@ -80,3 +80,6 @@ addopts = ["-ra"]
 strict = true
 log_level = "INFO"
 testpaths = ["tests"]
+# Turn warnings into errors. Ignore a warning only with an explicit filter and a
+# comment giving the reason.
+filterwarnings = ["error"]
