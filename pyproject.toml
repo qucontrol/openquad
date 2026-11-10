@@ -111,3 +111,33 @@ select = [
 
 [tool.ruff.lint.isort]
 known-first-party = ["openquad"]
+
+[tool.ruff.lint.per-file-ignores]
+# Findings present when ruff was introduced, not fixed yet. Remove a code once the
+# file is fixed or replaced. New files get the full rule set.
+"doc/conf.py" = ["F401", "SIM114"]
+"src/conftest.py" = ["I001"]
+"src/openquad/__init__.py" = ["F401", "I001", "RUF022"]
+"src/openquad/base.py" = [
+  "B006", "B024", "B904", "E722", "I001", "PIE790", "RET505", "SIM102", "SIM108",
+]
+"src/openquad/fibonacci.py" = ["I001", "RET506"]
+"src/openquad/geometries.py" = [
+  "B006", "B007", "B905", "F541", "I001", "PIE790", "PT018", "RET503", "RET505",
+  "RET506", "RUF012", "SIM113", "SIM114", "W293",
+]
+"src/openquad/graef.py" = ["I001"]
+"src/openquad/grid.py" = ["E501", "I001"]
+"src/openquad/karney.py" = ["I001"]
+"src/openquad/monte_carlo.py" = ["F821", "I001"]
+"src/openquad/newton_cotes.py" = ["F401", "I001"]
+"src/openquad/womersley.py" = ["I001", "SIM108"]
+"tests/test_Rn_quadrature.py" = ["F841", "I001"]
+"tests/test_S2_quadrature.py" = ["C408", "E501", "F841", "I001"]
+"tests/test_SO3_quadrature.py" = ["C408", "E501", "F841", "I001"]
+"tests/test_base.py" = ["F401", "I001", "SIM118"]
+"tests/test_base_1d_quadrature_methods.py" = [
+  "E731", "F821", "F841", "I001", "PT006", "PT011",
+]
+"tests/test_base_2d_quadrature_methods.py" = ["F401", "F841", "I001", "PT006"]
+"tests/test_base_3d_quadrature_methods.py" = ["E501", "F401", "F841", "I001", "PT006"]
