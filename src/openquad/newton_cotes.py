@@ -9,7 +9,6 @@ from .base import AtomicR1Quadrature, QuadratureWithFixedDegree
 
 
 class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedDegree):
-
     _has_endpoints = True
 
     def _get_degree(self):
@@ -17,14 +16,14 @@ class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
     def _points_weights(self, a, b):
         """Composite trapezoid rule.
-    
+
         Composite trapezoid rule for integrating a function on the interval
         :math:`[a,b]`.
 
         If `period=True` assume peridoic boundary conditions. In this case, the
         function value of point `a` is reused for the point `b`, effectively
         increasing the number of subintervals of :math:`[a,b]` by one.
-    
+
         Parameters
         ----------
         size : int
@@ -37,7 +36,7 @@ class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedDegree):
             Upper limit of integration.
         periodic : logical, optional
             If True, assume periodic boundary conditions.
-    
+
         Returns
         -------
         points : ndarray
@@ -46,7 +45,8 @@ class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedDegree):
             Array of ones. This is only returned to retain a common interface.
         """
         N = self.size
-        if self._periodic: N += 1
+        if self._periodic:
+            N += 1
         if N < 2:
             msg = "Trapezoid method requires at least two sample points"
             raise ValueError(msg)
@@ -58,7 +58,6 @@ class CompositeTrapezoid(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
 
 class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedDegree):
-
     _has_endpoints = True
 
     def _get_degree(self):
@@ -66,10 +65,10 @@ class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
     def _points_weights(self, a, b):
         """Composite Simpson's rule.
-    
+
         Composite Simpson's rule for integrating a function on the interval
         :math:`[a,b]`.
-    
+
         Parameters
         ----------
         size : int
@@ -80,7 +79,7 @@ class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedDegree):
             Lower limit of integration.
         b : float
             Upper limit of integration.
-    
+
         Returns
         -------
         points : ndarray
@@ -89,7 +88,8 @@ class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedDegree):
             Array of ones. This is only returned to retain a common interface.
         """
         N = self.size
-        if self._periodic: N += 1
+        if self._periodic:
+            N += 1
         if N < 3:
             msg = "Simpson method requires at least three sample points"
             raise ValueError(msg)
@@ -116,23 +116,22 @@ class CompositeSimpson(AtomicR1Quadrature, QuadratureWithFixedDegree):
 
 
 class Romberg(AtomicR1Quadrature, QuadratureWithFixedDegree):
-
     _has_endpoints = True
 
     def _get_degree(self):
         # Romberg is in some situations equivalent to Trapz, Simps and Boole,
         # i.e. it can have degree at least up to five. I don't know, if there
         # is a general formula for the degree for higher order of Romb.
-        return None #TODO?
+        return None  # TODO?
 
     def _points_weights(self, a, b):
         """Romberg integration.
 
         The number of sample points must be one plus a non-negative power of 2.
-    
+
         This function currently wraps SciPy's `romb` implementation for
         integrating a function on the interval :math:`[a, b]`.
-    
+
         Parameters
         ----------
         size : int
@@ -143,7 +142,7 @@ class Romberg(AtomicR1Quadrature, QuadratureWithFixedDegree):
             Lower limit of integration.
         b : float
             Upper limit of integration.
-    
+
         Returns
         -------
         points : ndarray
@@ -153,13 +152,16 @@ class Romberg(AtomicR1Quadrature, QuadratureWithFixedDegree):
         """
         # Check that we have a valid number of sample points
         N = self.size
-        if self._periodic: N += 1
+        if self._periodic:
+            N += 1
         n = 1
         while n < N - 1:
             n <<= 1
         if n != N - 1:
-            raise ValueError("Number of samples for Romberg integration"
-                             "must be one plus a non-negative power of 2")
+            raise ValueError(
+                "Number of samples for Romberg integration"
+                "must be one plus a non-negative power of 2"
+            )
         x = np.linspace(a, b, N)
         w = np.ones(N)
         return x, w
@@ -167,7 +169,6 @@ class Romberg(AtomicR1Quadrature, QuadratureWithFixedDegree):
     def _integrate_sample(self, f_samples, axis=-1):
         dx = self.points[1] - self.points[0]
         f_samples = np.moveaxis(f_samples, axis, -1)
-        if self._periodic: # add entry for endpoint of interval
-            f_samples = np.concatenate((f_samples, f_samples[...,:1]),
-                                       axis=-1)
+        if self._periodic:  # add entry for endpoint of interval
+            f_samples = np.concatenate((f_samples, f_samples[..., :1]), axis=-1)
         return romb(f_samples, dx=dx, axis=-1)

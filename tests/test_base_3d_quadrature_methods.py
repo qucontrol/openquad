@@ -29,7 +29,7 @@ def f_q(quaternions):
         assert poly.shape == (len(quaternions),)
     else:
         assert poly.shape == ()
-    return poly / (8*np.pi**2)
+    return poly / (8 * np.pi**2)
 
 
 def f_abg(alpha, beta, gamma):
@@ -43,8 +43,16 @@ def f_abg(alpha, beta, gamma):
 
 def test_test_function():
     """Make sure that the integral over the test function yields 1."""
-    assert integrate.tplquad(lambda a, b, g: np.sin(b)*f_abg(a, b, g).real, 0, 2*np.pi, 0, np.pi, 0, 2*np.pi)[0] == pytest.approx(1)
-    #assert integrate.tplquad(lambda a, b, g: np.sin(b)*f_abg(a, b, g).imag, 0, 2*np.pi, 0, np.pi, 0, 2*np.pi, epsabs=1e-1)[0] == pytest.approx(0)
+    assert integrate.tplquad(
+        lambda a, b, g: np.sin(b) * f_abg(a, b, g).real,
+        0,
+        2 * np.pi,
+        0,
+        np.pi,
+        0,
+        2 * np.pi,
+    )[0] == pytest.approx(1)
+    # assert integrate.tplquad(lambda a, b, g: np.sin(b)*f_abg(a, b, g).imag, 0, 2*np.pi, 0, np.pi, 0, 2*np.pi, epsabs=1e-1)[0] == pytest.approx(0)
 
 
 @pytest.mark.parametrize(
@@ -53,10 +61,10 @@ def test_test_function():
         (MonteCarloSO3, 10, None),
         (GraefSO3Gauss, 4, 1),
         (GraefSO3Chebyshev, 4, 1),
-        #(WomersleySO3Chebyshev, 4, 1),
-        #(ZCW3, 4, None),
+        # (WomersleySO3Chebyshev, 4, 1),
+        # (ZCW3, 4, None),
         (KarneySO3, 24, None),
-    ]
+    ],
 )
 def test_initialization(method, size, degree):
     # missing required arguments
@@ -93,22 +101,26 @@ def test_initialization(method, size, degree):
     "method, size, degree, tol, kwargs",
     [
         pytest.param(
-            MonteCarloSO3, 1000, None, 1e-2, {'seed':0, 'method':'quaternions'},
+            MonteCarloSO3,
+            1000,
+            None,
+            1e-2,
+            {"seed": 0, "method": "quaternions"},
             marks=pytest.mark.xfail(
                 reason="Monte Carlo error of 2-4% against required 1e-2. "
                 "Tolerance suspected, unconfirmed",
             ),
         ),
-        (MonteCarloSO3, 5000, None, 1e-2, {'seed':0, 'method':'angles'}),
+        (MonteCarloSO3, 5000, None, 1e-2, {"seed": 0, "method": "angles"}),
         (KarneySO3, 24, None, 1e-8, {}),
         (GraefSO3Gauss, 23, 3, 1e-8, {}),
         (GraefSO3Chebyshev, 24, 3, 1e-8, {}),
-        #(WomersleySO3Chebyshev, 10, 10, 1e-8, {}),
-    ]
+        # (WomersleySO3Chebyshev, 10, 10, 1e-8, {}),
+    ],
 )
 def test_fields_and_integration(method, size, degree, tol, kwargs):
     quad = method(size=size, **kwargs)
-    
+
     # test fields
     assert quad.dim == 3
     assert quad.degree == degree
@@ -116,7 +128,7 @@ def test_fields_and_integration(method, size, degree, tol, kwargs):
 
     # test weights
     assert quad.weights.shape == (size,)
-    assert np.sum(quad.weights) == pytest.approx(8*np.pi**2)
+    assert np.sum(quad.weights) == pytest.approx(8 * np.pi**2)
 
     # test grid dimension
     assert quad.points.shape == (3, size)
@@ -133,11 +145,11 @@ def test_fields_and_integration(method, size, degree, tol, kwargs):
 @pytest.mark.parametrize(
     "method, tol, kwargs",
     [
-        #TODO: set accuracy
+        # TODO: set accuracy
         (GraefSO3Gauss, 1e-9, {}),
         (GraefSO3Chebyshev, 1e-6, {}),
-        #(WomersleySO3Chebyshev, 1e-12, {}),
-    ]
+        # (WomersleySO3Chebyshev, 1e-12, {}),
+    ],
 )
 def test_degree(method, tol, kwargs):
     max_degree = 30
@@ -147,12 +159,10 @@ def test_degree(method, tol, kwargs):
     for degree in tested_degrees:
         quad = method(degree=degree, **kwargs)
         # First, test that the weights are normalized:
-        assert np.sum(quad.weights) == pytest.approx(8*np.pi**2)
+        assert np.sum(quad.weights) == pytest.approx(8 * np.pi**2)
         # Then, test the integration of all polynomials:
         q = quaternionic.array.from_euler_angles(*quad.angles)
-        Dlmm = wigner.D(q)[:, :wigner.Dindex(degree, degree, degree)+1]
+        Dlmm = wigner.D(q)[:, : wigner.Dindex(degree, degree, degree) + 1]
         results = quad.integrate(Dlmm, axis=0)
-        truevals = np.concatenate(
-            ([8*np.pi**2], np.zeros(Dlmm.shape[-1]-1))
-        )
+        truevals = np.concatenate(([8 * np.pi**2], np.zeros(Dlmm.shape[-1] - 1)))
         assert np.abs(results - truevals).max() == pytest.approx(0, abs=tol)

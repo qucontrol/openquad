@@ -7,12 +7,11 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 
-QUAD_DATA_DIR = (Path.cwd() / __file__).parent / 'data'
+QUAD_DATA_DIR = (Path.cwd() / __file__).parent / "data"
 """Directory where quadrature grids are stored."""
 
 
 class AtomicQuadrature(ABC):
-
     @property
     @abstractmethod
     def dim(self):
@@ -45,8 +44,10 @@ class AtomicQuadrature(ABC):
             raise ValueError("`size` must be larger than zero")
         if hasattr(self, "_available_sizes"):
             if value not in self._available_sizes:
-                msg = (f"`size` {value} not available. Possible values are:"
-                       f"{self._available_sizes}")
+                msg = (
+                    f"`size` {value} not available. Possible values are:"
+                    f"{self._available_sizes}"
+                )
                 raise ValueError(msg)
 
     @property
@@ -71,8 +72,10 @@ class AtomicQuadrature(ABC):
             raise ValueError("`degree` must not be negative")
         if hasattr(self, "_available_degrees"):
             if value not in self._available_degrees:
-                msg = (f"`degree` {value} not available. Possible values are:"
-                       f"{self._available_degrees}")
+                msg = (
+                    f"`degree` {value} not available. Possible values are:"
+                    f"{self._available_degrees}"
+                )
                 raise ValueError(msg)
 
     def __init__(self, *pw_args, jacobian=None, **pw_kwargs):
@@ -85,7 +88,7 @@ class AtomicQuadrature(ABC):
             w = self._apply_jacobian(x, w, jacobian)
         self.points = x
         self.weights = w
-        #TODO: ensure that points are contiguous?
+        # TODO: ensure that points are contiguous?
         # Maybe necessary for reliable reshaping?
 
     @abstractmethod
@@ -102,18 +105,19 @@ class AtomicQuadrature(ABC):
         msg = f"{self.__class__} missing method _points_weights"
         raise NotImplementedError(msg)
 
-    def _load_points_weights(self, folder, type, suffix=''):
+    def _load_points_weights(self, folder, type, suffix=""):
         if self.degree is not None:
             filename = f"{type}_size{self.size}_degree{self.degree}{suffix}.npy"
         else:
             filename = f"{type}_size{self.size}{suffix}.npy"
-        data = np.load(QUAD_DATA_DIR / folder / filename,
-                       allow_pickle=False, fix_imports=False)
-        if data.shape[0] not in [self.dim, self.dim+1]:
+        data = np.load(
+            QUAD_DATA_DIR / folder / filename, allow_pickle=False, fix_imports=False
+        )
+        if data.shape[0] not in [self.dim, self.dim + 1]:
             raise TypeError(
                 f"Read data has wrong shape {data.shape} for dim {self.dim}"
             )
-        points = data[0:self.dim]
+        points = data[0 : self.dim]
         if data.shape[0] == self.dim + 1:
             weights = data[-1]
         else:
@@ -121,7 +125,8 @@ class AtomicQuadrature(ABC):
         return points, weights
 
     def _apply_jacobian(self, x, w, jacobian):
-        if self.dim == 1: x = np.expand_dims(x, 0)
+        if self.dim == 1:
+            x = np.expand_dims(x, 0)
         try:
             w = w * jacobian(*x)
         except:
@@ -154,7 +159,6 @@ class AtomicQuadrature(ABC):
 
 
 class QuadratureWithoutDegree(AtomicQuadrature):
-
     def __init__(self, size, *args, **kwargs):
         self.size = size
         self.degree = None
@@ -162,7 +166,6 @@ class QuadratureWithoutDegree(AtomicQuadrature):
 
 
 class QuadratureWithFixedDegree(AtomicQuadrature):
-
     def __init__(self, size, *args, **kwargs):
         self.size = size
         self.degree = self._get_degree()
@@ -182,7 +185,6 @@ class QuadratureWithFixedDegree(AtomicQuadrature):
 
 
 class QuadratureWithDegree(AtomicQuadrature):
-
     def __init__(self, *args, size=None, degree=None, **kwargs):
         if size is not None and degree is None:
             self.size = size
@@ -203,7 +205,7 @@ class QuadratureWithDegree(AtomicQuadrature):
         overwritten in the corresponding child class.
 
         """
-        if hasattr(self, '_available_sizes'):
+        if hasattr(self, "_available_sizes"):
             selection = np.nonzero(self._available_degrees == degree)
             return self._available_sizes[selection].min()
         else:
@@ -219,7 +221,7 @@ class QuadratureWithDegree(AtomicQuadrature):
         be overwritten in the corresponding child class.
 
         """
-        if hasattr(self, '_available_degrees'):
+        if hasattr(self, "_available_degrees"):
             selection = np.nonzero(self._available_sizes == size)
             return self._available_degrees[selection].max()
         else:
@@ -228,7 +230,6 @@ class QuadratureWithDegree(AtomicQuadrature):
 
 
 class AtomicR1Quadrature(AtomicQuadrature):
-
     dim = 1
 
     @property
@@ -244,14 +245,13 @@ class AtomicR1Quadrature(AtomicQuadrature):
             raise ValueError("`a` must not be equal to `b`")
         self._periodic = periodic
         super().__init__(*args, a=a, b=b, **kwargs)
-        if self._periodic and self._has_endpoints: # drop endpoint
+        if self._periodic and self._has_endpoints:  # drop endpoint
             self.weights[0] += self.weights[-1]
             self.weights = self.weights[:-1]
             self.points = self.points[:-1]
 
 
 class AtomicS2Quadrature(AtomicQuadrature):
-
     dim = 2
 
     def __init__(self, *args, swap_angles=False, **kwargs):
@@ -265,7 +265,6 @@ class AtomicS2Quadrature(AtomicQuadrature):
 
 
 class AtomicSO3Quadrature(AtomicQuadrature):
-
     dim = 3
 
     def __init__(self, *args, **kwargs):
@@ -274,7 +273,6 @@ class AtomicSO3Quadrature(AtomicQuadrature):
 
 
 class NoQuadrature(ABC):
-
     dim = 1
 
     def __init__(self, points, *args, **kwargs):

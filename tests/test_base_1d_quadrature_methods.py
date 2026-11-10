@@ -7,10 +7,11 @@ from contextlib import nullcontext as does_not_raise
 from openquad.newton_cotes import CompositeTrapezoid, CompositeSimpson, Romberg
 from openquad.gauss import GaussLegendre, GaussLobattoLegendre
 
-#@pytest.fixture()
+
+# @pytest.fixture()
 def f(x):
     """Test integrand. Integral should yield 1."""
-    return (5*x + 4*x**2 + 3*x**3 + 2*x**4 + 1*x**5) / 215750
+    return (5 * x + 4 * x**2 + 3 * x**3 + 2 * x**4 + 1 * x**5) / 215750
 
 
 def test_test_function():
@@ -28,7 +29,7 @@ def test_test_function():
         (Romberg, False),
         (GaussLegendre, True),
         (GaussLobattoLegendre, True),
-    ]
+    ],
 )
 def test_initialization(method, has_poly_acc):
     # missing required arguments
@@ -42,7 +43,7 @@ def test_initialization(method, has_poly_acc):
         quad = method(size=5, b=1)
     with pytest.raises(TypeError):
         quad = method(a=0, b=1)
-    
+
     # duplicate arguments
     if has_poly_acc:
         with pytest.raises(TypeError, match="not both"):
@@ -82,9 +83,9 @@ def test_initialization(method, has_poly_acc):
         (CompositeSimpson, 21, True, lambda size: 3),
         (CompositeSimpson, 22, True, lambda size: 3),
         (Romberg, 9, False, lambda size: None),
-        (GaussLegendre, 5, True, lambda size: 2*size - 1),
-        (GaussLobattoLegendre, 5, True, lambda size: 2*size - 3),
-    ]
+        (GaussLegendre, 5, True, lambda size: 2 * size - 1),
+        (GaussLobattoLegendre, 5, True, lambda size: 2 * size - 3),
+    ],
 )
 def test_fields_and_integration(method, size, has_normalized_weights, poly_acc):
     a = 0
@@ -99,7 +100,7 @@ def test_fields_and_integration(method, size, has_normalized_weights, poly_acc):
 
     # test weights
     if has_normalized_weights:
-        assert np.sum(quad.weights) == pytest.approx(b-a)
+        assert np.sum(quad.weights) == pytest.approx(b - a)
     else:
         assert np.all(quad.weights == np.ones(size))
 
@@ -119,14 +120,15 @@ def test_fields_and_integration(method, size, has_normalized_weights, poly_acc):
     [
         (GaussLegendre, 1e-13),
         pytest.param(
-            GaussLobattoLegendre, 1e-13,
+            GaussLobattoLegendre,
+            1e-13,
             marks=pytest.mark.xfail(
                 reason="Error 1.7e-12 against required 1e-13. Gauss-Lobatto weights "
                 "are also wrong at larger sizes: at size 30 they sum to 2.169 "
                 "instead of 3 on [-1, 2]",
             ),
         ),
-    ]
+    ],
 )
 def test_poly_acc(method, tol):
     """Test the polynomial accuracy of the given method by checking that all
@@ -134,17 +136,18 @@ def test_poly_acc(method, tol):
 
     Here, Legendre polynomials integrated from -1 to 1.
     """
-    max_degree  = 100
-    for degree in np.arange(max_degree +1):
+    max_degree = 100
+    for degree in np.arange(max_degree + 1):
         quad = method(degree=degree, a=-1, b=1)
         # First, test that the weights are normalized:
         assert np.sum(quad.weights) == pytest.approx(2)
         # Then, test the integration of all polynomials:
-        orders = np.arange(degree+1)[:, np.newaxis]
+        orders = np.arange(degree + 1)[:, np.newaxis]
         Pls = special.eval_legendre(orders, quad.points)
         results = quad.integrate(Pls, axis=-1)
-        truevals = np.concatenate(([2], np.zeros(Pls.shape[0]-1)))
+        truevals = np.concatenate(([2], np.zeros(Pls.shape[0] - 1)))
         assert np.abs(results - truevals).max() == pytest.approx(0, abs=tol)
+
 
 def none_type_quadrature():
     points = np.linspace(0, 1, 10)

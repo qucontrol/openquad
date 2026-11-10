@@ -12,9 +12,9 @@ import openquad
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'OpenQuad'
-copyright = '2024, OpenQuad developers'
-author = 'Alexander Blech et al.'
+project = "OpenQuad"
+copyright = "2024, OpenQuad developers"
+author = "Alexander Blech et al."
 release = openquad.__version__
 
 # -- General configuration ---------------------------------------------------
@@ -25,21 +25,19 @@ nitpicky = True
 # nitpick_ignore = [("py:class", "callable")]
 
 extensions = [
-    'autoapi.extension',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.doctest',
-    'sphinx_design',
-    'sphinx_copybutton',
-    'numpydoc',
+    "autoapi.extension",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.doctest",
+    "sphinx_design",
+    "sphinx_copybutton",
+    "numpydoc",
 ]
 
-intersphinx_mapping = get_intersphinx_mapping(
-packages={"python", "numpy", "scipy"}
-)
-#intersphinx_disabled_reftypes = ["*"]
+intersphinx_mapping = get_intersphinx_mapping(packages={"python", "numpy", "scipy"})
+# intersphinx_disabled_reftypes = ["*"]
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # Will be included in the beginning of every RST file
 rst_prolog = """
@@ -49,7 +47,7 @@ rst_prolog = """
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'pydata_sphinx_theme'
+html_theme = "pydata_sphinx_theme"
 
 html_theme_options = {
     "logo": {
@@ -76,22 +74,22 @@ html_theme_options = {
     "footer_center": ["sphinx-version"],
     "navbar_end": [
         "theme-switcher",
-        #"version-switcher",
+        # "version-switcher",
         "navbar-icon-links",
     ],
     "use_edit_page_button": False,
     "navbar_align": "content",
-    #"show_version_warning_banner": True,
+    # "show_version_warning_banner": True,
     "show_toc_level": 2,
-    "show_nav_level": 2, #TODO
-    "navigation_depth": 4, #TODO
-    #"collapse_navigation": True,
-    "announcement": "https://raw.githubusercontent.com/qucontrol/openquad/main/doc/_templates/announcement_banner.html"
+    "show_nav_level": 2,  # TODO
+    "navigation_depth": 4,  # TODO
+    # "collapse_navigation": True,
+    "announcement": "https://raw.githubusercontent.com/qucontrol/openquad/main/doc/_templates/announcement_banner.html",
 }
 
 
-html_static_path = ['_static']
-html_css_files = ['openquad.css']
+html_static_path = ["_static"]
+html_css_files = ["openquad.css"]
 html_copy_source = False
 html_show_sourcelink = False
 
@@ -117,12 +115,14 @@ autoapi_options = [
     "inherited-members",
 ]
 
+
 def skip_submodules(app, what, name, obj, skip, options):
     if what == "module":
         skip = True
     elif what == "package" and name != "openquad":
         skip = True
     return skip
+
 
 # -----------------------------------------------------------------------------
 def setup(sphinx):
