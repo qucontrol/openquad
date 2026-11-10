@@ -1,6 +1,6 @@
 .. _contributing:
 
-Contributer guide
+Contributor guide
 =================
 
 Contributions are very welcome! Whether you're reporting bugs, suggesting new

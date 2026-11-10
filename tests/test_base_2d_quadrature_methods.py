@@ -23,13 +23,17 @@ def f(theta, phi):
         + 4 * special.sph_harm_y(4, 2, theta, phi)
         + 5 * special.sph_harm_y(5, 4, theta, phi)
     )
-    return poly / (4*np.pi)
+    return poly / (4 * np.pi)
 
 
 def test_testfuction():
     """Make sure that the integral over the test function yields 1."""
-    assert integrate.dblquad(lambda t, p: np.sin(t)*f(t, p).real, 0, 2*np.pi, 0, np.pi)[0] == pytest.approx(1)
-    assert integrate.dblquad(lambda t, p: np.sin(t)*f(t, p).imag, 0, 2*np.pi, 0, np.pi)[0] == pytest.approx(0)
+    assert integrate.dblquad(
+        lambda t, p: np.sin(t) * f(t, p).real, 0, 2 * np.pi, 0, np.pi
+    )[0] == pytest.approx(1)
+    assert integrate.dblquad(
+        lambda t, p: np.sin(t) * f(t, p).imag, 0, 2 * np.pi, 0, np.pi
+    )[0] == pytest.approx(0)
 
 
 @pytest.mark.parametrize(
@@ -41,7 +45,7 @@ def test_testfuction():
         (WomersleyS2Design, 6, 3, True),
         (FibonacciSphere, 13, None, False),
         (ZCW2, 21, None, False),
-    ]
+    ],
 )
 def test_initialization(method, size, degree, has_degree):
     # missing required arguments
@@ -80,28 +84,34 @@ def test_initialization(method, size, degree, has_degree):
         (LebedevLaikov, 14, 5, {}),
         (GraefS2Gauss, 12, 5, {}),
         (GraefS2Design, 12, 5, {}),
-        (WomersleyS2Design, 12, 5, {'symmetric':True}),
-        (WomersleyS2Design, 18, 5, {'symmetric':False}),
+        (WomersleyS2Design, 12, 5, {"symmetric": True}),
+        (WomersleyS2Design, 18, 5, {"symmetric": False}),
         pytest.param(
-            FibonacciSphere, 21, None, {},
+            FibonacciSphere,
+            21,
+            None,
+            {},
             marks=pytest.mark.xfail(
                 reason="Covering without a degree: integral 0.975 against required "
                 "1 +- 1e-6. Tolerance suspected, unconfirmed",
             ),
         ),
         pytest.param(
-            ZCW2, 21, None, {},
+            ZCW2,
+            21,
+            None,
+            {},
             marks=pytest.mark.xfail(
                 reason="Covering without a degree: integral 0.940 against required "
                 "1 +- 1e-6. Tolerance suspected, unconfirmed",
             ),
         ),
-    ]
+    ],
 )
 def test_fields_and_integration(method, size, degree, kwargs):
     tol = 1e-6
     quad = method(size=size, **kwargs)
-    
+
     # test fields
     assert quad.dim == 2
     assert quad.degree == degree
@@ -109,7 +119,7 @@ def test_fields_and_integration(method, size, degree, kwargs):
 
     # test weights
     assert quad.weights.shape == (size,)
-    assert np.sum(quad.weights) == pytest.approx(4*np.pi)
+    assert np.sum(quad.weights) == pytest.approx(4 * np.pi)
 
     # test grid dimension
     assert quad.points.shape == (2, size)
@@ -123,7 +133,6 @@ def test_fields_and_integration(method, size, degree, kwargs):
     assert quad.integrate(f_samples) == pytest.approx(1, rel=tol)
 
 
-
 @pytest.mark.parametrize(
     "method, tol, kwargs",
     [
@@ -131,7 +140,7 @@ def test_fields_and_integration(method, size, degree, kwargs):
         (GraefS2Gauss, 1e-9, {}),
         (GraefS2Design, 1e-8, {}),
         (WomersleyS2Design, 1e-12, {}),
-    ]
+    ],
 )
 def test_poly_acc(method, tol, kwargs):
     max_degree = 50
@@ -141,12 +150,10 @@ def test_poly_acc(method, tol, kwargs):
     for degree in tested_degree:
         quad = method(degree=degree, **kwargs)
         # First, test that the weights are normalized:
-        assert np.sum(quad.weights) == pytest.approx(4*np.pi)
+        assert np.sum(quad.weights) == pytest.approx(4 * np.pi)
         # Then, test the integration of all polynomials:
         q = quaternionic.array.from_spherical_coordinates(*quad.angles)
-        Ylm = wigner.sYlm(0, q)[:, :wigner.Yindex(degree, degree)+1]
+        Ylm = wigner.sYlm(0, q)[:, : wigner.Yindex(degree, degree) + 1]
         results = quad.integrate(Ylm, axis=0)
-        truevals = np.concatenate(
-            ([np.sqrt(4*np.pi)], np.zeros(Ylm.shape[-1]-1))
-        )
+        truevals = np.concatenate(([np.sqrt(4 * np.pi)], np.zeros(Ylm.shape[-1] - 1)))
         assert np.abs(results - truevals).max() == pytest.approx(0, abs=tol)

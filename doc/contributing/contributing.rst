@@ -52,7 +52,7 @@ issues in commits.
 .. _Linking a pull request to an issue: https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
 
 
-Relases follow `semantic versioning`_ and need to be compatible with `PyPA
+Releases follow `semantic versioning`_ and need to be compatible with `PyPA
 version specifiers`_ (former `PEP440`_).
 
 .. _semantic versioning: https://semver.org/
@@ -67,11 +67,22 @@ Code needs to be compatible with `PEP 8`_. It is formatted with `Ruff`_, which
 follows the Black code style, with Ruff's default line length of 88
 characters.
 
+Formatting, linting, spelling and the project configuration are checked with
+`prek`_, which is part of the development installation. The checks and their
+versions are listed in ``.pre-commit-config.yaml``, and CI runs the same ones.
+Run ``prek install`` once to check every commit before it is made, or run all
+checks on demand:
+
+.. code-block:: bash
+
+   prek run --all-files
+
 Docstrings are written according to the `NumPy Style Guide`_, e.g. see this
 `comprehensive example`_.
 
 .. _PEP 8: https://peps.python.org/pep-0008/
 .. _Ruff: https://docs.astral.sh/ruff/formatter/
+.. _prek: https://prek.j178.dev/
 .. _NumPy Style Guide: https://numpydoc.readthedocs.io/en/latest/format.html
 .. _comprehensive example: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_numpy.html
 

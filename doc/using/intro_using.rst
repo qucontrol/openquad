@@ -56,7 +56,7 @@ Sample points and weights
 """""""""""""""""""""""""
 
 Sample points and weights are stored as NumPy arrays in :attr:`~openquad.S2.points` and
-:attr:`~openquad.S2.weights`, respecitvely.
+:attr:`~openquad.S2.weights`, respectively.
 
 .. doctest::
 

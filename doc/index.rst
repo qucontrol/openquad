@@ -10,7 +10,7 @@ OpenQuad documentation
    User guide <using/index>
    Tutorials <using/tutorials>
    API reference <api/index>
-   Contributer guide <contributing/index>
+   Contributor guide <contributing/index>
 .. Cite me <using/cite>
 
 **Version**: |release|

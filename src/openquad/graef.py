@@ -4,7 +4,7 @@
 
 import numpy as np
 
-from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree)
+from .base import AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree
 from .data.graef import (
     S2_GAUSS_METHODS,
     S2_SPHERICAL_DESIGNS,
@@ -14,7 +14,6 @@ from .data.graef import (
 
 
 class GraefS2Gauss(AtomicS2Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(S2_GAUSS_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
     _available_degrees = _TABLE[:, 0]
@@ -33,13 +32,12 @@ class GraefS2Gauss(AtomicS2Quadrature, QuadratureWithDegree):
             Quadrature weights.
 
         """
-        points, weights = self._load_points_weights('graef', 's2_gauss')
-        weights = weights * (4*np.pi)
+        points, weights = self._load_points_weights("graef", "s2_gauss")
+        weights = weights * (4 * np.pi)
         return points, weights
 
 
 class GraefS2Design(AtomicS2Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1]
     _available_degrees = _TABLE[:, 0]
@@ -58,13 +56,12 @@ class GraefS2Design(AtomicS2Quadrature, QuadratureWithDegree):
             Quadrature weights.
 
         """
-        points, weights = self._load_points_weights('graef', 's2_design')
-        weights = weights * (4*np.pi)
+        points, weights = self._load_points_weights("graef", "s2_design")
+        weights = weights * (4 * np.pi)
         return points, weights
 
 
 class GraefSO3Gauss(AtomicSO3Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(SO3_GAUSS_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
     _available_degrees = _TABLE[:, 0]
@@ -83,13 +80,12 @@ class GraefSO3Gauss(AtomicSO3Quadrature, QuadratureWithDegree):
             Quadrature weights.
 
         """
-        points, weights = self._load_points_weights('graef', 'so3_gauss')
-        weights = weights * (8*np.pi**2)
+        points, weights = self._load_points_weights("graef", "so3_gauss")
+        weights = weights * (8 * np.pi**2)
         return points, weights
 
 
 class GraefSO3Chebyshev(AtomicSO3Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(SO3_CHEBYSHEV_METHODS, dtype=int)
     _available_sizes = _TABLE[:, 1]
     _available_degrees = _TABLE[:, 0]
@@ -108,6 +104,6 @@ class GraefSO3Chebyshev(AtomicSO3Quadrature, QuadratureWithDegree):
             Quadrature weights.
 
         """
-        points, weights = self._load_points_weights('graef', 'so3_chebyshev')
-        weights = weights * (8*np.pi**2)
+        points, weights = self._load_points_weights("graef", "so3_chebyshev")
+        weights = weights * (8 * np.pi**2)
         return points, weights

@@ -9,8 +9,7 @@ from .data.karney import SO3_COVERINGS
 
 
 class KarneySO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
-
-    _TABLE = np.array(SO3_COVERINGS, dtype='object')
+    _TABLE = np.array(SO3_COVERINGS, dtype="object")
     _available_sizes = _TABLE[:, 0].astype(int)
 
     def _points_weights(self):
@@ -29,6 +28,6 @@ class KarneySO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
             Quadrature weights.
 
         """
-        points, weights = self._load_points_weights('karney', 'so3_covering')
-        weights = weights * (8*np.pi**2)
+        points, weights = self._load_points_weights("karney", "so3_covering")
+        weights = weights * (8 * np.pi**2)
         return points, weights

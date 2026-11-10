@@ -4,12 +4,11 @@
 
 import numpy as np
 
-from .base import (AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree)
+from .base import AtomicSO3Quadrature, AtomicS2Quadrature, QuadratureWithDegree
 from .data.womersley import S2_SPHERICAL_DESIGNS
 
 
 class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1]
     _available_degrees = _TABLE[:, 0]
@@ -33,12 +32,12 @@ class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithDegree):
         """
         if symmetric is not None:
             if symmetric:
-                suffix = '_sym'
+                suffix = "_sym"
             else:
-                suffix = '_nosym'
+                suffix = "_nosym"
             points, weights = self._load_points_weights(
-                'womersley',
-                's2_design',
+                "womersley",
+                "s2_design",
                 suffix,
             )
         if symmetric is None:
@@ -46,22 +45,21 @@ class WomersleyS2Design(AtomicS2Quadrature, QuadratureWithDegree):
             # asymmetric
             try:
                 points, weights = self._load_points_weights(
-                    'womersley',
-                    's2_design',
-                    '_sym',
+                    "womersley",
+                    "s2_design",
+                    "_sym",
                 )
             except FileNotFoundError:
                 points, weights = self._load_points_weights(
-                    'womersley',
-                    's2_design',
-                    '_nosym',
+                    "womersley",
+                    "s2_design",
+                    "_nosym",
                 )
-        weights = weights * (4*np.pi)
+        weights = weights * (4 * np.pi)
         return points, weights
 
 
 class WomersleySO3Chebyshev(AtomicSO3Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(S2_SPHERICAL_DESIGNS, dtype=int)
     _available_sizes = _TABLE[:, 1] // 2
     _available_degrees = (_TABLE[:, 0] - 1) // 2
@@ -84,11 +82,11 @@ class WomersleySO3Chebyshev(AtomicSO3Quadrature, QuadratureWithDegree):
         msg = "SO3 quadratures from Womersley not yet implemented"
         raise NotImplementedError(msg)
 
-        points, weights = self._load_points_weights('womersley', 's3_design')
+        points, weights = self._load_points_weights("womersley", "s3_design")
         # data contains the cartesian coordinates
         # TODO: identify opposite points
         # TODO: convert to Euler angle representation
         # TODO: remove NotImplementedError at beginning of this method
         points = ...
-        weights = np.ones(self.size) / self.size * (8*np.pi**2)
+        weights = np.ones(self.size) / self.size * (8 * np.pi**2)
         return points, weights

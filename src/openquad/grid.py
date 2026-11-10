@@ -8,11 +8,11 @@ import quaternionic
 
 
 def angles_from_xyz(xyz, axis=0):
-    """Calculate the spherical polar angles of a set of cartesian
+    r"""Calculate the spherical polar angles of a set of cartesian
     coordinates.
 
     $\theta$ denotes the polar angle, while $\phi$ denotes the azimuthal angle.
-    
+
     Parameters
     ----------
     xyz : array_like
@@ -32,16 +32,16 @@ def angles_from_xyz(xyz, axis=0):
     xyz = np.moveaxis(xyz, axis, 0)
     x, y, z = xyz
     θ = np.arccos(z / 1.0)
-    ϕ = np.arctan2(y, x) % (2*np.pi)
+    ϕ = np.arctan2(y, x) % (2 * np.pi)
     return np.moveaxis([θ, ϕ], 0, axis)
 
 
 def xyz_from_angles(theta_phi, axis=0):
-    """Calculate the cartesian coordinates from a set of spherical
+    r"""Calculate the cartesian coordinates from a set of spherical
     polar angles.
 
     $\theta$ denotes the polar angle, while $\phi$ denotes the azimuthal angle.
-    
+
     Parameters
     ----------
     theta_phi : array_like
@@ -67,7 +67,7 @@ def xyz_from_angles(theta_phi, axis=0):
 def euler_angles_from_quaternions(quaternions, axis=0):
     """Convert quaternions to Euler angles.
 
-    Paramters
+    Parameters
     ---------
     angles : quaternion array
         Array of quaternions
@@ -83,14 +83,14 @@ def euler_angles_from_quaternions(quaternions, axis=0):
 
     """
     quaternions = np.moveaxis(quaternions, axis, -1)
-    angles = quaternions.as_euler_angles % (2*np.pi)
+    angles = quaternions.as_euler_angles % (2 * np.pi)
     return np.moveaxis(angles, -1, axis)
 
 
 def quaternions_from_euler_angles(angles, axis=0):
     """Convert Euler angles to quaternions.
 
-    Paramters
+    Parameters
     ---------
     angles : array_like
         Array of Euler angles.
@@ -111,7 +111,7 @@ def quaternions_from_euler_angles(angles, axis=0):
 
 class Grid(ABC):
     """TODO"""
-    
+
     @abstractmethod
     def _get_file_data_and_header(self, representation):
         """TODO"""
@@ -126,10 +126,9 @@ class Grid(ABC):
         if weights is not None:
             data = np.vstack((*data, weights))
             header = header + f"{'weights':>25}"
-        index = np.arange(1, data.shape[-1]+1)
-        fmt = '%10i' + data.shape[0] * '%25.16e'
-        np.savetxt(filename, np.vstack((index, *data)).T,
-                   fmt=fmt, header=header)
+        index = np.arange(1, data.shape[-1] + 1)
+        fmt = "%10i" + data.shape[0] * "%25.16e"
+        np.savetxt(filename, np.vstack((index, *data)).T, fmt=fmt, header=header)
 
 
 class S2Grid(Grid):
@@ -138,6 +137,7 @@ class S2Grid(Grid):
     Grid points are stored either as spherical polar angles `theta` and `phi`
     or in terms of cartesian coordinates `x`, `y` and `z`.
     """
+
     def __init__(self, representation, points, axis=0):
         """
         Parameters
@@ -159,9 +159,9 @@ class S2Grid(Grid):
         self._xyz = None
 
         points = np.moveaxis(points, axis, 0)
-        if representation == 'angles':
+        if representation == "angles":
             self.angles = points.reshape(2, -1)
-        elif representation == 'xyz':
+        elif representation == "xyz":
             self.xyz = points.reshape(3, -1)
         else:
             raise ValueError(f"Unknown representation: {representation}")
@@ -194,10 +194,10 @@ class S2Grid(Grid):
             + f"\nRepresentation: {representation}\n"
             + f"Number of grid points: {self.N}\n"
         )
-        if representation == 'angles':
+        if representation == "angles":
             data = self.angles
             header = header + f"{'index':>8}{'theta (rad)':>25}{'phi (rad)':>25}"
-        elif representation == 'xyz':
+        elif representation == "xyz":
             data = self.xyz
             header = header + f"{'index':>8}{'x':>25}{'y':>25}{'z':>25}"
         else:
@@ -211,6 +211,7 @@ class SO3Grid(Grid):
     Orientations are stored in several representations:
     Euler angles, quaternions.
     """
+
     def __init__(self, representation, points, axis=0):
         """
         Parameters
@@ -232,9 +233,9 @@ class SO3Grid(Grid):
         self._angles = None
         self._quaternions = None
 
-        if representation == 'Euler angles':
+        if representation == "Euler angles":
             self.angles = points.reshape(3, -1)
-        elif representation == 'quaternions':
+        elif representation == "quaternions":
             self.quaternions = points.reshape(-1, 4)
         else:
             raise ValueError(f"Unknown representation: {representation}")
@@ -267,12 +268,17 @@ class SO3Grid(Grid):
             + f"\nRepresentation: {representation}\n"
             + f"Number of grid points: {self.N}\n"
         )
-        if representation == 'Euler angles':
+        if representation == "Euler angles":
             data = self.angles
-            header = header + f"{'index':>8}{'alpha (rad)':>25}{'beta (rad)':>25}{'gamma (rad)':>25}"
-        elif representation == 'quaternions':
+            header = (
+                header
+                + f"{'index':>8}{'alpha (rad)':>25}{'beta (rad)':>25}{'gamma (rad)':>25}"
+            )
+        elif representation == "quaternions":
             data = self.quaternions
-            header = header + f"{'index':>8}{'q_0':>25}{'q_1':>25}{'q_2':>25}{'q_3':>25}"
+            header = (
+                header + f"{'index':>8}{'q_0':>25}{'q_1':>25}{'q_2':>25}{'q_3':>25}"
+            )
         else:
             raise ValueError(f"Unknown representation: {representation}")
         return data, header

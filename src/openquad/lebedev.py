@@ -9,7 +9,6 @@ from .data.lebedev import LEBEDEV_LAIKOV_QUADRATURES
 
 
 class LebedevLaikov(AtomicS2Quadrature, QuadratureWithDegree):
-
     _TABLE = np.asarray(LEBEDEV_LAIKOV_QUADRATURES, dtype=int)
     _available_sizes = _TABLE[:, 1]
     _available_degrees = _TABLE[:, 0]
@@ -35,6 +34,6 @@ class LebedevLaikov(AtomicS2Quadrature, QuadratureWithDegree):
             Array of ones. This is only returned to retain a common interface.
 
         """
-        points, weights = self._load_points_weights('lebedev', 's2_gauss')
-        weights = weights * (4*np.pi)
+        points, weights = self._load_points_weights("lebedev", "s2_gauss")
+        weights = weights * (4 * np.pi)
         return points, weights

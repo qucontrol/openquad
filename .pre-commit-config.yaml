@@ -1,0 +1,28 @@
+# OpenQuad - open database for multi-dimensional numerical integration
+# SPDX-FileCopyrightText: 2026  Alexander Blech
+# SPDX-License-Identifier: MPL-2.0
+
+# Checks run before each commit after `prek install`, and in CI with
+# `prek run --all-files`. Versions are pinned; `prek update` moves them forward.
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.2
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+      - id: codespell
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.39.0
+    hooks:
+      - id: check-github-workflows
+
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.27
+    hooks:
+      - id: validate-pyproject

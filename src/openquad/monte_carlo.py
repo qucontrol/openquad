@@ -5,11 +5,15 @@
 import numpy as np
 import quaternionic
 
-from .base import QuadratureWithoutDegree, AtomicR1Quadrature, AtomicS2Quadrature, AtomicSO3Quadrature
+from .base import (
+    QuadratureWithoutDegree,
+    AtomicR1Quadrature,
+    AtomicS2Quadrature,
+    AtomicSO3Quadrature,
+)
 
 
 class MonteCarloR1(AtomicR1Quadrature, QuadratureWithoutDegree):
-
     _has_endpoints = False
 
     def __init__(self, size, a, b, jacobian=None, seed=None, **kwargs):
@@ -17,12 +21,12 @@ class MonteCarloR1(AtomicR1Quadrature, QuadratureWithoutDegree):
 
     def _points_weights(self, a, b, seed):
         """One-dimensional Monte-Carlo integration.
-    
+
         Parameters
         ----------
         size : int
             Number of random sampling points.
-    
+
         Returns
         -------
         points : ndarray
@@ -33,23 +37,22 @@ class MonteCarloR1(AtomicR1Quadrature, QuadratureWithoutDegree):
         """
         rng = np.random.default_rng(seed=seed)
         x = rng.uniform(a, b, self.size)
-        w = np.ones(self.size, dtype=float) / self.size * (b-a)/2
+        w = np.ones(self.size, dtype=float) / self.size * (b - a) / 2
         return x, w
 
 
 class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutDegree):
-
     def __init__(self, size, seed=None):
         super().__init__(size=size, seed=seed)
 
     def _points_weights(self, seed):
         """Monte-Carlo integration on the unit sphere.
-    
+
         Parameters
         ----------
         size : int
             Number of random sampling points.
-    
+
         Returns
         -------
         points : ndarray
@@ -59,14 +62,14 @@ class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutDegree):
 
         """
         x = self._sample_spherical_polar_angles(self.size, seed)
-        w = np.ones(self.size, dtype=float) / self.size * (4*np.pi)
+        w = np.ones(self.size, dtype=float) / self.size * (4 * np.pi)
         return x, w
 
     def _sample_spherical_polar_angles(self, n, seed=None):
         """Generate a uniform distribution of points on the unit sphere.
 
-        The unit sphere is sampled in spherical polar coodinates.
-        
+        The unit sphere is sampled in spherical polar coordinates.
+
         Parameters
         ----------
         n : int
@@ -74,7 +77,7 @@ class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutDegree):
         seed : int, optional
             Seed for the pseudo-random number generator. If None, it will
             be determined by the OS.
-    
+
         Returns
         -------
         angles : ndarray
@@ -84,20 +87,19 @@ class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutDegree):
 
         """
         rng = np.random.default_rng(seed=seed)
-        phi = rng.uniform(0, 2*np.pi, n)
+        phi = rng.uniform(0, 2 * np.pi, n)
         u = rng.uniform(-1, 1, n)
         theta = np.arccos(u)
         return np.array([theta, phi])
 
 
 class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
-
-    def __init__(self, size, seed=None, method='quaternions'):
+    def __init__(self, size, seed=None, method="quaternions"):
         super().__init__(size=size, seed=seed, method=method)
 
     def _points_weights(self, seed, method):
         """Three-angle Monte-Carlo integration.
-    
+
         Parameters
         ----------
         size : int
@@ -105,7 +107,7 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
         method : str
             Sampling method. Possible options are `'quaternions'` and
             `'angles'`.
-    
+
         Returns
         -------
         points : ndarray
@@ -115,19 +117,19 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
 
         """
         x = self.random_rotations(self.size, method, seed)
-        w = np.ones(self.size, dtype=float) / self.size * (8*np.pi**2)
+        w = np.ones(self.size, dtype=float) / self.size * (8 * np.pi**2)
         return x, w
 
     def random_rotations(self, n, method, seed=None):
         """Generate uniform random 3d rotations.
-        
+
         The parameter `method` controls which method is used to sample
         orientation space: For ``method='quaternions'``, orientation space is
         sampled in quaternion representation with Showmake's method.  For
         ``method='angles'``, orientation space is sampled in Euler angle
         representation. Both methods yield uniform sampling without clustering
         at the poles.
-    
+
         Parameters
         ----------
         n : int
@@ -137,7 +139,7 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
         seed : int, optional
             Seed for the pseudo-random number generator. If None, it will
             be determined by the OS.
-    
+
         Returns
         -------
         angles : ndarray
@@ -145,10 +147,10 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
             The Euler angles are stored in the first axis.
 
         """
-        if method == 'quaternions':
+        if method == "quaternions":
             quaternions = self._sample_quaternions(n, seed)
             x = quaternions.to_euler_angles.T
-        elif method == 'angles':
+        elif method == "angles":
             x = self._sample_euler_angles(n, seed)
         else:
             raise ValueError(f"Invalid sampling method: {method}")
@@ -156,9 +158,9 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
 
     def _sample_quaternions(self, n, seed=None):
         """Generate uniform random 3d rotations in quaternion representation.
-        
+
         This function uses Shoemake's method.
-    
+
         Parameters
         ----------
         n : int
@@ -166,7 +168,7 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
         seed : int, optional
             Seed for the pseudo-random number generator. If None, it will
             be determined by the OS.
-    
+
         Returns
         -------
         quaternsions : quaternionic array
@@ -176,17 +178,17 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
         """
         rng = np.random.default_rng(seed=seed)
         x = rng.random((3, n))
-        s1 = np.sin(2*np.pi*x[0])
-        s2 = np.sin(2*np.pi*x[1])
-        c1 = np.cos(2*np.pi*x[0])
-        c2 = np.cos(2*np.pi*x[1])
+        s1 = np.sin(2 * np.pi * x[0])
+        s2 = np.sin(2 * np.pi * x[1])
+        c1 = np.cos(2 * np.pi * x[0])
+        c2 = np.cos(2 * np.pi * x[1])
         r1 = np.sqrt(1 - x[2])
         r2 = np.sqrt(x[2])
-        return quaternionic.array(np.transpose([c2*r2, s1*r1, c1*r1, s2*r2]))
+        return quaternionic.array(np.transpose([c2 * r2, s1 * r1, c1 * r1, s2 * r2]))
 
     def _sample_euler_angles(self, n, seed=None):
         """Generate uniform random 3d rotations in Euler angle representation.
-        
+
         Parameters
         ----------
         n : int
@@ -194,7 +196,7 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
         seed : int, optional
             Seed for the pseudo-random number generator. If None, it will
             be determined by the OS.
-    
+
         Returns
         -------
         angles : ndarray
@@ -203,8 +205,8 @@ class MonteCarloSO3(AtomicSO3Quadrature, QuadratureWithoutDegree):
 
         """
         rng = np.random.default_rng(seed=seed)
-        alpha = rng.uniform(0, 2*np.pi, n)
-        gamma = rng.uniform(0, 2*np.pi, n)
+        alpha = rng.uniform(0, 2 * np.pi, n)
+        gamma = rng.uniform(0, 2 * np.pi, n)
         u = rng.uniform(-1, 1, n)
         beta = np.arccos(u)
         return np.array([alpha, beta, gamma])
