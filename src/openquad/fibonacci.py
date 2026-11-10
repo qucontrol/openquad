@@ -56,7 +56,7 @@ class FibonacciSphere(AtomicS2Quadrature, QuadratureWithoutDegree):
     #TODO: is there a restriction for the available sizes?
 
     def _points_weights(self):
-        """Spherical Fibonacci point sets for S2 quadrature.
+        r"""Spherical Fibonacci point sets for S2 quadrature.
 
         Algorithm taken from Eq. (4) in
         Marques et al., Computer Graphics Forum 32, 8 (2013)

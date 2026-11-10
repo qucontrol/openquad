@@ -8,7 +8,7 @@ import quaternionic
 
 
 def angles_from_xyz(xyz, axis=0):
-    """Calculate the spherical polar angles of a set of cartesian
+    r"""Calculate the spherical polar angles of a set of cartesian
     coordinates.
 
     $\theta$ denotes the polar angle, while $\phi$ denotes the azimuthal angle.
@@ -37,7 +37,7 @@ def angles_from_xyz(xyz, axis=0):
 
 
 def xyz_from_angles(theta_phi, axis=0):
-    """Calculate the cartesian coordinates from a set of spherical
+    r"""Calculate the cartesian coordinates from a set of spherical
     polar angles.
 
     $\theta$ denotes the polar angle, while $\phi$ denotes the azimuthal angle.
