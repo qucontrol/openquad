@@ -83,3 +83,31 @@ testpaths = ["tests"]
 # Turn warnings into errors. Ignore a warning only with an explicit filter and a
 # comment giving the reason.
 filterwarnings = ["error"]
+
+[tool.ruff]
+# The data tables are left as they are, as they will move out of the package.
+# Code examples in Markdown keep their hand-written layout.
+extend-exclude = ["src/openquad/data/", "*.md"]
+
+[tool.ruff.lint]
+select = [
+  "E",     # pycodestyle errors
+  "F",     # pyflakes
+  "W",     # pycodestyle warnings
+  "I",     # isort
+  "B",     # flake8-bugbear
+  "UP",    # pyupgrade
+  "C4",    # flake8-comprehensions
+  "NPY",   # NumPy-specific rules
+  "PT",    # flake8-pytest-style
+  "PIE",   # flake8-pie
+  "RET",   # flake8-return
+  "RUF",   # ruff-specific rules
+  "SIM",   # flake8-simplify
+  "PTH",   # flake8-use-pathlib
+  "PGH",   # pygrep-hooks
+  "FURB",  # refurb
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["openquad"]
