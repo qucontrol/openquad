@@ -105,7 +105,7 @@ def test_initialization():
 
     # Invalid method options
     # Now given that the type of the specifier is correct and that a valid
-    # combination of methods has been choosen, check the remaining options
+    # combination of methods has been chosen, check the remaining options
     # for the method.
     with pytest.raises(TypeError, match="not both"):  # either degree or size
         quad = SO3(

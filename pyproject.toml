@@ -84,6 +84,10 @@ testpaths = ["tests"]
 # comment giving the reason.
 filterwarnings = ["error"]
 
+[tool.codespell]
+# "Reson" abbreviates the journal J. Magn. Reson.
+ignore-words-list = "reson"
+
 [tool.ruff]
 # The data tables are left as they are, as they will move out of the package.
 # Code examples in Markdown keep their hand-written layout.

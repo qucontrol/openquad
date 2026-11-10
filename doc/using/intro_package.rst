@@ -11,7 +11,7 @@ features.
 
 Currently, the following geometries are implemented:
 
-- :math:`n`-dimensional Euclidian spaces, :math:`\mathrm{R}^n`: :class:`openquad.Rn`
+- :math:`n`-dimensional Euclidean spaces, :math:`\mathrm{R}^n`: :class:`openquad.Rn`
 - the surface of the 2d unit sphere, :math:`\mathrm{S}^2`: :class:`openquad.S2`
 - the space of all orientations in 3d-space, i.e., the rotation group
   :math:`\mathrm{SO}(3)`: :class:`openquad.SO3`

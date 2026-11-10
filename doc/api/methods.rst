@@ -20,14 +20,14 @@ The first entry denotes the input string for the method specification, cf. the
 * ``Romberg``: `Romberg's method <https://en.wikipedia.org/wiki/Romberg's_method>`_, see :func:`scipy.integrate.romberg`
 * ``1d-MonteCarlo``:`Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
 
-These methods need the following additional keyword paramters:
+These methods need the following additional keyword parameters:
 
 * ``size``: float: Number of sampling points.
 * ``degree``: float: Degree of exactness. For Gauss methods alternative to ``size``.
 * ``a`` : float: Lower boundary of the integral.
 * ``b`` : float: Upper boundary of the integral.
 * ``jacobian`` : callable, optional: Jacobian to apply to the coordinate.
-* ``periodic`` : logical, optinal: If ``True``, assume periodic boundary conditions.
+* ``periodic`` : logical, optional: If ``True``, assume periodic boundary conditions.
 
 
 :math:`\mathrm{S}^2` methods
@@ -41,10 +41,10 @@ These methods need the following additional keyword paramters:
 * ``S2-Covering-ZCW``: near-uniform coverings with the `ZCW`_ method
 * ``S2-MonteCarlo``: `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
 
-These methods need the following additional keyword paramters:
+These methods need the following additional keyword parameters:
 
 * ``size``: float: Number of sampling points.
-* ``degree``: float: Degree of exactness. For Gauss methods and spherical desings alternative to ``size``.
+* ``degree``: float: Degree of exactness. For Gauss methods and spherical designs alternative to ``size``.
 
 
 :math:`\mathrm{SO}(3)` methods
@@ -55,7 +55,7 @@ These methods need the following additional keyword paramters:
 * ``SO3-Covering-Karney``: near-uniform coverings from `Charles Karney`_
 * ``SO3-MonteCarlo``: `Monte Carlo integration <https://en.wikipedia.org/wiki/Monte_Carlo_integration>`_
 
-These methods need the following additional keyword paramters:
+These methods need the following additional keyword parameters:
 
 * ``size``: float: Number of sampling points.
 * ``degree``: float: Degree of exactness. For Gauss and Chebyshev methods alternative to ``size``.
@@ -66,7 +66,7 @@ These methods need the following additional keyword paramters:
    The following extensions are planned for the next release:
    
    * Implementing the three-dimensional unit sphere, :math:`\mathrm{S}^3`.
-   * Adding spherical desings and coverings from `Neil Sloane and Ronald Hardin`_.
+   * Adding spherical designs and coverings from `Neil Sloane and Ronald Hardin`_.
    * Providing a way to use :math:`\mathrm{S}^3` quadratures for :math:`\mathrm{SO}(3)`
      and vice versa.
    * Implementing a class for the unit circle, :math:`\mathrm{S}^1`.

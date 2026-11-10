@@ -116,7 +116,7 @@ class GeometryQuadrature(ABC):
         method_objects = []
         method_options = []
         if len(method_specs) < 1:
-            raise ValueError("Method speficication must not be empty")
+            raise ValueError("Method specification must not be empty")
         for i, method_spec in enumerate(method_specs):
             method_str, options = deepcopy(method_spec)
             method_objects.append(self._select_method_object(method_str))
@@ -206,7 +206,7 @@ class GeometryQuadrature(ABC):
         if self._ndims[0] == self.dim:
             # the points form already the meshgrid
             meshgrid = self._method_points[0]
-            # TODO: make sure it is contigous?
+            # TODO: make sure it is contiguous?
             # TODO: could be merged with the case below?
         elif np.all(np.asarray(self._ndims) == 1):
             # If all subgrids have dimension one, it is easy:
@@ -332,7 +332,7 @@ class GeometryQuadrature(ABC):
         # (0, 1)
         # ((0, 1), 2) #no!
         dim = None
-        if dim is not None:  # integrate speficic dimensions
+        if dim is not None:  # integrate specific dimensions
             # This blew up in complexity; I won't allow it for now.
             raise NotImplementedError
             if np.ndim(dim) == 0:

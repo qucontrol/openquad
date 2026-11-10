@@ -68,7 +68,7 @@ class MonteCarloS2(AtomicS2Quadrature, QuadratureWithoutDegree):
     def _sample_spherical_polar_angles(self, n, seed=None):
         """Generate a uniform distribution of points on the unit sphere.
 
-        The unit sphere is sampled in spherical polar coodinates.
+        The unit sphere is sampled in spherical polar coordinates.
 
         Parameters
         ----------

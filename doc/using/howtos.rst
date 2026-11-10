@@ -3,7 +3,7 @@
 How-tos
 -------
 
-Recipies to achieve common tasks using |openquad|, targeted towards users familiar with the basic concepts.
+Recipes to achieve common tasks using |openquad|, targeted towards users familiar with the basic concepts.
 
 For detailed description of the classes and methods contained in |openquad|, see the :ref:`API reference <api>`.
 

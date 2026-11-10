@@ -67,7 +67,7 @@ def xyz_from_angles(theta_phi, axis=0):
 def euler_angles_from_quaternions(quaternions, axis=0):
     """Convert quaternions to Euler angles.
 
-    Paramters
+    Parameters
     ---------
     angles : quaternion array
         Array of quaternions
@@ -90,7 +90,7 @@ def euler_angles_from_quaternions(quaternions, axis=0):
 def quaternions_from_euler_angles(angles, axis=0):
     """Convert Euler angles to quaternions.
 
-    Paramters
+    Parameters
     ---------
     angles : array_like
         Array of Euler angles.

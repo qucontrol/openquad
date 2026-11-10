@@ -52,7 +52,7 @@ issues in commits.
 .. _Linking a pull request to an issue: https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
 
 
-Relases follow `semantic versioning`_ and need to be compatible with `PyPA
+Releases follow `semantic versioning`_ and need to be compatible with `PyPA
 version specifiers`_ (former `PEP440`_).
 
 .. _semantic versioning: https://semver.org/
