@@ -8,12 +8,18 @@ description = "Open database for multi-dimensional numerical integration"
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Operating System :: OS Independent",
 ]
-requires-python = ">=3"
+# Supported versions follow SPEC 0:
+# https://scientific-python.org/specs/spec-0000/
+requires-python = ">=3.13"
 dependencies = [
-  "numpy",
-  "scipy",
+  "numpy>=2.3",
+  "scipy>=1.15",
   "quaternionic",
 ]
 keywords = [
@@ -37,36 +43,40 @@ build-backend = "hatchling.build"
 path = "src/openquad/__init__.py"
 
 [project.optional-dependencies]
-dev = [
-  "pytest",
-  "spherical",
-]
 examples = [
   "matplotlib",
   "spherical",
 ]
-doc = [
-  "sphinx==7.4.7",
-  "pydata_sphinx_theme==0.15.4",
+
+# Development tools are not published with the package. Install them with
+# `pip install --group dev` (pip 25.1 or newer) or `uv sync`.
+[dependency-groups]
+test = [
+  "pytest>=9",
+  "pytest-cov",
+  "spherical",
+]
+lint = [
+  "prek",
+  "ruff",
+]
+docs = [
+  "sphinx==9.2.0",
+  "pydata_sphinx_theme==0.23.0",
   "intersphinx_registry",
-  "sphinx-autoapi==3.2.1",
+  "sphinx-autoapi==3.8.1",
   "sphinx-copybutton==0.5.2",
-  "sphinx_design==0.6.0",
-  "numpydoc==1.7.0",
+  "sphinx_design==0.7.0",
+  "numpydoc==1.11.0",
+]
+dev = [
+  {include-group = "test"},
+  {include-group = "lint"},
 ]
 
-[tool.hatch.envs.doc]
-description = "Build documentation (Python 3.12)"
-template = "doc"
-features = [
-  "dev",
-  "doc",
-]
-python = "3.12"
-
-[tool.hatch.envs.doc.scripts]
-build = [
-    #"sphinx-build -v -W --keep-going -b html doc doc/_build/html -d doc/_build/doctree",
-    "sphinx-build -b html doc doc/_build/html -d doc/_build/doctree",
-]
-serve = "python -m http.server -d doc/_build/html"
+[tool.pytest]
+minversion = "9.0"
+addopts = ["-ra"]
+strict = true
+log_level = "INFO"
+testpaths = ["tests"]
