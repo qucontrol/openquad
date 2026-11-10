@@ -24,6 +24,11 @@ This guide will get you started.
 
    structure
 
+.. toctree::
+   :maxdepth: 2
+
+   releasing
+
 
 .. tip::
 
